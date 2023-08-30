@@ -1,22 +1,17 @@
 "use client";
-
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { auth } from "@/utils/firebase";
-import { signOut } from "firebase/auth";
-import { Dialog } from "@headlessui/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import Login from "./Login";
+import LoginModal from "./Modals/LoginModal";
 
 const NavbarUser = () => {
   const user = useCurrentUser();
   const router = useRouter();
 
   const [openLogin, setOpenLogin] = useState(false);
-
-  // console.log(user ? "user logged in" : "user not logged in");
 
   const handleUpload = () => {
     if (!user) {
@@ -29,6 +24,7 @@ const NavbarUser = () => {
   const handleLogout = () => {
     auth.signOut();
     alert("signed out");
+    console.log(user);
     router.push("/");
   };
 
@@ -63,24 +59,23 @@ const NavbarUser = () => {
         )}
       </div>
 
-      <div>
-        <Dialog
-          open={openLogin}
-          onClose={() => setOpenLogin(false)}
-          className="relative z-20"
-        >
-          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-          <div className="fixed inset-0 flex items-center justify-center p-4">
-            <Dialog.Panel>
-              <Login
-                isOpen={openLogin}
-                closeModal={() => setOpenLogin(false)}
-                href={"/upload"}
-              />
-            </Dialog.Panel>
-          </div>
-        </Dialog>
-      </div>
+      {/* <Dialog
+        open={openLogin}
+        onClose={() => setOpenLogin(false)}
+        className="relative z-20"
+      >
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          <Dialog.Panel>
+            <LoginModal
+              isOpen={openLogin}
+              closeModal={() => setOpenLogin(false)}
+            />
+          </Dialog.Panel>
+        </div>
+      </Dialog> */}
+
+      <LoginModal isOpen={openLogin} closeModal={() => setOpenLogin(false)} />
     </div>
   );
 };

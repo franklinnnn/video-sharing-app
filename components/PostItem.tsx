@@ -1,22 +1,30 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { BsThreeDotsVertical, BsFillShareFill } from "react-icons/bs";
 import { AiFillHeart, AiFillDelete } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
-import { Dialog, Menu } from "@headlessui/react";
+import { Menu } from "@headlessui/react";
 import DeletePostModal from "./Modals/DeletePostModal";
 import { PostItemProps } from "@/types";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import { useRouter } from "next/navigation";
 
 const PostItem = ({ post }: PostItemProps) => {
+  const currentUser = useCurrentUser();
+  const router = useRouter();
   const [openDeletePostModal, setOpenDeletePostModal] = useState(false);
+
+  const goToPost = useCallback(() => {
+    router.push(`/${post.userInfo.username}/videos/${post.postId}`);
+  }, [router, post.postId, post.userInfo.username]);
 
   return (
     <div className="relative w-fit pb-6 my-2 border-b-2 border-zinc-700">
       <div className="absolute top-2 left-2 flex justify-start gap-2 z-10">
         <Image
-          src={post.photoURL}
+          src={post.userInfo.photoURL}
           alt="User profile photo"
           height={50}
           width={50}
@@ -24,10 +32,10 @@ const PostItem = ({ post }: PostItemProps) => {
         />
         <div className="flex flex-col">
           <Link
-            href={`users/${post.userId}`}
+            href={post.userInfo.username}
             className="text-xl font-semibold hover:underline"
           >
-            {post.displayName}
+            {post.userInfo.displayName}
           </Link>
           <span>{post.caption}</span>
         </div>
@@ -45,7 +53,10 @@ const PostItem = ({ post }: PostItemProps) => {
           <button className="flex items-center justify-center w-10 h-10 rounded-full p-2 bg-zinc-700 hover:bg-zinc-700/60 transition">
             <AiFillHeart size={24} />
           </button>
-          <button className="flex items-center justify-center w-10 h-10 rounded-full p-2 bg-zinc-700 hover:bg-zinc-700/60 transition">
+          <button
+            onClick={goToPost}
+            className="flex items-center justify-center w-10 h-10 rounded-full p-2 bg-zinc-700 hover:bg-zinc-700/60 transition"
+          >
             <FaComment size={24} />
           </button>
         </div>
@@ -63,36 +74,30 @@ const PostItem = ({ post }: PostItemProps) => {
                     <BsFillShareFill /> Share
                   </button>
                 </Menu.Item>
-                <Menu.Item>
-                  <button
-                    className="flex gap-2 items-center p-1 rounded-sm hover:bg-zinc-800/20"
-                    onClick={() => setOpenDeletePostModal(true)}
-                  >
-                    <AiFillDelete />
-                    Delete
-                  </button>
-                </Menu.Item>
+                {currentUser?.uid === post.userInfo.userId ? (
+                  <Menu.Item>
+                    <button
+                      className="flex gap-2 items-center p-1 rounded-sm hover:bg-zinc-800/20"
+                      onClick={() => setOpenDeletePostModal(true)}
+                    >
+                      <AiFillDelete />
+                      Delete
+                    </button>
+                  </Menu.Item>
+                ) : (
+                  <></>
+                )}
               </div>
             </Menu.Items>
           </div>
         </Menu>
       </div>
 
-      <Dialog
-        open={openDeletePostModal}
-        onClose={() => setOpenDeletePostModal(false)}
-      >
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel>
-            <DeletePostModal
-              isOpen={openDeletePostModal}
-              closeModal={() => setOpenDeletePostModal(false)}
-              postId={post.postId}
-            />
-          </Dialog.Panel>
-        </div>
-      </Dialog>
+      <DeletePostModal
+        isOpen={openDeletePostModal}
+        closeModal={() => setOpenDeletePostModal(false)}
+        postId={post.postId}
+      />
     </div>
   );
 };

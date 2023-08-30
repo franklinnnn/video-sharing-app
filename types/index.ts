@@ -1,8 +1,11 @@
 export interface UserProps {
-  displayName: string;
-  photoURL: string;
-  uid: string;
   bio?: string;
+  displayName: string;
+  email?: string;
+  photoURL: string;
+  providerId?: string;
+  username: string;
+  uid: string;
   website?: string;
 }
 

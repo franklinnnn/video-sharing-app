@@ -17,21 +17,20 @@ const UserBio = ({ user }: UserBioProps) => {
 
   const currentUser = useCurrentUser();
 
-  // const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
-  //   console.log(doc.data()?.bio);
-  // });
   return (
-    <div>
+    <div className="p-4 bg-zinc-800 rounded-md">
       <div className="flex gap-4 mb-4">
         <Image
-          src={currentUser?.photoURL || "/images/placeholder.png"}
+          src={user.photoURL || "/images/placeholder.png"}
           alt="User profile photo"
-          height={100}
-          width={100}
-          className="rounded-full"
+          width={112}
+          height={112}
+          className="object-fit w-28 h-28 rounded-full"
         />
+
         <div className="flex flex-col items-start justify-evenly w-full gap-2">
           <h1 className="text-4xl font-semibold">{user.displayName}</h1>
+          <p className="text-zinc-500">@{user?.username}</p>
           {currentUser?.uid === user.uid ? (
             <button
               className="py-1 px-6 object-fit border-2  border-fuchsia-500 rounded-md hover:bg-fuchsia-500/90 transition"

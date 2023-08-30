@@ -16,12 +16,17 @@ const useUser = async (userId: string) => {
       throw new Error("Invalid ID");
     }
 
-    const existingUser = await getDoc(doc(db, "users", userId));
-    if (existingUser.exists()) {
-      return existingUser.data();
-    } else {
-      console.log("No such document");
-    }
+    // const existingUser = await getDoc(doc(db, "users", userId));
+    // if (existingUser.exists()) {
+    //   const user = existingUser.data();
+    //   return user;
+    // } else {
+    //   console.log("No such document");
+    // }
+
+    await getDoc(doc(db, "users", userId)).then((doc) => {
+      return doc.data();
+    });
   } catch (error) {
     console.log(error);
   }

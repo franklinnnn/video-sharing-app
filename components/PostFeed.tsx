@@ -1,8 +1,5 @@
 "use client";
-
 import usePosts from "@/hooks/usePosts";
-import Image from "next/image";
-import React, { useCallback, useEffect, useState } from "react";
 import PostItem from "./PostItem";
 
 interface PostFeedProps {
@@ -10,7 +7,6 @@ interface PostFeedProps {
 }
 const PostFeed = ({ userId }: PostFeedProps) => {
   const posts = usePosts(userId);
-  // console.log(posts && posts?.length === 0 ? "no posts" : posts);
   return (
     <div className="h-full w-full flex flex-col items-center ">
       {posts && posts?.length === 0 ? (

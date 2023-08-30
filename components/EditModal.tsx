@@ -20,6 +20,7 @@ const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
   const currentUser = useCurrentUser();
 
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const [website, setWebsite] = useState("");
@@ -68,6 +69,7 @@ const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
       if (response.exists()) {
         await updateDoc(doc(db, "users", user.uid), {
           displayName: name,
+          username: username,
           bio: bio,
           website: website,
         });
@@ -85,6 +87,7 @@ const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
 
   useEffect(() => {
     setName(user?.displayName as string);
+    setUsername(user?.username as string);
     setProfileImage(user?.photoURL as string);
     setBio(user?.bio as string);
     setWebsite(user?.website as string);
@@ -141,6 +144,16 @@ const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
             placeholder={name}
             value={name}
             onChange={(e) => setName(e.target.value)}
+            className="text-xl w-full bg-inherit outline-none"
+          />
+        </div>
+        <div className="flex flex-row items-center p-4 border-2 border-zinc-700 rounded-md focus-within:border-fuchsia-500 transition">
+          <span className="text-xl text-zinc-600">@</span>
+          <input
+            type="text"
+            placeholder={username}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className="text-xl w-full bg-inherit outline-none"
           />
         </div>

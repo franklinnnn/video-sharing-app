@@ -5,17 +5,17 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Dialog } from "@headlessui/react";
 import { useDropzone } from "react-dropzone";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { auth, firebaseApp, storage } from "@/utils/firebase";
+import { db, firebaseApp, storage } from "@/utils/firebase";
 import {
   addDoc,
   collection,
   doc,
+  getDoc,
   getFirestore,
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
-
-const fileTypes = ["JPG", "PNG", "MP4", "WEBM"];
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const database = getFirestore(firebaseApp);
 
@@ -23,9 +23,22 @@ const Upload = () => {
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState("");
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [progress, setProgress] = useState(1);
-
+  // const [progress, setProgress] = useState(1);
+  const [fetchedUser, setFetchedUser] = useState({} as any);
   const [files, setFiles] = useState<any[]>([]);
+
+  const currentUser = useCurrentUser();
+
+  const getUser = async (userId: string) => {
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      setFetchedUser(userSnap.data());
+    } else {
+      console.log("no document");
+    }
+  };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -40,8 +53,13 @@ const Upload = () => {
     maxFiles: 1,
   });
 
+  const handleFiles = () => {
+    files.forEach((file) => URL.revokeObjectURL(file.preview));
+  };
+
   useEffect(() => {
-    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+    handleFiles();
+    getUser(currentUser?.uid as string);
   }, []);
 
   const handleCancel = async () => {
@@ -54,13 +72,15 @@ const Upload = () => {
   const handleUpload = async () => {
     try {
       setLoading(true);
-      const user = auth.currentUser;
       const docRef = await addDoc(collection(database, "posts"), {
-        userId: user?.uid,
-        displayName: user?.displayName,
-        photoURL: user?.photoURL,
         caption: caption,
         timestamp: serverTimestamp(),
+        userInfo: {
+          userId: fetchedUser.uid,
+          displayName: fetchedUser.displayName,
+          username: fetchedUser.username,
+          photoURL: fetchedUser.photoURL,
+        },
       });
 
       await Promise.all(
@@ -75,8 +95,6 @@ const Upload = () => {
           });
         })
       );
-
-      alert("upload success");
     } catch (error) {
       console.log(error);
     } finally {

@@ -1,57 +1,75 @@
 "use client";
-
-import { auth } from "@/utils/firebase";
 import { Dialog } from "@headlessui/react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useCallback, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect, useState } from "react";
 import { BsHouseFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import { MdExplore } from "react-icons/md";
 import Login from "./Login";
+import SidebarItem from "./SidebarItem";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import useUser from "@/hooks/useUser";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { db } from "@/utils/firebase";
 
 const Sidebar = () => {
-  const [user, loading] = useAuthState(auth);
+  const currentUser = useCurrentUser();
+  const [fetchedUser, setFetchedUser] = useState({} as any);
   const [openLogin, setOpenLogin] = useState(false);
 
-  const router = useRouter();
+  useEffect(() => {
+    if (currentUser?.uid) {
+      setFetchedUser({});
+      getUser();
+    }
+  }, [currentUser?.uid]);
 
   const sidebarItems = [
     {
       label: "Home",
-      icon: <BsHouseFill />,
+      icon: BsHouseFill,
       href: "/",
     },
     {
       label: "Explore",
-      icon: <MdExplore />,
+      icon: MdExplore,
       href: "/explore",
     },
     {
       label: "Profile",
-      icon: <FaUser />,
-      href: `/users/${user?.uid}`,
+      icon: FaUser,
+      href: `/${fetchedUser.username}`,
     },
   ];
 
+  const getUser = async () => {
+    const q = query(
+      collection(db, "users"),
+      where("uid", "==", currentUser?.uid)
+    );
+    const usersSnapshot = await getDocs(q);
+    usersSnapshot.forEach((doc) => {
+      setFetchedUser(doc.data());
+    });
+  };
+
   return (
     <div className="fixed pt-6 h-full z-1">
-      {sidebarItems.map((item) => {
-        const handleLink = useCallback(() => {
-          router.push(`${item.href}`);
-        }, [router, item.href]);
-        return (
-          <div
-            onClick={handleLink}
-            key={item.href}
-            className="flex flex-row justify-start items-center gap-4 text-xl mx-2 px-4 py-2 hover:bg-zinc-800 rounded-md object-fit hover:cursor-pointer"
-          >
-            <span className="text-2xl">{item.icon}</span>{" "}
-            <span className="hidden lg:block">{item.label}</span>
-          </div>
-        );
-      })}
+      {sidebarItems.map((item) => (
+        <SidebarItem
+          key={item.label}
+          label={item.label}
+          icon={item.icon}
+          href={item.href}
+          openModal={() => setOpenLogin(true)}
+        />
+      ))}
 
       <Dialog
         open={openLogin}
