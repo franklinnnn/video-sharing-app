@@ -3,21 +3,24 @@ import { UserProps } from "@/types";
 import { Dialog } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import EditModal from "../EditModal";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, query } from "firebase/firestore";
 import { db } from "@/utils/firebase";
-import { useAuth } from "@/hooks/useAuth";
 import FollowButton from "../FollowButton";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
 interface UserBioProps {
   user: UserProps;
+  setActiveTab: (value: string) => void;
 }
 
-const UserBio = ({ user }: UserBioProps) => {
+const UserBio = ({ user, setActiveTab }: UserBioProps) => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
-  const { user: currentUser, loading, error } = useAuth();
+  const { currentUser } = useCurrentUser();
+  const q = query(collection(db, `users/${user.uid}/followers`));
+  const [followers] = useCollectionData(q);
 
   return (
     <div className="p-4 bg-zinc-800 rounded-md">
@@ -44,13 +47,16 @@ const UserBio = ({ user }: UserBioProps) => {
             // <button className="py-1 px-6 object-fit border-2 bg-fuchsia-500 border-fuchsia-500 rounded-md hover:bg-fuchsia-500/90 transition">
             //   Follow
             // </button>
-            <FollowButton userId={user.uid} />
+            <FollowButton user={user} />
           )}
         </div>
       </div>
       <div className="flex flex-row gap-6 my-2 text-zinc-500">
-        <div>
-          <span className="font-semibold">100</span> Followers
+        <div
+          onClick={() => setActiveTab("Followers")}
+          className="hover:underline hover:cursor-pointer"
+        >
+          <span className="font-semibold">{followers?.length}</span> Followers
         </div>{" "}
         <div>
           <span className="font-semibold">100</span> Likes

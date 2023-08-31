@@ -28,7 +28,7 @@ const UserProfile = () => {
 
   return (
     <div className="h-full w-full p-2">
-      <UserBio user={fetchedUser} />
+      <UserBio user={fetchedUser} setActiveTab={setActiveTab} />
 
       <div className="flex flex-row items-center my-4  ">
         <button
@@ -58,7 +58,9 @@ const UserProfile = () => {
           Likes
         </button>
       </div>
-      <PostFeed userId={fetchedUser.uid as string} />
+      {activeTab === "Videos" && (
+        <PostFeed userId={fetchedUser.uid as string} />
+      )}
       {activeTab === "Followers" && <Followers userId={fetchedUser.uid} />}
     </div>
   );

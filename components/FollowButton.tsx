@@ -1,5 +1,7 @@
 import { useAuthContext } from "@/context/AuthContext";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import useUser from "@/hooks/useUser";
+import { UserProps } from "@/types";
 import { db } from "@/utils/firebase";
 import {
   FieldValue,
@@ -10,26 +12,36 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { useDocument } from "react-firebase-hooks/firestore";
 
 interface FollowButtonProps {
-  userId: string;
+  user: UserProps;
 }
 
-const FollowButton = ({ userId }: FollowButtonProps) => {
+const FollowButton = ({ user }: FollowButtonProps) => {
   const [isFollowing, setIsFollowing] = useState(false);
-  const firebase = useAuthContext();
+  const [currentUsername, setCurrentUsername] = useState("");
 
   const { currentUser } = useCurrentUser();
 
+  const getCurrentUsername = async () => {
+    if (currentUser) {
+      const userRef = doc(db, "users", currentUser.uid);
+      await getDoc(userRef).then((doc) => {
+        setCurrentUsername(doc.data()?.username);
+      });
+    }
+  };
+
   const handleFollow = async () => {
-    const followedUserRef = doc(db, "users", userId);
+    const followedUserRef = doc(db, "users", user.uid);
     if (currentUser) {
       const userRef = doc(db, "users", currentUser.uid);
 
       if (isFollowing) {
         const followingData = {
           following: {
-            [userId]: deleteField(),
+            [user.uid]: deleteField(),
           },
         };
         await updateDoc(userRef, followingData);
@@ -44,11 +56,17 @@ const FollowButton = ({ userId }: FollowButtonProps) => {
         console.log("unfollowed user");
         setIsFollowing(false);
       } else {
-        await setDoc(doc(userRef, "following", userId), {
-          userId: userId,
+        await setDoc(doc(userRef, "following", user.uid), {
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          username: user.username,
+          uid: user.uid,
         });
-        await setDoc(doc(followedUserRef, " followers", currentUser.uid), {
-          userId: currentUser.uid,
+        await setDoc(doc(followedUserRef, "followers", currentUser.uid), {
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+          username: currentUsername,
+          uid: currentUser.uid,
         });
         console.log("followed user");
         setIsFollowing(true);
@@ -57,6 +75,7 @@ const FollowButton = ({ userId }: FollowButtonProps) => {
   };
 
   useEffect(() => {
+    getCurrentUsername();
     if (currentUser) {
       const userRef = doc(db, "users", currentUser.uid);
 
@@ -64,7 +83,7 @@ const FollowButton = ({ userId }: FollowButtonProps) => {
       //     setIsFollowing(doc.exists());
       //   });
     }
-  }, [userId]);
+  }, [user.uid]);
   return (
     <button
       onClick={handleFollow}
