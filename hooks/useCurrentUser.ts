@@ -1,9 +1,12 @@
 import { auth } from "@/utils/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const useCurrentUser = () => {
-  const user = auth.currentUser;
+  const [user, loading, error] = useAuthState(auth);
+  const currentUser = user;
 
-  return user;
+  return { currentUser, loading, error };
 };
 
 export default useCurrentUser;

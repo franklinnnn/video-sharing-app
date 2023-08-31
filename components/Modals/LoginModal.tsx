@@ -1,12 +1,13 @@
 import { auth, db } from "@/utils/firebase";
 import { Dialog } from "@headlessui/react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import UsernameModal from "./UsernameModal";
+import { signInUser } from "@/utils";
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -22,39 +23,22 @@ const LoginModal = ({ isOpen, closeModal }: LoginModalProps) => {
   const onSubmit = async () => {
     try {
       const { user } = await signInWithPopup(auth, provider);
-      const { providerData, uid } = user;
+      const { refreshToken, providerData, uid } = user;
+
+      localStorage.setItem("user", JSON.stringify(providerData));
+      localStorage.setItem("accessToken", JSON.stringify(refreshToken));
+
       setUid(uid);
       const userRef = doc(db, "users", uid);
-
-      // const userSnap = await getDoc(userRef);
-      // if (userSnap.exists()) {
-      //   const username = userSnap.data().username;
-      //   if (!username || username === "") {
-      //     setOpenUsername(true);
-      //     console.log(username);
-      //   }
-      // else {
-      //   closeModal();
-      //   alert("signed in successfully");
-      //   router.push("/");
-      // }
-      // } else {
-      //   await setDoc(userRef, {
-      //     displayName: providerData[0].displayName,
-      //     username: providerData[0].displayName
-      //       ?.replace(/\s/g, "")
-      //       .toLowerCase(),
-      //     email: providerData[0].email,
-      //     photoURL: providerData[0].photoURL,
-      //     providerId: providerData[0].providerId,
-      //     uid: uid,
-      //     bio: "",
-      //     website: "",
-      //   });
-      // }
-
       const userSnap = await getDoc(userRef);
       if (userSnap.exists()) {
+        if (!userSnap.data().username || userSnap.data().username === "") {
+          await updateDoc(userRef, {
+            username: providerData[0].displayName
+              ?.replace(/\s/g, "")
+              .toLowerCase(),
+          });
+        }
         alert("signed in successfully");
         router.push("/");
         closeModal();
@@ -104,11 +88,11 @@ const LoginModal = ({ isOpen, closeModal }: LoginModalProps) => {
           </Dialog.Panel>
         </div>
       </Dialog>
-      <UsernameModal
+      {/* <UsernameModal
         isOpen={openUsername}
         closeModal={() => setOpenUsername(false)}
         uid={uid}
-      />
+      /> */}
     </>
   );
 };

@@ -1,5 +1,6 @@
 "use client";
 import PostFeed from "@/components/PostFeed";
+import Followers from "@/components/users/Followers";
 import UserBio from "@/components/users/UserBio";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -58,6 +59,7 @@ const UserProfile = () => {
         </button>
       </div>
       <PostFeed userId={fetchedUser.uid as string} />
+      {activeTab === "Followers" && <Followers userId={fetchedUser.uid} />}
     </div>
   );
 };

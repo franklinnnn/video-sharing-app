@@ -6,9 +6,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import LoginModal from "./Modals/LoginModal";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuth } from "@/hooks/useAuth";
 
 const NavbarUser = () => {
-  const user = useCurrentUser();
+  const { user, loading, error } = useAuth();
   const router = useRouter();
 
   const [openLogin, setOpenLogin] = useState(false);
@@ -23,9 +25,8 @@ const NavbarUser = () => {
 
   const handleLogout = () => {
     auth.signOut();
-    alert("signed out");
-    console.log(user);
     router.push("/");
+    alert("signed out");
   };
 
   return (
@@ -58,22 +59,6 @@ const NavbarUser = () => {
           </button>
         )}
       </div>
-
-      {/* <Dialog
-        open={openLogin}
-        onClose={() => setOpenLogin(false)}
-        className="relative z-20"
-      >
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel>
-            <LoginModal
-              isOpen={openLogin}
-              closeModal={() => setOpenLogin(false)}
-            />
-          </Dialog.Panel>
-        </div>
-      </Dialog> */}
 
       <LoginModal isOpen={openLogin} closeModal={() => setOpenLogin(false)} />
     </div>

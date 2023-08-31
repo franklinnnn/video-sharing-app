@@ -5,19 +5,16 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Dialog } from "@headlessui/react";
 import { useDropzone } from "react-dropzone";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { db, firebaseApp, storage } from "@/utils/firebase";
+import { db, storage } from "@/utils/firebase";
 import {
   addDoc,
   collection,
   doc,
   getDoc,
-  getFirestore,
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
 import useCurrentUser from "@/hooks/useCurrentUser";
-
-const database = getFirestore(firebaseApp);
 
 const Upload = () => {
   const [loading, setLoading] = useState(false);
@@ -27,7 +24,7 @@ const Upload = () => {
   const [fetchedUser, setFetchedUser] = useState({} as any);
   const [files, setFiles] = useState<any[]>([]);
 
-  const currentUser = useCurrentUser();
+  const { currentUser } = useCurrentUser();
 
   const getUser = async (userId: string) => {
     const userRef = doc(db, "users", userId);
@@ -72,7 +69,7 @@ const Upload = () => {
   const handleUpload = async () => {
     try {
       setLoading(true);
-      const docRef = await addDoc(collection(database, "posts"), {
+      const docRef = await addDoc(collection(db, "posts"), {
         caption: caption,
         timestamp: serverTimestamp(),
         userInfo: {
@@ -88,7 +85,7 @@ const Upload = () => {
           const storageRef = ref(storage, `videos/${docRef.id}/${file.path}`);
           uploadBytesResumable(storageRef, file).then(async () => {
             const downloadURL = await getDownloadURL(storageRef);
-            await updateDoc(doc(database, "posts", docRef.id), {
+            await updateDoc(doc(db, "posts", docRef.id), {
               video: downloadURL,
               postId: docRef.id,
             });

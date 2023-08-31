@@ -6,8 +6,7 @@ import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/utils/firebase";
-
-const inter = Inter({ subsets: ["latin"] });
+import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
   title: "Video Sharing App",
@@ -22,13 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-zinc-900">
-        <Navbar />
-        <div className="container grid grid-cols-4 justify-center mt-16 mx-auto max-w-2xl">
-          <div className="col-span-1 pr-4 justify-center items-start ">
-            <Sidebar />
+        <AuthProvider>
+          <div className="container grid grid-cols-4 justify-center mt-16 mx-auto max-w-2xl">
+            <div className="col-span-1 pr-4 justify-center items-start ">
+              <Sidebar />
+            </div>
+            <div className="col-span-3 w-full px-2 py-6">{children}</div>
           </div>
-          <div className="col-span-3 w-full px-2 py-6">{children}</div>
-        </div>
+          <Navbar />
+        </AuthProvider>
       </body>
     </html>
   );

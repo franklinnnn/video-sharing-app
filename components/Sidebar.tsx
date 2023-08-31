@@ -7,25 +7,18 @@ import { MdExplore } from "react-icons/md";
 import Login from "./Login";
 import SidebarItem from "./SidebarItem";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import useUser from "@/hooks/useUser";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 
 const Sidebar = () => {
-  const currentUser = useCurrentUser();
+  const { currentUser } = useCurrentUser();
   const [fetchedUser, setFetchedUser] = useState({} as any);
   const [openLogin, setOpenLogin] = useState(false);
 
+  // console.log("fetched user", fetchedUser);
+
   useEffect(() => {
     if (currentUser?.uid) {
-      setFetchedUser({});
       getUser();
     }
   }, [currentUser?.uid]);

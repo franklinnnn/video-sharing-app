@@ -7,6 +7,8 @@ import React, { useState } from "react";
 import EditModal from "../EditModal";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/utils/firebase";
+import { useAuth } from "@/hooks/useAuth";
+import FollowButton from "../FollowButton";
 
 interface UserBioProps {
   user: UserProps;
@@ -15,7 +17,7 @@ interface UserBioProps {
 const UserBio = ({ user }: UserBioProps) => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
-  const currentUser = useCurrentUser();
+  const { user: currentUser, loading, error } = useAuth();
 
   return (
     <div className="p-4 bg-zinc-800 rounded-md">
@@ -39,9 +41,10 @@ const UserBio = ({ user }: UserBioProps) => {
               Edit
             </button>
           ) : (
-            <button className="py-1 px-6 object-fit border-2 bg-fuchsia-500 border-fuchsia-500 rounded-md hover:bg-fuchsia-500/90 transition">
-              Follow
-            </button>
+            // <button className="py-1 px-6 object-fit border-2 bg-fuchsia-500 border-fuchsia-500 rounded-md hover:bg-fuchsia-500/90 transition">
+            //   Follow
+            // </button>
+            <FollowButton userId={user.uid} />
           )}
         </div>
       </div>
