@@ -1,8 +1,7 @@
 import { db } from "@/utils/firebase";
 import { collection, query } from "firebase/firestore";
-import Image from "next/image";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import FollowButton from "../FollowButton";
+import FollowersItem from "./FollowersItem";
 
 interface FollowersProps {
   userId: string;
@@ -17,31 +16,11 @@ const Followers = ({ userId }: FollowersProps) => {
       {followers && (
         <div>
           {followers.length < 1 ? (
-            <div>User has no followers</div>
+            <div>User has no followers 😔</div>
           ) : (
             <div>
               {followers?.map((user: any) => (
-                <div
-                  key={user.uid}
-                  className="flex flex-row gap-4 items-center justify-between p-2 my-2 hover:cursor-pointer"
-                >
-                  <div className="flex gap-4 items-center justify-start">
-                    <Image
-                      src={user.photoURL}
-                      alt={user.displayName}
-                      height={45}
-                      width={45}
-                      className="object-fit rounded-full"
-                    />
-                    <div>
-                      <p className="text-xl font-semibold hover:underline">
-                        {user.displayName}
-                      </p>
-                      <p className="text-md text-zinc-600">@{user.username}</p>
-                    </div>
-                  </div>
-                  <button>Follow</button>
-                </div>
+                <FollowersItem user={user} key={user.uid} />
               ))}
             </div>
           )}

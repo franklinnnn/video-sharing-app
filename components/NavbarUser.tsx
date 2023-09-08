@@ -14,12 +14,15 @@ const NavbarUser = () => {
   const router = useRouter();
 
   const [openLogin, setOpenLogin] = useState(false);
+  const [href, setHref] = useState("");
 
   const handleUpload = () => {
     if (!user) {
       setOpenLogin(true);
+      setHref("upload");
     } else {
       router.push("/upload");
+      setHref("");
     }
   };
 
@@ -60,7 +63,11 @@ const NavbarUser = () => {
         )}
       </div>
 
-      <LoginModal isOpen={openLogin} closeModal={() => setOpenLogin(false)} />
+      <LoginModal
+        isOpen={openLogin}
+        closeModal={() => setOpenLogin(false)}
+        href={href}
+      />
     </div>
   );
 };

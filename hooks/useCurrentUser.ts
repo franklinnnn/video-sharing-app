@@ -1,7 +1,5 @@
 import { auth } from "@/utils/firebase";
-import { onAuthStateChanged } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useDocument } from "react-firebase-hooks/firestore";
 
 const useCurrentUser = () => {
   const [user, loading, error] = useAuthState(auth);

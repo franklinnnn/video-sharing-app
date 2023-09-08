@@ -6,15 +6,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import UsernameModal from "./UsernameModal";
-import { signInUser } from "@/utils";
 
 interface LoginModalProps {
   isOpen: boolean;
+  href: string;
   closeModal: () => void;
 }
 
-const LoginModal = ({ isOpen, closeModal }: LoginModalProps) => {
+const LoginModal = ({ isOpen, closeModal, href }: LoginModalProps) => {
   const provider = new GoogleAuthProvider();
   const router = useRouter();
 
@@ -40,7 +39,7 @@ const LoginModal = ({ isOpen, closeModal }: LoginModalProps) => {
           });
         }
         alert("signed in successfully");
-        router.push("/");
+        router.push(`/${href}`);
         closeModal();
       } else {
         await setDoc(userRef, {

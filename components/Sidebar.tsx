@@ -15,8 +15,6 @@ const Sidebar = () => {
   const [fetchedUser, setFetchedUser] = useState({} as any);
   const [openLogin, setOpenLogin] = useState(false);
 
-  // console.log("fetched user", fetchedUser);
-
   useEffect(() => {
     if (currentUser?.uid) {
       getUser();

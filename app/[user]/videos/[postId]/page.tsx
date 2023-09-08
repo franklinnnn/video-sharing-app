@@ -1,25 +1,28 @@
 "use client";
-
-import CommentItem from "@/components/posts/CommentItem";
-import useCurrentUser from "@/hooks/useCurrentUser";
-import { usePost } from "@/hooks/usePost";
+import CommentFeed from "@/components/posts/CommentFeed";
 import { db } from "@/utils/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 
 const PostView = () => {
-  const [post, setPost] = useState({} as any);
   const params = useParams();
   const postId = params.postId;
+  const username = params.user;
+
+  const [post, setPost] = useState({} as any);
+  const [fetchedUser, setFetchedUser] = useState({} as any);
 
   const router = useRouter();
-
-  console.log(post.video);
-
-  const currentUser = useCurrentUser();
 
   const getPost = async (postId: string) => {
     setPost({});
@@ -31,16 +34,29 @@ const PostView = () => {
     }
   };
 
+  const getUser = async () => {
+    const q = query(collection(db, "users"), where("username", "==", username));
+    const usersSnapshot = await getDocs(q);
+    usersSnapshot.forEach((doc) => {
+      setFetchedUser(doc.data());
+    });
+  };
+
   useEffect(() => {
     getPost(postId as string);
-  }, []);
+    getUser();
+  }, [username]);
 
   const renderVideo = (video: string) => {
     return (
-      <video controls autoPlay className="h-full w-full">
+      <video controls className="h-full w-full">
         <source src={video} type="video/mp4" />
       </video>
     );
+  };
+
+  const goToPage = () => {
+    router.push(`/${fetchedUser.username}`);
   };
 
   return (
@@ -52,13 +68,17 @@ const PostView = () => {
         >
           <MdClose size={24} />
         </div>
+
+        {/* VIDEO SECTION */}
         <div className="h-full w-[65%] bg-zinc-900">
           {post.video && renderVideo(post.video)}
           <div className="h-full w-full " />
         </div>
+
+        {/* USER AND COMMENTS SECTION */}
         <div className="relative top-20 h-full w-[35%] min-w-72 ">
           <div className="flex flex-col py-2 px-4 m-2 rounded-md bg-zinc-500/20">
-            <div className="flex justify-between">
+            <div className="flex justify-between mb-4">
               <div className="flex gap-2 items-center">
                 <div className="min-w-20 rounded-full overflow-hidden">
                   <Image
@@ -70,33 +90,31 @@ const PostView = () => {
                   />
                 </div>
                 <div>
-                  <p>{post.userInfo?.username}</p>
-                  <p>{post.userInfo?.displayName}</p>
+                  <p
+                    onClick={goToPage}
+                    className="text-lg font-semibold hover:underline hover:cursor-pointer"
+                  >
+                    {post.userInfo?.displayName}
+                  </p>
+                  <p className="text-zinc-500">@{post.userInfo?.username}</p>
                 </div>
               </div>
-              {currentUser?.uid === post.userInfo?.userId ? (
+
+              {/* {currentUser?.uid === fetchedUser.uid ? (
                 <button className="px-6 object-fit border-2 h-10 border-fuchsia-500 rounded-md hover:bg-fuchsia-500/90 transition">
                   Edit
                 </button>
               ) : (
-                <button className="border-2 border-zinc-700 rounded-md text-sm p-2 h-10">
-                  Following
-                </button>
-              )}
+                <FollowButton
+                  user={fetchedUser}
+                  isFollowing={isFollowing}
+                  setIsFollowing={setIsFollowing}
+                />
+              )} */}
             </div>
             <p>{post.caption}</p>
           </div>
-          <div className="p-4">
-            <div className="flex gap-2">
-              <h1>Comments</h1>
-              <span>69</span>
-            </div>
-            <div>
-              <CommentItem />
-              <CommentItem />
-              <CommentItem />
-            </div>
-          </div>
+          <CommentFeed postId={post.postId} />
         </div>
       </div>
     </div>

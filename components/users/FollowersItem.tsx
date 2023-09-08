@@ -1,6 +1,10 @@
-import useCurrentUser from "@/hooks/useCurrentUser";
+import React, { useEffect, useState } from "react";
 import { UserProps } from "@/types";
-import { db } from "@/utils/firebase";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import FollowButton from "../FollowButton";
+import useCurrentUser from "@/hooks/useCurrentUser";
 import {
   collection,
   deleteDoc,
@@ -9,20 +13,15 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { db } from "@/utils/firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-interface FollowButtonProps {
+interface FollowersItemProps {
   user: UserProps;
-  isFollowing: boolean;
-  setIsFollowing: (value: boolean) => void;
 }
 
-const FollowButton = ({
-  user,
-  isFollowing,
-  setIsFollowing,
-}: FollowButtonProps) => {
+const FollowersItem = ({ user }: FollowersItemProps) => {
+  const [isFollowing, setIsFollowing] = useState(false);
   const [currentUsername, setCurrentUsername] = useState("");
 
   const { currentUser } = useCurrentUser();
@@ -86,11 +85,38 @@ const FollowButton = ({
   useEffect(() => {
     getCurrentUsername();
     handleFollowingCheck();
-  }, [user.uid]);
+  }, [user]);
+
   return (
-    <button
-      onClick={handleFollow}
-      className={`py-1 px-6 object-fit border-2  rounded-md  transition 
+    <Link
+      href={user.username}
+      className="flex flex-row gap-4 items-center justify-between p-2 my-2 hover:cursor-pointer"
+    >
+      <div className="flex gap-4 items-center justify-start">
+        <Image
+          src={user.photoURL}
+          alt={user.displayName}
+          height={45}
+          width={45}
+          className="object-fit rounded-full"
+        />
+        <div>
+          <p className="text-xl font-semibold hover:underline">
+            {user.displayName}
+          </p>
+          <p className="text-md text-zinc-600">@{user.username}</p>
+        </div>
+      </div>
+      {/* <FollowButton
+        user={user}
+        isFollowing={isFollowing}
+        setIsFollowing={setIsFollowing}
+      /> */}
+
+      {/* 
+      <button
+        onClick={handleFollow}
+        className={`py-1 px-6 object-fit border-2  rounded-md  transition 
         ${
           isFollowing
             ? "bg-fuchsia-500 border-fuchsia-500 hover:bg-transparent hover:border-red-500"
@@ -98,10 +124,11 @@ const FollowButton = ({
         }
         ${currentUser?.uid === user.uid ? "hidden" : "block"}
       `}
-    >
-      {isFollowing ? "Unfollow" : "Follow"}
-    </button>
+      >
+        {isFollowing ? "Follow" : "Unfollow"}
+      </button> */}
+    </Link>
   );
 };
 
-export default FollowButton;
+export default FollowersItem;

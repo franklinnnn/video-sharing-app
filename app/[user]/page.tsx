@@ -2,33 +2,55 @@
 import PostFeed from "@/components/PostFeed";
 import Followers from "@/components/users/Followers";
 import UserBio from "@/components/users/UserBio";
+import useCurrentUser from "@/hooks/useCurrentUser";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const UserProfile = () => {
   const params = useParams();
   const username = params.user;
+  const { currentUser } = useCurrentUser();
   const [fetchedUser, setFetchedUser] = useState({} as any);
   const [activeTab, setActiveTab] = useState("Videos");
+  const [isFollowing, setIsFollowing] = useState(false);
 
   const getUser = async () => {
     const q = query(collection(db, "users"), where("username", "==", username));
     const usersSnapshot = await getDocs(q);
     usersSnapshot.forEach((doc) => {
-      // console.log(doc.id, "=>", doc.data());
       setFetchedUser(doc.data());
+    });
+  };
+
+  const q = query(collection(db, `users/${currentUser?.uid}/following`));
+  const [following] = useCollectionData(q);
+
+  const handleFollowingCheck = () => {
+    following?.map((followingUser) => {
+      if (followingUser.uid === fetchedUser.uid) {
+        setIsFollowing(true);
+      } else {
+        setIsFollowing(false);
+      }
     });
   };
 
   useEffect(() => {
     getUser();
-  }, []);
+    handleFollowingCheck();
+  }, [fetchedUser]);
 
   return (
     <div className="h-full w-full p-2">
-      <UserBio user={fetchedUser} setActiveTab={setActiveTab} />
+      <UserBio
+        user={fetchedUser}
+        setActiveTab={setActiveTab}
+        isFollowing={isFollowing}
+        setIsFollowing={setIsFollowing}
+      />
 
       <div className="flex flex-row items-center my-4  ">
         <button

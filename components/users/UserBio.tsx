@@ -4,7 +4,7 @@ import { Dialog } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import EditModal from "../EditModal";
+import EditModal from "../Modals/EditModal";
 import { collection, query } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import FollowButton from "../FollowButton";
@@ -13,9 +13,16 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 interface UserBioProps {
   user: UserProps;
   setActiveTab: (value: string) => void;
+  isFollowing: boolean;
+  setIsFollowing: (value: boolean) => void;
 }
 
-const UserBio = ({ user, setActiveTab }: UserBioProps) => {
+const UserBio = ({
+  user,
+  setActiveTab,
+  isFollowing,
+  setIsFollowing,
+}: UserBioProps) => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
   const { currentUser } = useCurrentUser();
@@ -44,10 +51,11 @@ const UserBio = ({ user, setActiveTab }: UserBioProps) => {
               Edit
             </button>
           ) : (
-            // <button className="py-1 px-6 object-fit border-2 bg-fuchsia-500 border-fuchsia-500 rounded-md hover:bg-fuchsia-500/90 transition">
-            //   Follow
-            // </button>
-            <FollowButton user={user} />
+            <FollowButton
+              user={user}
+              isFollowing={isFollowing}
+              setIsFollowing={setIsFollowing}
+            />
           )}
         </div>
       </div>
