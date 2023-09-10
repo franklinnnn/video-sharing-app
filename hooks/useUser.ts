@@ -1,17 +1,18 @@
+"use client";
 import { db } from "@/utils/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { useState } from "react";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
-const useUser = async (userId: string) => {
-  try {
-    if (!userId || typeof userId !== "string") {
-      throw new Error("Invalid ID");
-    }
-    await getDoc(doc(db, "users", userId)).then((doc) => {
-      return doc.data();
-    });
-  } catch (error) {
-    console.log(error);
-  }
+export const useUser = async (userId: string) => {
+  const usersRef = collection(db, "users");
+  const q = query(usersRef);
+  const data = await getDocs(q);
 };
-
-export default useUser;

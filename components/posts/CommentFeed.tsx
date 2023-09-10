@@ -22,7 +22,7 @@ const CommentFeed = ({ postId }: CommentFeedProps) => {
         <div className="flex gap-2">
           <h1>Comments</h1>
           <span>
-            {comments && comments?.length < 1 ? "" : `(${comments?.length})`}
+            {comments && comments?.length < 1 ? "(0)" : `(${comments?.length})`}
           </span>
         </div>
         <div>

@@ -1,24 +1,48 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BsThreeDotsVertical, BsFillShareFill } from "react-icons/bs";
 import { AiFillHeart, AiFillDelete } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
 import { Menu } from "@headlessui/react";
 import DeletePostModal from "./Modals/DeletePostModal";
 import { PostItemProps } from "@/types";
-import useCurrentUser from "@/hooks/useCurrentUser";
 import { useRouter } from "next/navigation";
+import { auth, db } from "@/utils/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import LikePostButton from "./LikePostButton";
+import { collection, query } from "firebase/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useLike } from "@/hooks/useLike";
 
 const PostItem = ({ post }: PostItemProps) => {
-  const currentUser = useCurrentUser();
+  // const currentUser = useCurrentUser();
+  const [currentUser] = useAuthState(auth);
   const router = useRouter();
   const [openDeletePostModal, setOpenDeletePostModal] = useState(false);
+  const [likedPost, setLikedPost] = useState(false);
 
   const goToPost = useCallback(() => {
     router.push(`/${post.userInfo.username}/videos/${post.postId}`);
   }, [router, post.postId, post.userInfo.username]);
+
+  const likedQuery = query(collection(db, `posts/${post.postId}/likes`));
+  const [likes] = useCollectionData(likedQuery);
+
+  const handleLikedCheck = () => {
+    likes?.map((like) => {
+      if (like.uid === currentUser?.uid) {
+        setLikedPost(true);
+      } else {
+        setLikedPost(false);
+      }
+    });
+  };
+
+  useEffect(() => {
+    handleLikedCheck();
+  });
 
   return (
     <div className="relative w-fit pb-6 my-2 border-b-2 border-zinc-700">
@@ -50,9 +74,11 @@ const PostItem = ({ post }: PostItemProps) => {
 
       <div className="relative flex justify-between  items-center py-2">
         <div className="flex flex-row gap-2">
-          <button className="flex items-center justify-center w-10 h-10 rounded-full p-2 bg-zinc-700 hover:bg-zinc-700/60 transition">
-            <AiFillHeart size={24} />
-          </button>
+          <LikePostButton
+            postId={post.postId}
+            likedPost={likedPost}
+            setLikedPost={setLikedPost}
+          />
           <button
             onClick={goToPost}
             className="flex items-center justify-center w-10 h-10 rounded-full p-2 bg-zinc-700 hover:bg-zinc-700/60 transition"
@@ -84,9 +110,7 @@ const PostItem = ({ post }: PostItemProps) => {
                       Delete
                     </button>
                   </Menu.Item>
-                ) : (
-                  <></>
-                )}
+                ) : null}
               </div>
             </Menu.Items>
           </div>

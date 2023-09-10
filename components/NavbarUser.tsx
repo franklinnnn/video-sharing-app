@@ -1,16 +1,16 @@
 "use client";
-import useCurrentUser from "@/hooks/useCurrentUser";
 import { auth } from "@/utils/firebase";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import LoginModal from "./Modals/LoginModal";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useAuth } from "@/hooks/useAuth";
+import { useUser } from "@/hooks/useUser";
 
 const NavbarUser = () => {
   const { user, loading, error } = useAuth();
+
   const router = useRouter();
 
   const [openLogin, setOpenLogin] = useState(false);
@@ -43,7 +43,7 @@ const NavbarUser = () => {
         </button>
 
         {user ? (
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-4 w-14">
             <Image
               src={user?.photoURL as string}
               width={50}

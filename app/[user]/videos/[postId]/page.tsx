@@ -1,4 +1,5 @@
 "use client";
+import LikePostButton from "@/components/LikePostButton";
 import CommentFeed from "@/components/posts/CommentFeed";
 import { db } from "@/utils/firebase";
 import {
@@ -12,6 +13,9 @@ import {
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { AiFillHeart } from "react-icons/ai";
+import { FaComment } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
 
 const PostView = () => {
@@ -41,6 +45,12 @@ const PostView = () => {
       setFetchedUser(doc.data());
     });
   };
+
+  const likesQuery = query(collection(db, `posts/${postId}/likes`));
+  const [likes] = useCollectionData(likesQuery);
+
+  const commentsQuery = query(collection(db, `posts/${postId}/comments`));
+  const [comments] = useCollectionData(commentsQuery);
 
   useEffect(() => {
     getPost(postId as string);
@@ -99,20 +109,24 @@ const PostView = () => {
                   <p className="text-zinc-500">@{post.userInfo?.username}</p>
                 </div>
               </div>
-
-              {/* {currentUser?.uid === fetchedUser.uid ? (
-                <button className="px-6 object-fit border-2 h-10 border-fuchsia-500 rounded-md hover:bg-fuchsia-500/90 transition">
-                  Edit
-                </button>
-              ) : (
-                <FollowButton
-                  user={fetchedUser}
-                  isFollowing={isFollowing}
-                  setIsFollowing={setIsFollowing}
-                />
-              )} */}
             </div>
             <p>{post.caption}</p>
+
+            <div className="flex gap-4 my-4 text-sm font-semibold">
+              <span className="flex items-center gap-2">
+                <button className="flex items-center justify-center w-6 h-6 rounded-full p-1 bg-zinc-700 hover:bg-zinc-700/60 transition">
+                  <AiFillHeart />
+                </button>
+                {likes?.length}
+              </span>
+
+              <span className="flex items-center gap-2">
+                <button className="flex items-center justify-center w-6 h-6 rounded-full p-1 bg-zinc-700 hover:bg-zinc-700/60 transition">
+                  <FaComment size={14} />
+                </button>
+                {comments?.length}
+              </span>
+            </div>
           </div>
           <CommentFeed postId={post.postId} />
         </div>

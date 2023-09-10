@@ -7,7 +7,7 @@ import { db } from "@/utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useCollectionData, useDocument } from "react-firebase-hooks/firestore";
 
 const UserProfile = () => {
   const params = useParams();
@@ -25,8 +25,10 @@ const UserProfile = () => {
     });
   };
 
-  const q = query(collection(db, `users/${currentUser?.uid}/following`));
-  const [following] = useCollectionData(q);
+  const followingQuery = query(
+    collection(db, `users/${currentUser?.uid}/following`)
+  );
+  const [following] = useCollectionData(followingQuery);
 
   const handleFollowingCheck = () => {
     following?.map((followingUser) => {
