@@ -1,11 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Providers } from "./providers";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/utils/firebase";
 import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata: Metadata = {
@@ -20,9 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-zinc-900">
+      <body className="bg-white text-zinc-800">
         <AuthProvider>
-          <div className="container grid grid-cols-4 justify-center mt-16 mx-auto max-w-2xl">
+          <div className="container grid grid-cols-4 justify-center mt-16 mx-auto max-w-3xl">
             <div className="col-span-1 pr-4 justify-center items-start ">
               <Sidebar />
             </div>

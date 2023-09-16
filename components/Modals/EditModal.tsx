@@ -97,9 +97,9 @@ const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
   }, []);
 
   return (
-    <div className="w-screen md:w-[50rem] bg-zinc-800 px-4 py-2 rounded-md">
+    <div className="w-screen md:w-[50rem] bg-white px-4 py-2 rounded-md">
       <div className="flex flex-col gap-4">
-        <h1 className="text-2xl font-semibold py-4 border-b border-zinc-700">
+        <h1 className="text-2xl font-semibold py-4 border-b border-gray-2">
           Edit profile
         </h1>
         <div className="flex items-center justify-center py-6 ">
@@ -110,7 +110,7 @@ const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
             <div className="absolute top-0 left-0 bottom-0 right-0 m-auto w-full h-full flex items-center justify-center p-6 rounded-full">
               <MdOutlineAddAPhoto
                 size={60}
-                className="bg-zinc-700/50 hover:bg-zinc-700/30 p-4 rounded-full cursor-pointer transition"
+                className="bg-gray-2/50 hover:bg-gray-1/50 p-4 rounded-full cursor-pointer transition"
               />
             </div>
             {files.length < 1 ? (
@@ -140,7 +140,7 @@ const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
             )}
           </div>
         </div>
-        <div className="p-4 border-2 border-zinc-700 rounded-md focus-within:border-fuchsia-500 transition">
+        <div className="p-4 border-2 border-gray-2 rounded-md focus-within:border-primary transition">
           <input
             type="text"
             placeholder={name}
@@ -149,7 +149,7 @@ const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
             className="text-xl w-full bg-inherit outline-none"
           />
         </div>
-        <div className="flex flex-row items-center p-4 border-2 border-zinc-700 rounded-md focus-within:border-fuchsia-500 transition">
+        <div className="flex flex-row items-center p-4 border-2 border-gray-2 rounded-md focus-within:border-primary transition">
           <span className="text-xl text-zinc-600">@</span>
           <input
             type="text"
@@ -159,7 +159,7 @@ const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
             className="text-xl w-full bg-inherit outline-none"
           />
         </div>
-        <div className="p-4 border-2 border-zinc-700 rounded-md focus-within:border-fuchsia-500 transition">
+        <div className="p-4 border-2 border-gray-2 rounded-md focus-within:border-primary transition">
           <textarea
             name=""
             id=""
@@ -171,7 +171,7 @@ const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
             className="text-xl w-full bg-inherit outline-none resize-none"
           ></textarea>
         </div>
-        <div className="p-4 border-2 border-zinc-700 rounded-md focus-within:border-fuchsia-500 transition">
+        <div className="p-4 border-2 border-gray-2 rounded-md focus-within:border-primary transition">
           <input
             type="url"
             placeholder={website ? website : ""}
@@ -181,15 +181,15 @@ const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
           />
         </div>
       </div>
-      <div className="flex justify-center items-center gap-4 w-full my-6 pt-6 border-t-2 border-zinc-700">
+      <div className="flex justify-center items-center gap-4 w-full my-6 pt-6 border-t-2 border-gray-2">
         <button
-          className="border-2 border-zinc-700 w-40 hover:border-zinc-700/70 py-2 rounded-md"
+          className="border-2 border-gray-2 w-40 hover:border-primary py-2 rounded-md"
           onClick={closeModal}
         >
           Cancel
         </button>
         <button
-          className="border-2 border-zinc-700 w-40 hover:border-zinc-700/70 py-2 rounded-md"
+          className="border-2 border-gray-2 w-40 hover:border-primary py-2 rounded-md"
           onClick={handleEditProfile}
           // disabled={!caption}
         >

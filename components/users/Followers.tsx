@@ -2,14 +2,11 @@ import { db } from "@/utils/firebase";
 import { collection, query } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import FollowersItem from "./FollowersItem";
-
-interface FollowersProps {
-  userId: string;
-}
+import { FollowersProps } from "@/types";
 
 const Followers = ({ userId }: FollowersProps) => {
-  const q = query(collection(db, `users/${userId}/followers`));
-  const [followers] = useCollectionData(q);
+  const followersQuery = query(collection(db, `users/${userId}/followers`));
+  const [followers] = useCollectionData(followersQuery);
 
   return (
     <div>

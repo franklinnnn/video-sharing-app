@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { UserProps } from "@/types";
+import { useEffect, useState } from "react";
+import { FollowersItemProps } from "@/types";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import FollowButton from "../FollowButton";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import {
   collection,
@@ -15,10 +13,6 @@ import {
 } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-
-interface FollowersItemProps {
-  user: UserProps;
-}
 
 const FollowersItem = ({ user }: FollowersItemProps) => {
   const [isFollowing, setIsFollowing] = useState(false);

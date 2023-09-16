@@ -18,7 +18,6 @@ const LoginModal = ({ isOpen, closeModal, href }: LoginModalProps) => {
   const router = useRouter();
 
   const [uid, setUid] = useState("");
-  const [openUsername, setOpenUsername] = useState(false);
   const onSubmit = async () => {
     try {
       const { user } = await signInWithPopup(auth, provider);
@@ -70,15 +69,15 @@ const LoginModal = ({ isOpen, closeModal, href }: LoginModalProps) => {
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel>
-            <div className="relative flex justify-center items-center bg-zinc-800 w-60 h-60 rounded-md">
+            <div className="relative flex justify-center items-center bg-gray-1  w-60 h-60 rounded-md">
               <AiFillCloseCircle
                 size={30}
-                className="absolute right-2 top-2 hover:cursor-pointer"
+                className="absolute right-2 top-2 hover:cursor-pointer text-primary-dark"
                 onClick={closeModal}
               />
               <button
                 onClick={onSubmit}
-                className="flex justify-center items-center gap-2 bg-black/60 p-4 rounded-md z-10"
+                className="flex justify-center items-center gap-2 bg-gray-2 p-4 rounded-md z-10"
               >
                 <FcGoogle />
                 Sign in with Google
@@ -87,11 +86,6 @@ const LoginModal = ({ isOpen, closeModal, href }: LoginModalProps) => {
           </Dialog.Panel>
         </div>
       </Dialog>
-      {/* <UsernameModal
-        isOpen={openUsername}
-        closeModal={() => setOpenUsername(false)}
-        uid={uid}
-      /> */}
     </>
   );
 };

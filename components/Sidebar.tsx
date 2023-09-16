@@ -1,14 +1,14 @@
 "use client";
 import { Dialog } from "@headlessui/react";
 import { useEffect, useState } from "react";
-import { BsHouseFill } from "react-icons/bs";
+import { BsHouseFill, BsBellFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import { MdExplore } from "react-icons/md";
-import Login from "./Login";
 import SidebarItem from "./SidebarItem";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/utils/firebase";
+import LoginModal from "./Modals/LoginModal";
 
 const Sidebar = () => {
   const { currentUser } = useCurrentUser();
@@ -26,6 +26,11 @@ const Sidebar = () => {
       label: "Home",
       icon: BsHouseFill,
       href: "/",
+    },
+    {
+      label: "Notifications",
+      icon: BsBellFill,
+      href: "/notifications",
     },
     {
       label: "Explore",
@@ -71,7 +76,7 @@ const Sidebar = () => {
 
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel>
-            <Login
+            <LoginModal
               isOpen={openLogin}
               closeModal={() => setOpenLogin(false)}
               href={"/users"}

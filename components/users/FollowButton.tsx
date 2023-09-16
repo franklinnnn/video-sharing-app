@@ -1,5 +1,5 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { UserProps } from "@/types";
+import { FollowButtonProps, UserProps } from "@/types";
 import { db } from "@/utils/firebase";
 import {
   collection,
@@ -7,25 +7,21 @@ import {
   doc,
   getDoc,
   query,
+  serverTimestamp,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-
-interface FollowButtonProps {
-  user: UserProps;
-  isFollowing: boolean;
-  setIsFollowing: (value: boolean) => void;
-}
 
 const FollowButton = ({
   user,
   isFollowing,
   setIsFollowing,
 }: FollowButtonProps) => {
-  const [currentUsername, setCurrentUsername] = useState("");
-
   const { currentUser } = useCurrentUser();
+  const [currentUsername, setCurrentUsername] = useState("");
+  const [previouslyFollowed, setPreviouslyFollowed] = useState(false);
 
   const getCurrentUsername = async () => {
     if (currentUser) {
@@ -77,6 +73,17 @@ const FollowButton = ({
           username: currentUsername,
           uid: currentUser.uid,
         });
+        await setDoc(doc(followedUserRef, "notifications", user.uid), {
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+          uid: currentUser.uid,
+          type: "follow",
+          timestamp: serverTimestamp(),
+        });
+        await updateDoc(doc(db, "users", user.uid), {
+          hasNotification: true,
+        });
+
         console.log("followed user");
         setIsFollowing(true);
       }

@@ -1,13 +1,14 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { BsHeart, BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import LikeCommentButton from "./LikeCommentButton";
+import { CommentItemProps } from "@/types";
+import { AiFillDelete } from "react-icons/ai";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "@/utils/firebase";
 
-interface CommentItemProps {
-  comment: Record<string, any>;
-}
-
-const CommentItem = ({ comment }: CommentItemProps) => {
+const CommentItem = ({ postId, comment }: CommentItemProps) => {
   const { currentUser } = useCurrentUser();
   const router = useRouter();
 
@@ -44,6 +45,12 @@ const CommentItem = ({ comment }: CommentItemProps) => {
     return output;
   };
 
+  const handleDeleteComment = async () => {
+    const commentRef = doc(db, "posts", postId, "comments", comment.commentId);
+    await deleteDoc(commentRef);
+    alert("comment deleted");
+  };
+
   return (
     <div className="flex items-start gap-2 my-6">
       <Image
@@ -68,12 +75,19 @@ const CommentItem = ({ comment }: CommentItemProps) => {
         <div className="flex gap-6 items-center justify-between w-full mt-2">
           <div className="flex gap-4">
             <div className="flex gap-2 items-center">
-              <BsHeart /> <span>10</span>
+              <LikeCommentButton
+                postId={postId}
+                commentId={comment.commentId}
+              />
             </div>
             <div>Reply</div>
           </div>
           {currentUser && currentUser.uid === comment.userInfo.userId && (
-            <BsThreeDotsVertical />
+            <AiFillDelete
+              size={12}
+              className="text-zinc-700 hover:text-red-500 hover:cursor-pointer"
+              onClick={handleDeleteComment}
+            />
           )}
         </div>
       </div>

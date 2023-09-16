@@ -4,11 +4,7 @@ import { PiFilmReelFill } from "react-icons/pi";
 import { MdSportsBasketball } from "react-icons/md";
 import { BsHandbagFill } from "react-icons/bs";
 import { FaMusic } from "react-icons/fa";
-
-interface CategoriesProps {
-  activeCategory: string;
-  setActiveCategory: Dispatch<SetStateAction<string>>;
-}
+import { CategoriesProps } from "@/types";
 
 const Categories = ({ activeCategory, setActiveCategory }: CategoriesProps) => {
   const categories = [
@@ -43,7 +39,7 @@ const Categories = ({ activeCategory, setActiveCategory }: CategoriesProps) => {
       {categories.map((item) => (
         <button
           key={item.id}
-          className="flex justify-center items-center gap-4 text-md bg-zinc-700/60 hover:bg-zinc-700 rounded-md transition py-1 px-4 "
+          className="flex justify-center items-center gap-4 text-md text-primary bg-gray-1/50 hover:bg-gray-1 rounded-md transition py-1 px-4 "
           onClick={() => setActiveCategory(item.label)}
         >
           {item.icon} {item.label}

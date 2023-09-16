@@ -1,12 +1,12 @@
 "use client";
-import { auth } from "@/utils/firebase";
+import { auth, db } from "@/utils/firebase";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import LoginModal from "./Modals/LoginModal";
 import { useAuth } from "@/hooks/useAuth";
-import { useUser } from "@/hooks/useUser";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 const NavbarUser = () => {
   const { user, loading, error } = useAuth();
@@ -37,7 +37,7 @@ const NavbarUser = () => {
       <div className="flex justify-end gap-2 w-full">
         <button
           onClick={handleUpload}
-          className="flex justify-center items-center gap-2 border-2 border-fuchsia-500  py-2 rounded-lg w-36 px-2"
+          className="flex justify-center items-center gap-2 border-2 border-primary text-primary-dark py-2 rounded-lg w-36 px-2 font-semibold hover:bg-primary hover:text-white transition"
         >
           <AiOutlinePlus size={20} /> Upload
         </button>
@@ -56,7 +56,7 @@ const NavbarUser = () => {
         ) : (
           <button
             onClick={() => setOpenLogin(true)}
-            className="bg-fuchsia-500 py-2 rounded-lg w-36 px-2"
+            className="bg-primary text-white py-2 rounded-lg w-36 px-2"
           >
             Login
           </button>

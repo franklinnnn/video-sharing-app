@@ -1,18 +1,25 @@
 "use client";
-import { db } from "@/utils/firebase";
+import { auth, db } from "@/utils/firebase";
 import {
   collection,
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
   query,
   where,
 } from "firebase/firestore";
 import { useState } from "react";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollectionData, useDocument } from "react-firebase-hooks/firestore";
 
 export const useUser = async (userId: string) => {
-  const usersRef = collection(db, "users");
-  const q = query(usersRef);
-  const data = await getDocs(q);
+  const userQuery = query(collection(db, "users"), where("uid", "==", userId));
+  onSnapshot(userQuery, (response) => {
+    console.log(
+      response.docs.map((doc) => {
+        return { ...doc.data(), id: doc.id };
+      })
+    );
+  });
 };

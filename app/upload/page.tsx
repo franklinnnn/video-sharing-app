@@ -92,6 +92,7 @@ const Upload = () => {
           });
         })
       );
+      alert("Your video will be available once it has finished uploading");
     } catch (error) {
       console.log(error);
     } finally {
@@ -102,7 +103,7 @@ const Upload = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-1 lg:gap-4 p-6 bg-zinc-900">
+    <div className="flex flex-col justify-center items-center gap-1 lg:gap-4 p-6 bg-gray-1/50">
       <h1 className="text-2xl font-semibold w-full text-left">Upload video</h1>
 
       <section className="w-full my-2">
@@ -119,7 +120,7 @@ const Upload = () => {
                 <h1>Uploading...</h1>
               </div>
             ) : (
-              <div className="flex flex-col justify-center items-center gap-6 p-6 h-72 min-h-72 bg-zinc-800 rounded-md border-2 border-dashed border-zinc-700">
+              <div className="flex flex-col justify-center items-center gap-6 p-6 h-72 min-h-72 bg-white rounded-md border-2 border-dashed border-gray-2">
                 <input {...getInputProps()} />
                 <div className="flex flex-col justify-center items-center">
                   <BsCloudUploadFill size={50} />
@@ -130,7 +131,7 @@ const Upload = () => {
                   <p>MP4 or WebM</p>
                   <p>Less than 500MB</p>
                 </div>
-                <button className="bg-fuchsia-500 w-40 p-2 rounded-md">
+                <button className="bg-primary text-white w-40 p-2 rounded-md">
                   Select file
                 </button>
               </div>
@@ -152,7 +153,7 @@ const Upload = () => {
               ))}
             </div>
             <div {...getRootProps({ className: "dropzone" })}>
-              <button className="bg-fuchsia-500 w-40 p-2 rounded-md">
+              <button className="bg-primary text-white w-40 p-2 rounded-md">
                 Change file
               </button>
             </div>
@@ -165,19 +166,19 @@ const Upload = () => {
         placeholder="Write a caption..."
         value={caption}
         required
-        className="w-full fontsize-lg bg-zinc-900 border-2 border-zinc-800 p-2 focus:border-zinc-700 focus:outline-none rounded-md"
+        className="w-full fontsize-lg bg-white border-2 border-gray-2 p-2 focus:border-primary focus:outline-none rounded-md"
         onChange={(e) => setCaption(e.target.value)}
       />
 
       <div className="flex justify-center items-center gap-4 w-full my-4">
         <button
-          className="border-2 border-zinc-700 w-40 hover:border-zinc-700/70 py-2 rounded-md"
+          className="border-2 w-40 border-gray-2 hover:border-gray-1 py-2 rounded-md"
           onClick={() => setOpenConfirm(true)}
         >
           Cancel
         </button>
         <button
-          className="border-2 border-zinc-700 w-40 hover:border-zinc-700/70 py-2 rounded-md"
+          className="border-2 w-40 border-gray-2 hover:border-gray-1 py-2 rounded-md"
           onClick={handleUpload}
           disabled={!caption}
         >

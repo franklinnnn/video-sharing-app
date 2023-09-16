@@ -3,12 +3,12 @@ import { BsSearch } from "react-icons/bs";
 
 const Search = () => {
   return (
-    <div className="col-span-3 flex justify-center items-center w-full h-12  border-2 border-zinc-800 rounded-md ">
+    <div className="group col-span-3 flex justify-center items-center w-full h-12  border-2 border-gray-1 rounded-md group-hover:border-primary">
       <input
         placeholder="Search..."
-        className="w-full h-full bg-zinc-900 py-1 px-2 rounded-l-md focus:outline-none"
+        className="w-full h-full py-1 px-2 rounded-l-md focus:outline-none"
       />
-      <button className="flex justify-center items-center h-full px-4 text-slate-500 hover:text-slate-200 bg-zinc-800 transition">
+      <button className="flex justify-center items-center h-full px-4 text-gray-2 hover:text-zinc-500 transition">
         <BsSearch size={20} />
       </button>
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import LikePostButton from "@/components/LikePostButton";
+import LikePostButton from "@/components/posts/LikePostButton";
 import CommentFeed from "@/components/posts/CommentFeed";
 import { db } from "@/utils/firebase";
 import {
@@ -13,10 +13,8 @@ import {
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-import { AiFillHeart } from "react-icons/ai";
-import { FaComment } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
+import CommentButton from "@/components/posts/CommentButton";
 
 const PostView = () => {
   const params = useParams();
@@ -46,12 +44,6 @@ const PostView = () => {
     });
   };
 
-  const likesQuery = query(collection(db, `posts/${postId}/likes`));
-  const [likes] = useCollectionData(likesQuery);
-
-  const commentsQuery = query(collection(db, `posts/${postId}/comments`));
-  const [comments] = useCollectionData(commentsQuery);
-
   useEffect(() => {
     getPost(postId as string);
     getUser();
@@ -74,7 +66,7 @@ const PostView = () => {
       <div className="relative flex flex-row items-center justify-center h-full w-full">
         <div
           onClick={() => router.back()}
-          className="absolute top-20 left-0 bg-zinc-800/40 rounded-full m-2 p-2 z-10 hover:bg-zinc-800/90 hover:cursor-pointer transition"
+          className="absolute top-20 left-0 bg-gray-1/50 rounded-full m-2 p-2 z-10 hover:bg-gray-2/50 hover:cursor-pointer transition"
         >
           <MdClose size={24} />
         </div>
@@ -87,7 +79,7 @@ const PostView = () => {
 
         {/* USER AND COMMENTS SECTION */}
         <div className="relative top-20 h-full w-[35%] min-w-72 ">
-          <div className="flex flex-col py-2 px-4 m-2 rounded-md bg-zinc-500/20">
+          <div className="flex flex-col py-2 px-4 m-2 border-b-2 border-b-gray-1">
             <div className="flex justify-between mb-4">
               <div className="flex gap-2 items-center">
                 <div className="min-w-20 rounded-full overflow-hidden">
@@ -113,19 +105,8 @@ const PostView = () => {
             <p>{post.caption}</p>
 
             <div className="flex gap-4 my-4 text-sm font-semibold">
-              <span className="flex items-center gap-2">
-                <button className="flex items-center justify-center w-6 h-6 rounded-full p-1 bg-zinc-700 hover:bg-zinc-700/60 transition">
-                  <AiFillHeart />
-                </button>
-                {likes?.length}
-              </span>
-
-              <span className="flex items-center gap-2">
-                <button className="flex items-center justify-center w-6 h-6 rounded-full p-1 bg-zinc-700 hover:bg-zinc-700/60 transition">
-                  <FaComment size={14} />
-                </button>
-                {comments?.length}
-              </span>
+              <LikePostButton postId={post.postId} />
+              <CommentButton postId={post.postId} onClick={() => {}} />
             </div>
           </div>
           <CommentFeed postId={post.postId} />

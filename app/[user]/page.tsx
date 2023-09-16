@@ -1,10 +1,11 @@
 "use client";
-import PostFeed from "@/components/PostFeed";
+import PostFeed from "@/components/posts/PostFeed";
 import Followers from "@/components/users/Followers";
 import UserBio from "@/components/users/UserBio";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import { useUser } from "@/hooks/useUser";
 import { db } from "@/utils/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDocs, query, where } from "firebase/firestore";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useCollectionData, useDocument } from "react-firebase-hooks/firestore";
@@ -56,7 +57,7 @@ const UserProfile = () => {
 
       <div className="flex flex-row items-center my-4  ">
         <button
-          className={`px-6 border-b-2 hover:bg-zinc-600 transition ${
+          className={`px-6 border-b-2 hover:bg-gray-1 rounded-t-md transition ${
             activeTab === "Videos" ? "border-b-zinc-600" : "border-transparent"
           }`}
           onClick={() => setActiveTab("Videos")}
@@ -64,7 +65,7 @@ const UserProfile = () => {
           Videos
         </button>
         <button
-          className={`px-6 border-b-2 hover:bg-zinc-600 transition ${
+          className={`px-6 border-b-2 hover:bg-gray-1 rounded-t-md transition ${
             activeTab === "Followers"
               ? "border-b-zinc-600"
               : "border-transparent"
@@ -74,7 +75,7 @@ const UserProfile = () => {
           Followers
         </button>
         <button
-          className={`px-6 border-b-2 hover:bg-zinc-600 transition ${
+          className={`px-6 border-b-2 hover:bg-gray-1 rounded-t-md transition ${
             activeTab === "Likes" ? "border-b-zinc-600" : "border-transparent"
           }`}
           onClick={() => setActiveTab("Likes")}

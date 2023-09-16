@@ -1,6 +1,6 @@
 "use client";
 
-import PostFeed from "@/components/PostFeed";
+import PostFeed from "@/components/posts/PostFeed";
 
 export default function Home() {
   return (

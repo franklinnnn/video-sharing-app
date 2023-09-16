@@ -1,8 +1,8 @@
+"use client";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { useCurrentUsername } from "@/hooks/useCurrentUsername";
 import { db } from "@/utils/firebase";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 interface CommentFeedProps {
@@ -30,11 +30,13 @@ const CommentInput = ({ postId }: CommentFeedProps) => {
 
   const handlePostComment = async () => {
     try {
+      const commentId = uuid();
       const postRef = doc(db, "posts", postId);
       if (currentUser) {
-        await setDoc(doc(postRef, "comments", uuid()), {
+        await setDoc(doc(postRef, "comments", commentId), {
           comment: comment,
           timestamp: serverTimestamp(),
+          commentId: commentId,
           userInfo: {
             userId: currentUser.uid,
             displayName: currentUser.displayName,
@@ -51,17 +53,18 @@ const CommentInput = ({ postId }: CommentFeedProps) => {
   };
 
   return (
-    <div className="fixed bottom-0 right-0 flex gap-2 justify-around items-center w-[35%] p-4 bg-zinc-900 z-10">
+    <div className="fixed bottom-0 right-0 flex gap-2 justify-around items-center w-[35%] p-4 bg-gray-1 z-10">
       <input
         type="text"
         placeholder="Add comment..."
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        className="text-lg w-full bg-zinc-800 outline-none px-2 py-1"
+        className="text-lg w-full bg-white outline-none px-2 py-1 rounded-md"
       />
       <button
         onClick={handlePostComment}
-        className="border-2 border-zinc-600 rounded-md px-2 py-1"
+        disabled={!comment}
+        className="border-2 border-primary rounded-md px-2 py-1 hover:bg-primary hover:text-white transition"
       >
         Post
       </button>

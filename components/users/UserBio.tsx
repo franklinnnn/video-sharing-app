@@ -1,5 +1,5 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { UserProps } from "@/types";
+import { UserBioProps, UserProps } from "@/types";
 import { Dialog } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,15 +7,8 @@ import { useState } from "react";
 import EditModal from "../Modals/EditModal";
 import { collection, query } from "firebase/firestore";
 import { db } from "@/utils/firebase";
-import FollowButton from "../FollowButton";
+import FollowButton from "./FollowButton";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-
-interface UserBioProps {
-  user: UserProps;
-  setActiveTab: (value: string) => void;
-  isFollowing: boolean;
-  setIsFollowing: (value: boolean) => void;
-}
 
 const UserBio = ({
   user,
@@ -30,7 +23,7 @@ const UserBio = ({
   const [followers] = useCollectionData(q);
 
   return (
-    <div className="p-4 bg-zinc-800 rounded-md">
+    <div className="p-4 rounded-md">
       <div className="flex gap-4 mb-4">
         <Image
           src={user.photoURL || "/images/placeholder.png"}
@@ -41,11 +34,13 @@ const UserBio = ({
         />
 
         <div className="flex flex-col items-start justify-evenly w-full gap-2">
-          <h1 className="text-4xl font-semibold">{user.displayName}</h1>
+          <h1 className="text-4xl font-semibold font-display">
+            {user.displayName}
+          </h1>
           <p className="text-zinc-500">@{user?.username}</p>
           {currentUser?.uid === user.uid ? (
             <button
-              className="py-1 px-6 object-fit border-2  border-fuchsia-500 rounded-md hover:bg-fuchsia-500/90 transition"
+              className="py-1 px-6 object-fit border-2 font-semibold border-primary rounded-md hover:bg-primary hover:text-white transition"
               onClick={() => setOpenEditModal(true)}
             >
               Edit

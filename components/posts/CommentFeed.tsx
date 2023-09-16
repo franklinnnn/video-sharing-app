@@ -27,7 +27,11 @@ const CommentFeed = ({ postId }: CommentFeedProps) => {
         </div>
         <div>
           {comments?.map((comment) => (
-            <CommentItem comment={comment} key={comment.timestamp} />
+            <CommentItem
+              comment={comment}
+              key={comment.timestamp}
+              postId={postId}
+            />
           ))}
         </div>
         <CommentInput postId={postId} />
