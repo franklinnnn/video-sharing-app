@@ -1,18 +1,18 @@
 import { db } from "@/utils/firebase";
-import { collection, orderBy, query } from "firebase/firestore";
+import { collection, orderBy, query, where } from "firebase/firestore";
 import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import CommentItem from "./CommentItem";
 import CommentInput from "./CommentInput";
 
 interface CommentFeedProps {
-  postId: string;
+  post: Record<string, any>;
 }
 
-const CommentFeed = ({ postId }: CommentFeedProps) => {
+const CommentFeed = ({ post }: CommentFeedProps) => {
   const [comments] = useCollectionData(
     query(
-      collection(db, `posts/${postId}/comments`),
+      collection(db, `posts/${post.postId}/comments`),
       orderBy("timestamp", "desc")
     )
   );
@@ -30,11 +30,11 @@ const CommentFeed = ({ postId }: CommentFeedProps) => {
             <CommentItem
               comment={comment}
               key={comment.timestamp}
-              postId={postId}
+              postId={post.postId}
             />
           ))}
         </div>
-        <CommentInput postId={postId} />
+        <CommentInput postId={post.postId} postUserId={post.userInfo?.userId} />
       </div>
     </section>
   );

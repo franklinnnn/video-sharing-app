@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { v4 as uuid } from "uuid";
 
 const FollowButton = ({
   user,
@@ -21,7 +22,6 @@ const FollowButton = ({
 }: FollowButtonProps) => {
   const { currentUser } = useCurrentUser();
   const [currentUsername, setCurrentUsername] = useState("");
-  const [previouslyFollowed, setPreviouslyFollowed] = useState(false);
 
   const getCurrentUsername = async () => {
     if (currentUser) {
@@ -73,19 +73,38 @@ const FollowButton = ({
           username: currentUsername,
           uid: currentUser.uid,
         });
-        await setDoc(doc(followedUserRef, "notifications", user.uid), {
-          displayName: currentUser.displayName,
-          photoURL: currentUser.photoURL,
-          uid: currentUser.uid,
-          type: "follow",
-          timestamp: serverTimestamp(),
-        });
-        await updateDoc(doc(db, "users", user.uid), {
-          hasNotification: true,
-        });
+
+        handleFollowNotification();
 
         console.log("followed user");
         setIsFollowing(true);
+      }
+    }
+  };
+
+  const handleFollowNotification = async () => {
+    const recipientUserRef = doc(db, "users", user.uid);
+
+    if (currentUser) {
+      const notificationId = uuid();
+      const notificationRef = doc(
+        recipientUserRef,
+        "notifications",
+        notificationId
+      );
+      const notificationSnapshot = await getDoc(notificationRef);
+      if (notificationSnapshot.data()?.notificationId === notificationId) {
+        await updateDoc(notificationRef, { isRead: true });
+        console.log("Followed user before, they won't get a notification");
+      } else {
+        await setDoc(doc(recipientUserRef, "notifications", notificationId), {
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+          type: "follow",
+          isRead: false,
+          timestamp: serverTimestamp(),
+        });
+        console.log("notification sent");
       }
     }
   };

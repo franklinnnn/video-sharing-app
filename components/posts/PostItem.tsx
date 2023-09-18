@@ -53,7 +53,7 @@ const PostItem = ({ post }: PostItemProps) => {
 
       <div className="relative flex justify-between  items-center py-2">
         <div className="flex flex-row gap-4">
-          <LikePostButton postId={post.postId} userInfo={post.userInfo} />
+          <LikePostButton postId={post.postId} userId={post.userInfo?.userId} />
           <CommentButton onClick={goToPost} postId={post.postId} />
         </div>
 

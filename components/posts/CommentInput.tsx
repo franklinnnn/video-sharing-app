@@ -1,15 +1,22 @@
 "use client";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { db } from "@/utils/firebase";
-import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 interface CommentFeedProps {
   postId: string;
+  postUserId: string;
 }
 
-const CommentInput = ({ postId }: CommentFeedProps) => {
+const CommentInput = ({ postId, postUserId }: CommentFeedProps) => {
   const [currentUsername, setCurrentUsername] = useState("");
   const [comment, setComment] = useState("");
 
@@ -44,12 +51,48 @@ const CommentInput = ({ postId }: CommentFeedProps) => {
             photoURL: currentUser.photoURL,
           },
         });
+        handleNotification();
       }
     } catch (error) {
       console.log(error);
     }
     setComment("");
     alert(`comment: "${comment}" posted successfully`);
+  };
+
+  const handleNotification = async () => {
+    const recipientUserRef = doc(db, "users", postUserId);
+    if (currentUser) {
+      const notificationId = uuid();
+      const notificationRef = doc(
+        db,
+        "users",
+        postUserId,
+        "notifications",
+        notificationId
+      );
+      const notificationSnapshot = await getDoc(notificationRef);
+      if (notificationSnapshot.data()?.notificationId === notificationId) {
+        console.log(notificationSnapshot.data());
+        await updateDoc(notificationRef, { isRead: true });
+      } else {
+        const postRef = doc(db, "posts", postId);
+        const postSnapshot = await getDoc(postRef);
+
+        await setDoc(doc(recipientUserRef, "notifications", notificationId), {
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+          type: "comment",
+          isRead: false,
+          postId: postId,
+          postData: {
+            caption: postSnapshot.data()?.caption,
+          },
+          comment: comment,
+          timestamp: serverTimestamp(),
+        });
+      }
+    }
   };
 
   return (

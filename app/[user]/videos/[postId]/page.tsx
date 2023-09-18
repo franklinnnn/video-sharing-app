@@ -105,11 +105,11 @@ const PostView = () => {
             <p>{post.caption}</p>
 
             <div className="flex gap-4 my-4 text-sm font-semibold">
-              <LikePostButton postId={post.postId} />
+              <LikePostButton postId={post.postId} userId={fetchedUser.uid} />
               <CommentButton postId={post.postId} onClick={() => {}} />
             </div>
           </div>
-          <CommentFeed postId={post.postId} />
+          <CommentFeed post={post} />
         </div>
       </div>
     </div>

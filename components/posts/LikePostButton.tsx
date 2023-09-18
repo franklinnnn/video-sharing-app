@@ -1,31 +1,28 @@
 "use client";
-
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { db } from "@/utils/firebase";
 import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   query,
+  serverTimestamp,
   setDoc,
-  where,
+  updateDoc,
 } from "firebase/firestore";
 import { AiFillHeart } from "react-icons/ai";
 import LoginModal from "../Modals/LoginModal";
 import { useEffect, useState } from "react";
-import {
-  useCollectionData,
-  useDocument,
-  useDocumentDataOnce,
-} from "react-firebase-hooks/firestore";
-import { useCurrentUsername } from "@/hooks/useCurrentUsername";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { v4 as uuid } from "uuid";
 
 interface LikePostButtonProps {
   postId: string;
-  userInfo: Record<string, any>;
+  userId: string;
 }
 
-const LikePostButton = ({ postId, userInfo }: LikePostButtonProps) => {
+const LikePostButton = ({ postId, userId }: LikePostButtonProps) => {
   const { currentUser } = useCurrentUser();
 
   const [likedPost, setLikedPost] = useState(false);
@@ -45,12 +42,48 @@ const LikePostButton = ({ postId, userInfo }: LikePostButtonProps) => {
           displayName: currentUser.displayName,
           uid: currentUser.uid,
         });
+        handleNotification();
 
         console.log("liked post");
         setLikedPost(true);
       }
     } else {
       setOpenLogin(true);
+    }
+  };
+
+  const handleNotification = async () => {
+    const recipientUserRef = doc(db, "users", userId);
+    if (currentUser) {
+      const notificationId = uuid();
+      const notificationRef = doc(
+        recipientUserRef,
+        "notifications",
+        notificationId
+      );
+      const notificationSnapshot = await getDoc(notificationRef);
+      if (notificationSnapshot.data()) {
+        await updateDoc(notificationRef, { isRead: true });
+        console.log(
+          "You liked this post before, notification will not be sent to recipient user"
+        );
+      } else {
+        const postRef = doc(db, "posts", postId);
+        const postSnapshot = await getDoc(postRef);
+
+        await setDoc(doc(recipientUserRef, "notifications", notificationId), {
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+          type: "like",
+          isRead: false,
+          postId: postId,
+          postData: {
+            caption: postSnapshot.data()?.caption,
+          },
+          timestamp: serverTimestamp(),
+        });
+        console.log("notification sent successfully");
+      }
     }
   };
 
