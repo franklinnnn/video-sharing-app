@@ -71,8 +71,12 @@ const LikePostButton = ({ postId, userId }: LikePostButtonProps) => {
         const postRef = doc(db, "posts", postId);
         const postSnapshot = await getDoc(postRef);
 
+        const currentUserRef = doc(db, "users", currentUser?.uid);
+        const currentUserSnapshot = await getDoc(currentUserRef);
+
         await setDoc(doc(recipientUserRef, "notifications", notificationId), {
           displayName: currentUser.displayName,
+          username: currentUserSnapshot.data()?.username,
           photoURL: currentUser.photoURL,
           type: "like",
           isRead: false,
@@ -82,6 +86,8 @@ const LikePostButton = ({ postId, userId }: LikePostButtonProps) => {
           },
           timestamp: serverTimestamp(),
         });
+
+        await updateDoc(recipientUserRef, { hasNotification: true });
         console.log("notification sent successfully");
       }
     }

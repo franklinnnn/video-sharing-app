@@ -31,6 +31,7 @@ const Sidebar = () => {
       label: "Notifications",
       icon: BsBellFill,
       href: "/notifications",
+      alert: fetchedUser?.hasNotification,
     },
     {
       label: "Explore",
@@ -63,6 +64,7 @@ const Sidebar = () => {
           label={item.label}
           icon={item.icon}
           href={item.href}
+          alert={item.alert}
           openModal={() => setOpenLogin(true)}
         />
       ))}

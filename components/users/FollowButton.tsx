@@ -76,6 +76,7 @@ const FollowButton = ({
 
         handleFollowNotification();
 
+        await updateDoc(followedUserRef, { hasNotification: true });
         console.log("followed user");
         setIsFollowing(true);
       }
@@ -99,6 +100,7 @@ const FollowButton = ({
       } else {
         await setDoc(doc(recipientUserRef, "notifications", notificationId), {
           displayName: currentUser.displayName,
+          username: currentUsername,
           photoURL: currentUser.photoURL,
           type: "follow",
           isRead: false,

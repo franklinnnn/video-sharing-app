@@ -81,6 +81,7 @@ const CommentInput = ({ postId, postUserId }: CommentFeedProps) => {
 
         await setDoc(doc(recipientUserRef, "notifications", notificationId), {
           displayName: currentUser.displayName,
+          username: currentUsername,
           photoURL: currentUser.photoURL,
           type: "comment",
           isRead: false,
@@ -91,6 +92,8 @@ const CommentInput = ({ postId, postUserId }: CommentFeedProps) => {
           comment: comment,
           timestamp: serverTimestamp(),
         });
+
+        await updateDoc(recipientUserRef, { hasNotification: true });
       }
     }
   };
