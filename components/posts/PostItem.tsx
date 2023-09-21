@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Menu } from "@headlessui/react";
 import { PostItemProps } from "@/types";
@@ -11,6 +11,7 @@ import { AiFillDelete } from "react-icons/ai";
 import LikePostButton from "../posts/LikePostButton";
 import CommentButton from "../posts/CommentButton";
 import DeletePostModal from "../Modals/DeletePostModal";
+import Video from "./Video";
 
 const PostItem = ({ post }: PostItemProps) => {
   // const currentUser = useCurrentUser();
@@ -20,6 +21,14 @@ const PostItem = ({ post }: PostItemProps) => {
   const goToPost = useCallback(() => {
     router.push(`/${post.userInfo.username}/videos/${post.postId}`);
   }, [router, post.postId, post.userInfo.username]);
+
+  const videoRef = useRef(null);
+
+  const handleOnMouseOverVideo = (
+    event: React.MouseEvent<HTMLVideoElement>
+  ) => {
+    event;
+  };
 
   return (
     <div className="relative w-fit pb-6 my-2 border-b-2 border-gray-1">
@@ -43,13 +52,16 @@ const PostItem = ({ post }: PostItemProps) => {
           </span>
         </div>
       </div>
-      <video
-        controls
+      {/* <video
         muted
-        className="h-[60vh] rounded-md aspect-[9/16] bg-black/20 focus:outline-none"
+        controls
+        controlsList="nodownload noplayback"
+        disablePictureInPicture
+        className="post-video h-[60vh] rounded-md aspect-[9/16] bg-black/20 focus:outline-none"
       >
         <source src={post.video} type="video/mp4" />
-      </video>
+      </video> */}
+      <Video video={post.video} />
 
       <div className="relative flex justify-between  items-center py-2">
         <div className="flex flex-row gap-4">

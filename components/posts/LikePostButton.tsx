@@ -34,6 +34,9 @@ const LikePostButton = ({ postId, userId }: LikePostButtonProps) => {
     if (currentUser) {
       if (likedPost) {
         await deleteDoc(doc(db, "posts", postId, "likes", currentUser.uid));
+        await deleteDoc(
+          doc(db, "users", currentUser.uid, "likedPosts", postId)
+        );
 
         console.log("unliked post");
         setLikedPost(false);
@@ -41,6 +44,20 @@ const LikePostButton = ({ postId, userId }: LikePostButtonProps) => {
         await setDoc(doc(postRef, "likes", currentUser.uid), {
           displayName: currentUser.displayName,
           uid: currentUser.uid,
+        });
+
+        const postSnapshot = await getDoc(postRef);
+        await setDoc(doc(db, "users", currentUser.uid, "likedPosts", postId), {
+          caption: postSnapshot.data()?.caption,
+          userInfo: {
+            userId: postSnapshot.data()?.userInfo.userId,
+            displayName: postSnapshot.data()?.userInfo.displayName,
+            username: postSnapshot.data()?.userInfo.username,
+            photoURL: postSnapshot.data()?.userInfo.photoURL,
+          },
+          video: postSnapshot.data()?.video,
+          postId: postId,
+          timestamp: serverTimestamp(),
         });
         handleNotification();
 

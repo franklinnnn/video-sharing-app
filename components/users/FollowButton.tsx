@@ -121,7 +121,7 @@ const FollowButton = ({
       className={`py-1 px-6 object-fit border-2  rounded-md  transition 
         ${
           isFollowing
-            ? "bg-fuchsia-500 border-fuchsia-500 hover:bg-transparent hover:border-red-500"
+            ? "bg-primary border-primary text-white font-semibold hover:bg-transparent hover:border-red-500 hover:text-red-500"
             : "border-zinc-200 hover:bg-zinc-700/60"
         }
         ${currentUser?.uid === user.uid ? "hidden" : "block"}

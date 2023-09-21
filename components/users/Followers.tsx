@@ -13,7 +13,9 @@ const Followers = ({ userId }: FollowersProps) => {
       {followers && (
         <div>
           {followers.length < 1 ? (
-            <div>User has no followers 😔</div>
+            <div className="flex justify-center text-lg font-semibold pt-4">
+              User has no followers 😔
+            </div>
           ) : (
             <div>
               {followers?.map((user: any) => (

@@ -19,8 +19,10 @@ const UserBio = ({
   const [openEditModal, setOpenEditModal] = useState(false);
 
   const { currentUser } = useCurrentUser();
-  const q = query(collection(db, `users/${user.uid}/followers`));
-  const [followers] = useCollectionData(q);
+  const followersQuery = query(collection(db, `users/${user.uid}/followers`));
+  const [followers] = useCollectionData(followersQuery);
+  const likesQuery = query(collection(db, `users/${user.uid}/likedPosts`));
+  const [likes] = useCollectionData(likesQuery);
 
   return (
     <div className="p-4 rounded-md">
@@ -37,10 +39,10 @@ const UserBio = ({
           <h1 className="text-4xl font-semibold font-display">
             {user.displayName}
           </h1>
-          <p className="text-zinc-500">@{user?.username}</p>
+          <p className="text-zinc-500 text-lg -mt-4">@{user?.username}</p>
           {currentUser?.uid === user.uid ? (
             <button
-              className="py-1 px-6 object-fit border-2 font-semibold border-primary rounded-md hover:bg-primary hover:text-white transition"
+              className="py-1 px-6 object-fit border-2 font-semibold border-primary rounded-md hover:bg-gray-1 transition"
               onClick={() => setOpenEditModal(true)}
             >
               Edit
@@ -62,7 +64,7 @@ const UserBio = ({
           <span className="font-semibold">{followers?.length}</span> Followers
         </div>{" "}
         <div>
-          <span className="font-semibold">100</span> Likes
+          <span className="font-semibold">{likes?.length}</span> Likes
         </div>
       </div>
       <div className="flex flex-col gap-2">

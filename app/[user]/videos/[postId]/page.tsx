@@ -72,13 +72,13 @@ const PostView = () => {
         </div>
 
         {/* VIDEO SECTION */}
-        <div className="h-full w-[65%] bg-zinc-900">
+        <div className="h-full w-[55%] bg-zinc-900">
           {post.video && renderVideo(post.video)}
           <div className="h-full w-full " />
         </div>
 
         {/* USER AND COMMENTS SECTION */}
-        <div className="relative top-20 h-full w-[35%] min-w-72 ">
+        <div className="relative top-20 h-full w-[45%] min-w-72 ">
           <div className="flex flex-col py-2 px-4 m-2 border-b-2 border-b-gray-1">
             <div className="flex justify-between mb-4">
               <div className="flex gap-2 items-center">

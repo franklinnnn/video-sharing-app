@@ -1,7 +1,6 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import LikeCommentButton from "./LikeCommentButton";
 import { CommentItemProps } from "@/types";
 import { AiFillDelete } from "react-icons/ai";

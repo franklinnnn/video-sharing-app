@@ -1,6 +1,7 @@
 "use client";
 import PostFeed from "@/components/posts/PostFeed";
 import Followers from "@/components/users/Followers";
+import Likes from "@/components/users/Likes";
 import UserBio from "@/components/users/UserBio";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { useUser } from "@/hooks/useUser";
@@ -87,6 +88,7 @@ const UserProfile = () => {
         <PostFeed userId={fetchedUser.uid as string} />
       )}
       {activeTab === "Followers" && <Followers userId={fetchedUser.uid} />}
+      {activeTab === "Likes" && <Likes userId={fetchedUser.uid} />}
     </div>
   );
 };
