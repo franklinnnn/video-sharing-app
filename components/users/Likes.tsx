@@ -27,7 +27,7 @@ const Likes = ({ userId }: LikesProps) => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {likes?.map((item) => (
-                <LikesItem item={item} />
+                <LikesItem item={item} key={item.postId} />
               ))}
             </div>
           )}

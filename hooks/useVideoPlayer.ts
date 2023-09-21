@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useVideoPlayer = (videoElement) => {
+const useVideoPlayer = (videoElement: any) => {
   const [playerState, setPlayerState] = useState({
     isPlaying: false,
     progress: 0,
@@ -22,28 +22,21 @@ const useVideoPlayer = (videoElement) => {
   }, [playerState.isPlaying, videoElement]);
 
   const handleOnTimeUpdate = () => {
-    const progress = (videoElement.current.currentTime / videoElement.current.duration) * 100;
+    const progress =
+      (videoElement.current.currentTime / videoElement.current.duration) * 100;
     setPlayerState({
       ...playerState,
       progress,
     });
   };
 
-  const handleVideoProgress = (event) => {
+  const handleVideoProgress = (event: any) => {
     const manualChange = Number(event.target.value);
-    videoElement.current.currentTime = (videoElement.current.duration / 100) * manualChange;
+    videoElement.current.currentTime =
+      (videoElement.current.duration / 100) * manualChange;
     setPlayerState({
       ...playerState,
       progress: manualChange,
-    });
-  };
-
-  const handleVideoSpeed = (event) => {
-    const speed = Number(event.target.value);
-    videoElement.current.playbackRate = speed;
-    setPlayerState({
-      ...playerState,
-      speed,
     });
   };
 
@@ -65,7 +58,6 @@ const useVideoPlayer = (videoElement) => {
     togglePlay,
     handleOnTimeUpdate,
     handleVideoProgress,
-    handleVideoSpeed,
     toggleMute,
   };
 };

@@ -27,6 +27,7 @@
     "react-drag-drop-files": "^2.3.10",
     "react-dropzone": "^14.2.3",
     "react-firebase-hooks": "^5.1.1",
+    "react-hook-inview": "^4.5.0",
     "react-icons": "^4.10.1",
     "react-loader-spinner": "^5.3.4",
     "react-player": "^2.12.0",

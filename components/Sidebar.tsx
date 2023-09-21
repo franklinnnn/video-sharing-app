@@ -1,14 +1,15 @@
 "use client";
 import { Dialog } from "@headlessui/react";
 import { useEffect, useState } from "react";
-import { BsHouseFill, BsBellFill } from "react-icons/bs";
-import { FaUser } from "react-icons/fa";
-import { MdExplore } from "react-icons/md";
+import { BsHouseFill, BsBellFill, BsBell } from "react-icons/bs";
+import { FaRegUser, FaUser } from "react-icons/fa";
+import { MdExplore, MdOutlineExplore } from "react-icons/md";
 import SidebarItem from "./SidebarItem";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import LoginModal from "./Modals/LoginModal";
+import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 
 const Sidebar = () => {
   const { currentUser } = useCurrentUser();
@@ -24,23 +25,27 @@ const Sidebar = () => {
   const sidebarItems = [
     {
       label: "Home",
-      icon: BsHouseFill,
+      icon: AiOutlineHome,
+      activeIcon: AiFillHome,
       href: "/",
     },
     {
       label: "Notifications",
-      icon: BsBellFill,
+      icon: BsBell,
+      activeIcon: BsBellFill,
       href: "/notifications",
       alert: fetchedUser?.hasNotification,
     },
     {
       label: "Explore",
-      icon: MdExplore,
+      icon: MdOutlineExplore,
+      activeIcon: MdExplore,
       href: "/explore",
     },
     {
       label: "Profile",
-      icon: FaUser,
+      icon: FaRegUser,
+      activeIcon: FaUser,
       href: `/${fetchedUser.username}`,
     },
   ];
@@ -63,6 +68,7 @@ const Sidebar = () => {
           key={item.label}
           label={item.label}
           icon={item.icon}
+          activeIcon={item.activeIcon}
           href={item.href}
           alert={item.alert}
           openModal={() => setOpenLogin(true)}

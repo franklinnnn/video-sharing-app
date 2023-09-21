@@ -62,6 +62,7 @@ export interface CategoriesProps {
 export interface SidebarItemProps {
   label: string;
   icon: IconType;
+  activeIcon: IconType;
   href: string;
   alert: boolean;
   openModal: () => void;

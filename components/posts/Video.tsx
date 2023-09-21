@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import useVideoPlayer from "@/hooks/useVideoPlayer";
+import React, { useRef, useState } from "react";
+import { useInView } from "react-hook-inview";
+
 import {
   BsFillPauseFill,
   BsFillPlayFill,
@@ -11,29 +14,60 @@ interface VideoProps {
 }
 
 const Video = ({ video }: VideoProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const handlePlayVideo = (event: React.MouseEvent<HTMLVideoElement>) => {
-    if (event.currentTarget.paused) {
-      event.currentTarget.play();
-      setIsPlaying(true);
-    } else {
-      event.currentTarget.pause();
-      setIsPlaying(false);
-    }
-  };
-  const handleOnMouseOver = (event: React.MouseEvent<HTMLVideoElement>) => {
-    event.currentTarget.play();
-    setIsPlaying(true);
-  };
-
-  const handleOnMouseOut = (event: React.MouseEvent<HTMLVideoElement>) => {
-    event.currentTarget.pause();
-    setIsPlaying(false);
-  };
-
+  const [ref, inView] = useInView();
+  const videoRef = useRef(null);
+  const {
+    playerState,
+    togglePlay,
+    handleOnTimeUpdate,
+    handleVideoProgress,
+    toggleMute,
+  } = useVideoPlayer(videoRef);
   return (
-    <div className="relative h-[60vh]">
-      <video
+    <div className="relative h-[60vh] w-full bg-black rounded-md">
+      <div className="relative flex justify-center w-full overflow-hidden rounded-md group">
+        <video
+          ref={videoRef}
+          onClick={togglePlay}
+          onTimeUpdate={handleOnTimeUpdate}
+          className="h-[60vh] aspect-[9/16]"
+        >
+          <source src={video} type="video/mp4" />
+        </video>
+        <div className="absolute -bottom-2 w-full opacity-0 group-hover:opacity-80 transition duration-200">
+          <div className="flex items-center justify-between w-full">
+            <button
+              onClick={togglePlay}
+              className="bg-none border-none outline-none cursor-pointer px-1 text-white"
+            >
+              {!playerState.isPlaying ? (
+                <BsFillPlayFill size={30} />
+              ) : (
+                <BsFillPauseFill size={30} />
+              )}
+            </button>
+            <button
+              className="mute-btn bg-none border-none outline-none cursor-pointer px-1"
+              onClick={toggleMute}
+            >
+              {!playerState.isMuted ? (
+                <BsFillVolumeUpFill size={30} color="white" />
+              ) : (
+                <BsVolumeMuteFill size={30} color="white" />
+              )}
+            </button>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={playerState.progress}
+            onChange={(e) => handleVideoProgress(e)}
+            className="video-timeline"
+          />
+        </div>
+      </div>
+      {/* <video
         muted
         controls
         controlsList="nodownload noplayback"
@@ -55,9 +89,8 @@ const Video = ({ video }: VideoProps) => {
         <input type="range" min="0" max="100" value="0" className="timeline" />
         <button>
           <BsFillVolumeUpFill size={30} color="white" />
-          {/* <BsVolumeMuteFill /> */}
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
