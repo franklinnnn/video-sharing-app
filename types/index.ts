@@ -64,6 +64,7 @@ export interface SidebarItemProps {
   icon: IconType;
   activeIcon: IconType;
   href: string;
+  activeSegment: string | null;
   alert: boolean;
   openModal: () => void;
 }

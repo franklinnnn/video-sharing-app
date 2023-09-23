@@ -32,7 +32,7 @@ const PostItem = ({ post }: PostItemProps) => {
 
   return (
     <div className="relative w-fit pb-6 my-2 border-b-2 border-gray-1">
-      <div className="absolute top-2 left-2 flex justify-start gap-2 z-10">
+      <div className="absolute top-2 left-2 flex justify-start gap-2 z-10 ">
         <Image
           src={post.userInfo.photoURL}
           alt="User profile photo"
@@ -52,15 +52,7 @@ const PostItem = ({ post }: PostItemProps) => {
           </span>
         </div>
       </div>
-      {/* <video
-        muted
-        controls
-        controlsList="nodownload noplayback"
-        disablePictureInPicture
-        className="post-video h-[60vh] rounded-md aspect-[9/16] bg-black/20 focus:outline-none"
-      >
-        <source src={post.video} type="video/mp4" />
-      </video> */}
+
       <Video video={post.video} />
 
       <div className="relative flex justify-between  items-center py-2">

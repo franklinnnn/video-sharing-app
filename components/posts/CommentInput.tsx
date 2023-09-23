@@ -99,7 +99,7 @@ const CommentInput = ({ postId, postUserId }: CommentFeedProps) => {
   };
 
   return (
-    <div className="fixed bottom-0 right-0 flex gap-2 justify-around items-center w-[45%] p-4 bg-gray-1 z-10">
+    <div className="fixed bottom-0 right-0 flex gap-2 justify-around items-center w-[40%] p-4 bg-gray-1 z-10">
       <input
         type="text"
         placeholder="Add comment..."

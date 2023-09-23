@@ -1,8 +1,7 @@
-"use client";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { SidebarItemProps } from "@/types";
-import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+import { useCallback } from "react";
 import { BsDot } from "react-icons/bs";
 
 const SidebarItem = ({
@@ -10,13 +9,13 @@ const SidebarItem = ({
   icon: Icon,
   activeIcon: ActiveIcon,
   href,
+  activeSegment,
   alert,
   openModal,
 }: SidebarItemProps) => {
   const { currentUser } = useCurrentUser();
+  const activePage = useSelectedLayoutSegment();
   const router = useRouter();
-
-  const [activePage, setActivePage] = useState("Home");
 
   const handleClick = useCallback(() => {
     if (!currentUser) {
@@ -24,17 +23,17 @@ const SidebarItem = ({
       console.log("open login modal");
     } else if (href) {
       router.push(href);
-      console.log(label);
-      setActivePage(label);
     }
-  }, [router, href, label, currentUser, openModal]);
+  }, [router, href, currentUser, openModal]);
 
   return (
     <div
       onClick={handleClick}
-      className="relative flex flex-row justify-start items-center gap-4 text-xl mx-2 px-4 py-2 hover:bg-gray-1 rounded-md object-fit hover:cursor-pointer"
+      className={`relative flex flex-row justify-start items-center gap-4 text-xl mx-2 px-4 py-2 hover:bg-gray-1/50 rounded-md object-fit hover:cursor-pointer ${
+        activePage === activeSegment ? "font-semibold" : "font-normal"
+      }`}
     >
-      {activePage === label ? (
+      {activePage === activeSegment ? (
         <ActiveIcon size={24} className="text-primary-dark" />
       ) : (
         <Icon size={24} className="text-primary-dark" />

@@ -1,6 +1,5 @@
 import useVideoPlayer from "@/hooks/useVideoPlayer";
-import React, { useRef, useState } from "react";
-import { useInView } from "react-hook-inview";
+import { useRef } from "react";
 
 import {
   BsFillPauseFill,
@@ -11,10 +10,10 @@ import {
 
 interface VideoProps {
   video: string;
+  isBigVideo?: boolean;
 }
 
-const Video = ({ video }: VideoProps) => {
-  const [ref, inView] = useInView();
+const Video = ({ video, isBigVideo }: VideoProps) => {
   const videoRef = useRef(null);
   const {
     playerState,
@@ -23,14 +22,19 @@ const Video = ({ video }: VideoProps) => {
     handleVideoProgress,
     toggleMute,
   } = useVideoPlayer(videoRef);
+
   return (
-    <div className="relative h-[60vh] w-full bg-black rounded-md">
+    <div
+      className={`w-full bg-black ${
+        isBigVideo ? "rounded-none" : "rounded-md"
+      }`}
+    >
       <div className="relative flex justify-center w-full overflow-hidden rounded-md group">
         <video
           ref={videoRef}
           onClick={togglePlay}
           onTimeUpdate={handleOnTimeUpdate}
-          className="h-[60vh] aspect-[9/16]"
+          className={`${isBigVideo ? "h-screen" : "h-[60vh]"} aspect-[9/16]`}
         >
           <source src={video} type="video/mp4" />
         </video>
@@ -67,33 +71,8 @@ const Video = ({ video }: VideoProps) => {
           />
         </div>
       </div>
-      {/* <video
-        muted
-        controls
-        controlsList="nodownload noplayback"
-        disablePictureInPicture
-        onMouseOver={handleOnMouseOver}
-        onMouseOut={handleOnMouseOut}
-        className="post-video h-[60vh] rounded-md aspect-[9/16] bg-black/20 focus:outline-none"
-      >
-        <source src={video} type="video/mp4" />
-      </video>
-      <div className="absolute bottom-2 flex gap-2 px-2 items-center w-full z-10">
-        <button className="border-none bg-transparent cursor-pointer opacity-80 transition-all hover:opacity-100 text-white">
-          {isPlaying ? (
-            <BsFillPlayFill size={30} />
-          ) : (
-            <BsFillPauseFill size={30} />
-          )}
-        </button>
-        <input type="range" min="0" max="100" value="0" className="timeline" />
-        <button>
-          <BsFillVolumeUpFill size={30} color="white" />
-        </button>
-      </div> */}
     </div>
   );
 };
 
 export default Video;
-//

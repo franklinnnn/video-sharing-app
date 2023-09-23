@@ -15,6 +15,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import CommentButton from "@/components/posts/CommentButton";
+import Video from "@/components/posts/Video";
 
 const PostView = () => {
   const params = useParams();
@@ -51,9 +52,10 @@ const PostView = () => {
 
   const renderVideo = (video: string) => {
     return (
-      <video controls className="h-full w-full">
-        <source src={video} type="video/mp4" />
-      </video>
+      // <video controls className="h-full w-full">
+      //   <source src={video} type="video/mp4" />
+      // </video>
+      <Video video={video} isBigVideo />
     );
   };
 
@@ -72,13 +74,13 @@ const PostView = () => {
         </div>
 
         {/* VIDEO SECTION */}
-        <div className="h-full w-[55%] bg-zinc-900">
+        <div className="h-full w-[60%] bg-zinc-900">
           {post.video && renderVideo(post.video)}
-          <div className="h-full w-full " />
+          {/* <div className="h-full w-full" /> */}
         </div>
 
         {/* USER AND COMMENTS SECTION */}
-        <div className="relative top-20 h-full w-[45%] min-w-72 ">
+        <div className="relative top-20 h-full w-[40%] min-w-72 ">
           <div className="flex flex-col py-2 px-4 m-2 border-b-2 border-b-gray-1">
             <div className="flex justify-between mb-4">
               <div className="flex gap-2 items-center">
