@@ -4,12 +4,11 @@ import Followers from "@/components/users/Followers";
 import Likes from "@/components/users/Likes";
 import UserBio from "@/components/users/UserBio";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { useUser } from "@/hooks/useUser";
 import { db } from "@/utils/firebase";
-import { collection, doc, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useCollectionData, useDocument } from "react-firebase-hooks/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const UserProfile = () => {
   const params = useParams();

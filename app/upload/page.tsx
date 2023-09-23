@@ -20,7 +20,6 @@ const Upload = () => {
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState("");
   const [openConfirm, setOpenConfirm] = useState(false);
-  // const [progress, setProgress] = useState(1);
   const [fetchedUser, setFetchedUser] = useState({} as any);
   const [files, setFiles] = useState<any[]>([]);
 

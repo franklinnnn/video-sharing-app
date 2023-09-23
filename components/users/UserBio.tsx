@@ -1,5 +1,5 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { UserBioProps, UserProps } from "@/types";
+import { UserBioProps } from "@/types";
 import { Dialog } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";

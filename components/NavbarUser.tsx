@@ -1,12 +1,11 @@
 "use client";
-import { auth, db } from "@/utils/firebase";
+import { auth } from "@/utils/firebase";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import LoginModal from "./Modals/LoginModal";
 import { useAuth } from "@/hooks/useAuth";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 const NavbarUser = () => {
   const { user, loading, error } = useAuth();

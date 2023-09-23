@@ -1,11 +1,8 @@
 "use client";
 import usePosts from "@/hooks/usePosts";
 import PostItem from "./PostItem";
-import { useUser } from "@/hooks/useUser";
+import { PostFeedProps } from "@/types";
 
-interface PostFeedProps {
-  userId?: string;
-}
 const PostFeed = ({ userId }: PostFeedProps) => {
   const posts = usePosts(userId);
 
@@ -15,10 +12,6 @@ const PostFeed = ({ userId }: PostFeedProps) => {
         <div>User has no posts</div>
       ) : (
         <>
-          {/* {posts?.map((post: Record<string, any>) => (
-            <PostItem post={post} key={post.postId} />
-          ))} */}
-
           {posts
             ?.filter((post) => post.video)
             .map((post: Record<string, any>) => (

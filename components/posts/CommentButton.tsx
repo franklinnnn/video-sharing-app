@@ -1,12 +1,8 @@
+import { CommentButtonProps } from "@/types";
 import { db } from "@/utils/firebase";
 import { collection, query } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { FaComment } from "react-icons/fa";
-
-interface CommentButtonProps {
-  postId: string;
-  onClick: () => void;
-}
 
 const CommentButton = ({ postId, onClick }: CommentButtonProps) => {
   const commentsQuery = query(collection(db, `/posts/${postId}/comments`));

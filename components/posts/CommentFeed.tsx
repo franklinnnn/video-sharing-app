@@ -1,13 +1,10 @@
 import { db } from "@/utils/firebase";
-import { collection, orderBy, query, where } from "firebase/firestore";
+import { collection, orderBy, query } from "firebase/firestore";
 import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import CommentItem from "./CommentItem";
 import CommentInput from "./CommentInput";
-
-interface CommentFeedProps {
-  post: Record<string, any>;
-}
+import { CommentFeedProps } from "@/types";
 
 const CommentFeed = ({ post }: CommentFeedProps) => {
   const [comments] = useCollectionData(

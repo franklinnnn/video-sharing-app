@@ -7,11 +7,7 @@ import { useEffect, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import LoginModal from "../Modals/LoginModal";
-
-interface LikeCommentButtonProps {
-  postId: string;
-  commentId: string;
-}
+import { LikeCommentButtonProps } from "@/types";
 
 const LikeCommentButton = ({ postId, commentId }: LikeCommentButtonProps) => {
   const { currentUser } = useCurrentUser();

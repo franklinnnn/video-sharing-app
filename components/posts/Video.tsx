@@ -1,17 +1,12 @@
 import useVideoPlayer from "@/hooks/useVideoPlayer";
+import { VideoProps } from "@/types";
 import { useRef } from "react";
-
 import {
   BsFillPauseFill,
   BsFillPlayFill,
   BsFillVolumeUpFill,
   BsVolumeMuteFill,
 } from "react-icons/bs";
-
-interface VideoProps {
-  video: string;
-  isBigVideo?: boolean;
-}
 
 const Video = ({ video, isBigVideo }: VideoProps) => {
   const videoRef = useRef(null);

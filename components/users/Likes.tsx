@@ -1,13 +1,8 @@
 import { db } from "@/utils/firebase";
 import { collection, orderBy, query } from "firebase/firestore";
-import { useRouter } from "next/navigation";
-import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import LikesItem from "./LikesItem";
-
-interface LikesProps {
-  userId: string;
-}
+import { LikesProps } from "@/types";
 
 const Likes = ({ userId }: LikesProps) => {
   const likesQuery = query(

@@ -1,5 +1,6 @@
 "use client";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import { CommentInputProps } from "@/types";
 import { db } from "@/utils/firebase";
 import {
   doc,
@@ -11,12 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
-interface CommentFeedProps {
-  postId: string;
-  postUserId: string;
-}
-
-const CommentInput = ({ postId, postUserId }: CommentFeedProps) => {
+const CommentInput = ({ postId, postUserId }: CommentInputProps) => {
   const [currentUsername, setCurrentUsername] = useState("");
   const [comment, setComment] = useState("");
 
@@ -51,7 +47,9 @@ const CommentInput = ({ postId, postUserId }: CommentFeedProps) => {
             photoURL: currentUser.photoURL,
           },
         });
-        handleNotification();
+        if (currentUser.uid !== postUserId) {
+          handleNotification();
+        }
       }
     } catch (error) {
       console.log(error);

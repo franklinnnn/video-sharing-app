@@ -16,11 +16,7 @@ import LoginModal from "../Modals/LoginModal";
 import { useEffect, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { v4 as uuid } from "uuid";
-
-interface LikePostButtonProps {
-  postId: string;
-  userId: string;
-}
+import { LikePostButtonProps } from "@/types";
 
 const LikePostButton = ({ postId, userId }: LikePostButtonProps) => {
   const { currentUser } = useCurrentUser();
@@ -59,7 +55,9 @@ const LikePostButton = ({ postId, userId }: LikePostButtonProps) => {
           postId: postId,
           timestamp: serverTimestamp(),
         });
-        handleNotification();
+        if (currentUser.uid !== userId) {
+          handleNotification();
+        }
 
         console.log("liked post");
         setLikedPost(true);

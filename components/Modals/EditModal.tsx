@@ -1,6 +1,6 @@
 "use client";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { UserProps } from "@/types";
+import { ModalProps } from "@/types";
 import { db, storage } from "@/utils/firebase";
 import { updateProfile } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
@@ -11,13 +11,7 @@ import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 
-interface EditModalProps {
-  isOpen: boolean;
-  closeModal: () => void;
-  user: UserProps;
-}
-
-const EditModal = ({ isOpen, closeModal, user }: EditModalProps) => {
+const EditModal = ({ isOpen, closeModal, user }: ModalProps) => {
   const { currentUser } = useCurrentUser();
   const router = useRouter();
 

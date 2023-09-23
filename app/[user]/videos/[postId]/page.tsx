@@ -51,12 +51,7 @@ const PostView = () => {
   }, [username]);
 
   const renderVideo = (video: string) => {
-    return (
-      // <video controls className="h-full w-full">
-      //   <source src={video} type="video/mp4" />
-      // </video>
-      <Video video={video} isBigVideo />
-    );
+    return <Video video={video} isBigVideo />;
   };
 
   const goToPage = () => {
@@ -76,7 +71,6 @@ const PostView = () => {
         {/* VIDEO SECTION */}
         <div className="h-full w-[60%] bg-zinc-900">
           {post.video && renderVideo(post.video)}
-          {/* <div className="h-full w-full" /> */}
         </div>
 
         {/* USER AND COMMENTS SECTION */}

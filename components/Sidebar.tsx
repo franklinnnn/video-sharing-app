@@ -1,7 +1,6 @@
 "use client";
 import { Dialog } from "@headlessui/react";
 import { useEffect, useState } from "react";
-import { FaRegUser, FaUser } from "react-icons/fa";
 import { MdExplore, MdOutlineExplore } from "react-icons/md";
 import { HiUser, HiOutlineUser } from "react-icons/hi";
 import SidebarItem from "./SidebarItem";
@@ -43,13 +42,13 @@ const Sidebar = () => {
       alert: fetchedUser?.hasNotification,
       activeSegment: "notifications",
     },
-    {
-      label: "Explore",
-      icon: MdOutlineExplore,
-      activeIcon: MdExplore,
-      href: "/explore",
-      activeSegment: "explore",
-    },
+    // {
+    //   label: "Explore",
+    //   icon: MdOutlineExplore,
+    //   activeIcon: MdExplore,
+    //   href: "/explore",
+    //   activeSegment: "explore",
+    // },
     {
       label: "Profile",
       icon: HiOutlineUser,

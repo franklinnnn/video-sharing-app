@@ -1,9 +1,6 @@
+import { LikesItemProps } from "@/types";
 import { useRouter } from "next/navigation";
 import React from "react";
-
-interface LikesItemProps {
-  item: Record<string, any>;
-}
 
 const LikesItem = ({ item }: LikesItemProps) => {
   const router = useRouter();

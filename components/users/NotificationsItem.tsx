@@ -1,4 +1,5 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
+import { NotificationsItemProps } from "@/types";
 import { db } from "@/utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import Image from "next/image";
@@ -7,10 +8,6 @@ import React, { useCallback } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaComment } from "react-icons/fa";
-
-interface NotificationsItemProps {
-  notification: Record<string, any>;
-}
 
 const NotificationsItem = ({ notification }: NotificationsItemProps) => {
   const { currentUser } = useCurrentUser();

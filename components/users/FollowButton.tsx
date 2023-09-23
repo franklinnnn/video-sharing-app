@@ -1,5 +1,5 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { FollowButtonProps, UserProps } from "@/types";
+import { FollowButtonProps } from "@/types";
 import { db } from "@/utils/firebase";
 import {
   collection,

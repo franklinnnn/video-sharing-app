@@ -1,3 +1,4 @@
+import { ModalProps } from "@/types";
 import { auth, db } from "@/utils/firebase";
 import { Dialog } from "@headlessui/react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -7,13 +8,7 @@ import { useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 
-interface LoginModalProps {
-  isOpen: boolean;
-  href: string;
-  closeModal: () => void;
-}
-
-const LoginModal = ({ isOpen, closeModal, href }: LoginModalProps) => {
+const LoginModal = ({ isOpen, closeModal, href }: ModalProps) => {
   const provider = new GoogleAuthProvider();
   const router = useRouter();
 
@@ -69,7 +64,7 @@ const LoginModal = ({ isOpen, closeModal, href }: LoginModalProps) => {
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel>
-            <div className="relative flex justify-center items-center bg-gray-1  w-60 h-60 rounded-md">
+            <div className="relative flex justify-center items-center bg-gray-1 w-72 h-60 rounded-md">
               <AiFillCloseCircle
                 size={30}
                 className="absolute right-2 top-2 hover:cursor-pointer text-primary-dark"
