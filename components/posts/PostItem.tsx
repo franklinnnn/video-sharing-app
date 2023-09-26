@@ -24,14 +24,16 @@ const PostItem = ({ post }: PostItemProps) => {
 
   return (
     <div className="relative w-fit pb-6 my-2 border-b-2 border-gray-1">
-      <div className="absolute top-2 left-2 flex justify-start gap-2 z-10 ">
-        <Image
-          src={post.userInfo.photoURL}
-          alt="User profile photo"
-          height={50}
-          width={50}
-          className="rounded-full"
-        />
+      <div className="absolute top-2 left-2 flex justify-start gap-2 z-10 text-xs sm:text-base">
+        <div className="w-12 h-12">
+          <Image
+            src={post.userInfo.photoURL}
+            alt="User profile photo"
+            height={50}
+            width={50}
+            className="rounded-full"
+          />
+        </div>
         <div className="flex flex-col text-white">
           <Link
             href={post.userInfo.username}

@@ -32,17 +32,18 @@ const NavbarUser = () => {
   };
 
   return (
-    <div className="col-span-1 justify-end items-end">
+    <div className="col-span-2 justify-end items-end w-full">
       <div className="flex justify-end gap-2 w-full">
         <button
           onClick={handleUpload}
-          className="flex justify-center items-center gap-2 border-2 border-primary text-primary-dark py-2 rounded-lg w-36 px-2 font-semibold hover:bg-primary hover:text-white transition"
+          className="flex justify-center items-center gap-2 border-2 border-primary text-primary-dark py-2 rounded-lg h-12 w-12 md:w-36 px-2 font-semibold hover:bg-primary hover:text-white transition"
         >
-          <AiOutlinePlus size={20} /> Upload
+          <AiOutlinePlus size={20} />{" "}
+          <span className="hidden md:block">Upload</span>
         </button>
 
         {user ? (
-          <div className="flex items-center justify-center gap-4 w-14">
+          <div className="flex items-center justify-center gap-4 h-12 w-12">
             <Image
               src={user?.photoURL as string}
               width={50}

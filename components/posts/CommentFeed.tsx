@@ -14,8 +14,8 @@ const CommentFeed = ({ post }: CommentFeedProps) => {
     )
   );
   return (
-    <section className="relative flex flex-col justify-between w-full h-full">
-      <div className="p-4 h-full overflow-auto [&::-webkit-scrollbar]:hidden">
+    <section className="flex flex-col justify-between w-full h-full">
+      <div className="relative p-4 h-full overflow-auto [&::-webkit-scrollbar]:hidden">
         <div className="flex gap-2">
           <h1>Comments</h1>
           <span>

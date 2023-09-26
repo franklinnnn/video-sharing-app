@@ -70,7 +70,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="fixed pt-6 h-full z-1">
+    <div className="fixed flex flex-col gap-2 pt-12 z-1">
       {sidebarItems.map((item) => (
         <SidebarItem
           key={item.label}

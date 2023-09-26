@@ -95,7 +95,7 @@ const FollowersItem = ({ user }: FollowersItemProps) => {
           className="object-fit rounded-full"
         />
         <div>
-          <p className="text-xl font-semibold hover:underline">
+          <p className="text-lg sm:text-xl font-semibold hover:underline">
             {user.displayName}
           </p>
           <p className="text-md text-zinc-600">@{user.username}</p>

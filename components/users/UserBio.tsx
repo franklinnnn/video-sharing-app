@@ -26,7 +26,7 @@ const UserBio = ({
 
   return (
     <div className="p-4 rounded-md">
-      <div className="flex gap-4 mb-4">
+      <div className="flex flex-col sm:flex-row gap-4 mb-4">
         <Image
           src={user.photoURL || "/images/placeholder.png"}
           alt="User profile photo"
@@ -56,14 +56,17 @@ const UserBio = ({
           )}
         </div>
       </div>
-      <div className="flex flex-row gap-6 my-2 text-zinc-500">
+      <div className="flex flex-row gap-6 my-2 text-sm md:text-base text-zinc-500">
         <div
           onClick={() => setActiveTab("Followers")}
           className="hover:underline hover:cursor-pointer"
         >
           <span className="font-semibold">{followers?.length}</span> Followers
         </div>{" "}
-        <div>
+        <div
+          onClick={() => setActiveTab("Likes")}
+          className="hover:underline hover:cursor-pointer"
+        >
           <span className="font-semibold">{likes?.length}</span> Likes
         </div>
       </div>

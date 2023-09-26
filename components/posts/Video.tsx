@@ -29,7 +29,9 @@ const Video = ({ video, isBigVideo }: VideoProps) => {
           ref={videoRef}
           onClick={togglePlay}
           onTimeUpdate={handleOnTimeUpdate}
-          className={`${isBigVideo ? "h-screen" : "h-[60vh]"} aspect-[9/16]`}
+          className={`${
+            isBigVideo ? "h-screen" : "h-[60vh]"
+          } aspect-[9/16] object-cover sm:object-contain`}
         >
           <source src={video} type="video/mp4" />
         </video>

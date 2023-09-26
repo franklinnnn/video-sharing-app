@@ -55,9 +55,9 @@ const UserProfile = () => {
         setIsFollowing={setIsFollowing}
       />
 
-      <div className="flex flex-row items-center my-4  ">
+      <div className="flex flex-row items-center my-4">
         <button
-          className={`px-6 border-b-2 hover:bg-gray-1 rounded-t-md transition ${
+          className={`px-1 sm:px-6 text-sm sm:text-base border-b-2 hover:bg-gray-1 rounded-t-md transition ${
             activeTab === "Videos" ? "border-b-zinc-600" : "border-transparent"
           }`}
           onClick={() => setActiveTab("Videos")}
@@ -65,7 +65,7 @@ const UserProfile = () => {
           Videos
         </button>
         <button
-          className={`px-6 border-b-2 hover:bg-gray-1 rounded-t-md transition ${
+          className={`px-1 sm:px-6 border-b-2 hover:bg-gray-1 rounded-t-md transition ${
             activeTab === "Followers"
               ? "border-b-zinc-600"
               : "border-transparent"
@@ -75,7 +75,7 @@ const UserProfile = () => {
           Followers
         </button>
         <button
-          className={`px-6 border-b-2 hover:bg-gray-1 rounded-t-md transition ${
+          className={`px-1 sm:px-6 text-sm sm:text-base border-b-2 hover:bg-gray-1 rounded-t-md transition ${
             activeTab === "Likes" ? "border-b-zinc-600" : "border-transparent"
           }`}
           onClick={() => setActiveTab("Likes")}

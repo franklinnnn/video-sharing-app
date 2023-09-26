@@ -1,12 +1,17 @@
 import { SearchButtonProps } from "@/types";
 import { db } from "@/utils/firebase";
 import { and, collection, getDocs, or, query, where } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 
 const SearchButton = ({ input }: SearchButtonProps) => {
-  const [postResults, setPostResults] = useState({} as any);
-  const [userResults, setUserResults] = useState({} as any);
+  const [postResults, setPostResults] = useState([] as any);
+  const [usernameResults, setUsernameResults] = useState([] as any);
+  const [displayNameResults, setDisplayNameResults] = useState([] as any);
+  const [userResults, setUserResults] = useState([] as any);
+
+  const router = useRouter();
   const handleSearch = async () => {
     try {
       const postsRef = collection(db, "posts");
@@ -89,22 +94,28 @@ const SearchButton = ({ input }: SearchButtonProps) => {
         )
       );
 
-      //   const postsSnapshot = await getDocs(postsQuery);
-      //   postsSnapshot.forEach((post) => {
-      //     console.log(post.id, "=>", post.data());
-      //     setPostResults((prev: Record<string, any>) => [...prev, post.data()]);
-      //   });
+      const postsSnapshot = await getDocs(postsQuery);
+      postsSnapshot.forEach((post) => {
+        // console.log(post.id, "=>", post.data());
+        setPostResults(post.data());
+      });
+      const usersUsernameSnapshot = await getDocs(usersUsernameQuery);
+      usersUsernameSnapshot.forEach((user) => {
+        // console.log(user.id, "=>", user.data());
+        setUsernameResults(user.data());
+      });
+      const usersDisplayNameSnapshot = await getDocs(usersDisplayNameQuery);
+      usersDisplayNameSnapshot.forEach((user) => {
+        // console.log(user.id, "=>", user.data());
+        setDisplayNameResults(user.data());
+      });
 
-      //   const usersUsernameSnapshot = await getDocs(usersUsernameQuery);
-      //   usersUsernameSnapshot.forEach((user) => {
-      //     // console.log(user.id, "=>", user.data());
-      //     setUserResults((prev: Record<string, any>) => [...prev, user.data()]);
-      //   });
-      //   const usersDisplayNameSnapshot = await getDocs(usersDisplayNameQuery);
-      //   usersDisplayNameSnapshot.forEach((user) => {
-      //     // console.log(user.id, "=>", user.data());
-      //     setUserResults((prev: Record<string, any>) => [...prev, user.data()]);
-      //   });
+      console.log(postResults);
+      console.log(usernameResults);
+      console.log(displayNameResults);
+      // console.log("posts", postResults, "users", userResults);
+
+      router.push(`/search?q=${input}`);
     } catch (error) {
       console.log(error);
     }

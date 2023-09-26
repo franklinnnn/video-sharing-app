@@ -8,10 +8,10 @@ const NavbarLogo = () => {
   return (
     <div
       onClick={() => router.push("/")}
-      className="col-span-1 flex gap-1 justify-center items-center hover:cursor-pointer"
+      className="col-span-2 flex gap-1 justify-center items-center hover:cursor-pointer w-full"
     >
       <Image src="/icon.png" width={40} height={40} alt="Logo" />
-      <span className="font-display font-extrabold text-3xl text-primary">
+      <span className="font-display font-extrabold text-3xl text-primary md:block hidden">
         Vidly
       </span>
     </div>

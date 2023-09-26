@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className="bg-white text-zinc-800">
         <AuthProvider>
           <div className="container grid grid-cols-4 justify-center mt-16 mx-auto max-w-3xl">
-            <div className="col-span-1 pr-4 justify-center items-start ">
+            <div className="col-span-1 flex justify-center">
               <Sidebar />
             </div>
             <div className="col-span-3 w-full px-2 py-6">{children}</div>
