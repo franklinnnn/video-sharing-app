@@ -1,3 +1,5 @@
+"use client";
+
 import useVideoPlayer from "@/hooks/useVideoPlayer";
 import { VideoProps } from "@/types";
 import { useRef } from "react";

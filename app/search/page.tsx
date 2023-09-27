@@ -1,4 +1,5 @@
 "use client";
+import useCurrentUser from "@/hooks/useCurrentUser";
 import { useParams, useSearchParams } from "next/navigation";
 import React from "react";
 
@@ -6,7 +7,11 @@ const Search = () => {
   const searchParams = useSearchParams();
   const params = useParams();
 
-  return <div></div>;
+  const { currentUser } = useCurrentUser();
+
+  console.log(currentUser);
+
+  return <div>{JSON.stringify(currentUser)}</div>;
 };
 
 export default Search;

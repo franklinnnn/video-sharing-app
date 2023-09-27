@@ -1,11 +1,34 @@
+"use client";
+
 import { db } from "@/utils/firebase";
-import { doc } from "firebase/firestore";
-import { useDocument, useDocumentData } from "react-firebase-hooks/firestore";
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
-export const usePost = async (postId: string) => {
-  const [value, loading, error] = useDocument(doc(db, "posts", postId), {
-    snapshotListenOptions: { includeMetadataChanges: true },
-  });
+export const usePost = (postId: string) => {
+  const [data, setData] = useState<any>({});
+  const [loading, setLoading] = useState(false);
 
-  return value;
+  const postRef = doc(db, "posts", postId);
+
+  const getPost = async () => {
+    setLoading(true);
+    const postSnapshot = await getDoc(postRef);
+    if (postSnapshot.exists()) {
+      // console.log(postSnapshot.data());
+      setData(postSnapshot.data());
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    try {
+      getPost();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [postId]);
+
+  // console.log(data);
+
+  return { data, loading };
 };

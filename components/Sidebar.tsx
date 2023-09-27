@@ -1,12 +1,9 @@
 "use client";
 import { Dialog } from "@headlessui/react";
-import { useEffect, useState } from "react";
-import { MdExplore, MdOutlineExplore } from "react-icons/md";
+import { useState } from "react";
 import { HiUser, HiOutlineUser } from "react-icons/hi";
 import SidebarItem from "./SidebarItem";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "@/utils/firebase";
 import LoginModal from "./Modals/LoginModal";
 import {
   AiFillBell,
@@ -17,14 +14,7 @@ import {
 
 const Sidebar = () => {
   const { currentUser } = useCurrentUser();
-  const [fetchedUser, setFetchedUser] = useState({} as any);
   const [openLogin, setOpenLogin] = useState(false);
-
-  useEffect(() => {
-    if (currentUser?.uid) {
-      getUser();
-    }
-  }, [currentUser?.uid]);
 
   const sidebarItems = [
     {
@@ -39,7 +29,7 @@ const Sidebar = () => {
       icon: AiOutlineBell,
       activeIcon: AiFillBell,
       href: "/notifications",
-      alert: fetchedUser?.hasNotification,
+      alert: currentUser?.hasNotification,
       activeSegment: "notifications",
     },
     // {
@@ -53,21 +43,10 @@ const Sidebar = () => {
       label: "Profile",
       icon: HiOutlineUser,
       activeIcon: HiUser,
-      href: `/${fetchedUser.username}`,
-      activeSegment: `${fetchedUser.username}`,
+      href: `/${currentUser.username}`,
+      activeSegment: `${currentUser.username}`,
     },
   ];
-
-  const getUser = async () => {
-    const q = query(
-      collection(db, "users"),
-      where("uid", "==", currentUser?.uid)
-    );
-    const usersSnapshot = await getDocs(q);
-    usersSnapshot.forEach((doc) => {
-      setFetchedUser(doc.data());
-    });
-  };
 
   return (
     <div className="fixed flex flex-col gap-2 pt-12 z-1">

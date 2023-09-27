@@ -6,6 +6,7 @@ import { CommentItemProps } from "@/types";
 import { AiFillDelete } from "react-icons/ai";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
+import { getRelativeTime } from "@/utils/index";
 
 const CommentItem = ({ postId, comment }: CommentItemProps) => {
   const { currentUser } = useCurrentUser();
@@ -13,35 +14,6 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
 
   const goToPage = () => {
     router.push(`/${comment.userInfo.username}`);
-  };
-
-  const getRelativeTime = () => {
-    const date = new Date();
-    const timestamp = date.getTime();
-    const seconds = Math.floor(timestamp / 1000);
-    const difference = seconds - comment.timestamp?.seconds;
-    let output = "";
-
-    if (difference < 60) {
-      // Less than a minute has passed:
-      output = `${difference} seconds ago`;
-    } else if (difference < 3600) {
-      // Less than an hour has passed:
-      output = `${Math.floor(difference / 60)} minutes ago`;
-    } else if (difference < 86400) {
-      // Less than a day has passed:
-      output = `${Math.floor(difference / 3600)} hours ago`;
-    } else if (difference < 2620800) {
-      // Less than a month has passed:
-      output = `${Math.floor(difference / 86400)} days ago`;
-    } else if (difference < 31449600) {
-      // Less than a year has passed:
-      output = `${Math.floor(difference / 2620800)} months ago`;
-    } else {
-      // More than a year has passed:
-      output = `${Math.floor(difference / 31449600)} years ago`;
-    }
-    return output;
   };
 
   const handleDeleteComment = async () => {
@@ -67,7 +39,9 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
           >
             {comment.userInfo.displayName}
           </span>{" "}
-          <span className="text-xs text-zinc-500">{getRelativeTime()}</span>
+          <span className="text-xs text-zinc-500">
+            {getRelativeTime(comment.timestamp?.seconds)}
+          </span>
         </div>
         <p>{comment.comment}</p>
 

@@ -9,22 +9,30 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useUser } from "@/hooks/useUser";
+import { useFollowingCheck } from "@/hooks/useFollowingCheck";
 
 const UserProfile = () => {
   const params = useParams();
   const username = params.user;
   const { currentUser } = useCurrentUser();
-  const [fetchedUser, setFetchedUser] = useState({} as any);
+  // const [fetchedUser, setFetchedUser] = useState({} as any);
   const [activeTab, setActiveTab] = useState("Videos");
   const [isFollowing, setIsFollowing] = useState(false);
 
-  const getUser = async () => {
-    const q = query(collection(db, "users"), where("username", "==", username));
-    const usersSnapshot = await getDocs(q);
-    usersSnapshot.forEach((doc) => {
-      setFetchedUser(doc.data());
-    });
-  };
+  const { data: fetchedUser } = useUser(username as string);
+  // console.log(testUser);
+
+  // const getUser = async () => {
+  //   const q = query(collection(db, "users"), where("username", "==", username));
+  //   const usersSnapshot = await getDocs(q);
+  //   usersSnapshot.forEach((doc) => {
+  //     setFetchedUser(doc.data());
+  //   });
+  // };
+
+  // const { isFollowing } = useFollowingCheck(fetchedUser.uid);
+  // console.log(isFollowing);
 
   const followingQuery = query(
     collection(db, `users/${currentUser?.uid}/following`)
@@ -42,7 +50,7 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    getUser();
+    // getUser();
     handleFollowingCheck();
   }, [fetchedUser]);
 

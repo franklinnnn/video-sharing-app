@@ -1,19 +1,34 @@
+"use client";
+
 import { db } from "@/utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useCurrentUsername = async (userId: string) => {
-  try {
-    if (!userId || typeof userId !== "string") {
-      throw new Error("Invalid ID");
+  const [data, setData] = useState<any>({});
+  const [loading, setLoading] = useState(false);
+
+  const userRef = doc(db, "users", userId);
+
+  const getUsername = async () => {
+    setLoading(true);
+    const userSnapshot = await getDoc(userRef);
+    if (userSnapshot.exists()) {
+      setData(userSnapshot.data());
+      console.log(userSnapshot.data()?.username);
     }
-    const [currentUsername, setCurrentUsername] = useState("");
-    await getDoc(doc(db, "users", userId)).then((doc) => {
-      setCurrentUsername(doc.data()?.username);
-      console.log(currentUsername);
-      return currentUsername;
-    });
-  } catch (error) {
-    console.log(error);
-  }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    try {
+      getUsername();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [userId]);
+
+  console.log(data);
+
+  return { data, loading };
 };

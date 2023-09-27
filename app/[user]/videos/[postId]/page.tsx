@@ -1,61 +1,29 @@
 "use client";
 import LikePostButton from "@/components/posts/LikePostButton";
 import CommentFeed from "@/components/posts/CommentFeed";
-import { db } from "@/utils/firebase";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import CommentButton from "@/components/posts/CommentButton";
 import Video from "@/components/posts/Video";
+import { getRelativeTime } from "@/utils/index";
+import { usePost } from "@/hooks/usePost";
+import { useUser } from "@/hooks/useUser";
 
 const PostView = () => {
   const params = useParams();
   const postId = params.postId;
   const username = params.user;
 
-  const [post, setPost] = useState({} as any);
-  const [fetchedUser, setFetchedUser] = useState({} as any);
+  const { data: post, loading: loadingPost } = usePost(postId as string);
+  const { data: user, loading: loadingUser } = useUser(username as string);
 
   const router = useRouter();
-
-  const getPost = async (postId: string) => {
-    setPost({});
-    const postSnap = await getDoc(doc(db, "posts", postId));
-    if (postSnap.exists()) {
-      setPost(postSnap.data());
-    } else {
-      console.log("document does not exist");
-    }
+  const goToPage = () => {
+    router.push(`/${user.username}`);
   };
-
-  const getUser = async () => {
-    const q = query(collection(db, "users"), where("username", "==", username));
-    const usersSnapshot = await getDocs(q);
-    usersSnapshot.forEach((doc) => {
-      setFetchedUser(doc.data());
-    });
-  };
-
-  useEffect(() => {
-    getPost(postId as string);
-    getUser();
-  }, [username]);
-
   const renderVideo = (video: string) => {
     return <Video video={video} isBigVideo />;
-  };
-
-  const goToPage = () => {
-    router.push(`/${fetchedUser.username}`);
   };
 
   return (
@@ -75,36 +43,45 @@ const PostView = () => {
 
         {/* USER AND COMMENTS SECTION */}
         <div className="relative top-20 h-full w-[40%] min-w-72 ">
-          <div className="flex flex-col py-2 px-4 m-2 border-b-2 border-b-gray-1">
-            <div className="flex justify-between mb-4">
-              <div className="flex gap-2 items-center">
-                <div className="min-w-20 rounded-full overflow-hidden">
-                  <Image
-                    src={post.userInfo?.photoURL}
-                    alt="User profile photo"
-                    width={60}
-                    height={60}
-                    className="object-fit"
-                  />
-                </div>
-                <div>
-                  <p
-                    onClick={goToPage}
-                    className="text-lg font-semibold hover:underline hover:cursor-pointer"
-                  >
-                    {post.userInfo?.displayName}
-                  </p>
-                  <p className="text-zinc-500">@{post.userInfo?.username}</p>
+          {loadingPost ? (
+            <div>loading...</div>
+          ) : (
+            <div className="flex flex-col py-2 px-4 m-2 border-b-2 border-b-gray-1">
+              <div className="flex justify-between mb-4">
+                <div className="flex gap-2 items-center">
+                  <div className="min-w-20 rounded-full overflow-hidden">
+                    <Image
+                      src={post.userInfo?.photoURL}
+                      alt="User profile photo"
+                      width={60}
+                      height={60}
+                      className="object-fit"
+                    />
+                  </div>
+                  <div>
+                    <p
+                      onClick={goToPage}
+                      className="text-xl font-semibold hover:underline hover:cursor-pointer"
+                    >
+                      {post.userInfo?.displayName}
+                    </p>
+                    <p className="text-zinc-500">
+                      @{post.userInfo?.username}{" "}
+                      <span className="text-xs text-zinc-500">
+                        • {getRelativeTime(post.timestamp?.seconds)}
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <p>{post.caption}</p>
+              <p>{post.caption}</p>
 
-            <div className="flex gap-4 my-4 text-sm font-semibold">
-              <LikePostButton postId={post.postId} userId={fetchedUser.uid} />
-              <CommentButton postId={post.postId} onClick={() => {}} />
+              <div className="flex gap-4 my-4 text-sm font-semibold">
+                <LikePostButton postId={post.postId} userId={user.uid} />
+                <CommentButton postId={post.postId} onClick={() => {}} />
+              </div>
             </div>
-          </div>
+          )}
           <CommentFeed post={post} />
         </div>
       </div>
