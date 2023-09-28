@@ -88,8 +88,6 @@ const UserBio = ({
             <EditModal
               isOpen={openEditModal}
               closeModal={() => setOpenEditModal(false)}
-              user={user}
-              // href={"/upload"}
             />
           </Dialog.Panel>
         </div>

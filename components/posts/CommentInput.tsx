@@ -1,6 +1,7 @@
 "use client";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { CommentInputProps } from "@/types";
+import { sendNotification } from "@/utils/index";
 import { db } from "@/utils/firebase";
 import {
   doc,
@@ -13,23 +14,9 @@ import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 const CommentInput = ({ postId, postUserId }: CommentInputProps) => {
-  const [currentUsername, setCurrentUsername] = useState("");
   const [comment, setComment] = useState("");
 
   const { currentUser } = useCurrentUser();
-
-  const getCurrentUsername = async () => {
-    if (currentUser) {
-      const userRef = doc(db, "users", currentUser.uid);
-      await getDoc(userRef).then((doc) => {
-        setCurrentUsername(doc.data()?.username);
-      });
-    }
-  };
-
-  useEffect(() => {
-    getCurrentUsername();
-  }, [currentUser]);
 
   const handlePostComment = async () => {
     try {
@@ -43,12 +30,12 @@ const CommentInput = ({ postId, postUserId }: CommentInputProps) => {
           userInfo: {
             userId: currentUser.uid,
             displayName: currentUser.displayName,
-            username: currentUsername,
+            username: currentUser.username,
             photoURL: currentUser.photoURL,
           },
         });
         if (currentUser.uid !== postUserId) {
-          handleNotification();
+          sendNotification(currentUser, postUserId, "comment", postId, comment);
         }
       }
     } catch (error) {
@@ -56,44 +43,6 @@ const CommentInput = ({ postId, postUserId }: CommentInputProps) => {
     }
     setComment("");
     alert(`comment: "${comment}" posted successfully`);
-  };
-
-  const handleNotification = async () => {
-    const recipientUserRef = doc(db, "users", postUserId);
-    if (currentUser) {
-      const notificationId = uuid();
-      const notificationRef = doc(
-        db,
-        "users",
-        postUserId,
-        "notifications",
-        notificationId
-      );
-      const notificationSnapshot = await getDoc(notificationRef);
-      if (notificationSnapshot.data()?.notificationId === notificationId) {
-        console.log(notificationSnapshot.data());
-        await updateDoc(notificationRef, { isRead: true });
-      } else {
-        const postRef = doc(db, "posts", postId);
-        const postSnapshot = await getDoc(postRef);
-
-        await setDoc(doc(recipientUserRef, "notifications", notificationId), {
-          displayName: currentUser.displayName,
-          username: currentUsername,
-          photoURL: currentUser.photoURL,
-          type: "comment",
-          isRead: false,
-          postId: postId,
-          postData: {
-            caption: postSnapshot.data()?.caption,
-          },
-          comment: comment,
-          timestamp: serverTimestamp(),
-        });
-
-        await updateDoc(recipientUserRef, { hasNotification: true });
-      }
-    }
   };
 
   return (

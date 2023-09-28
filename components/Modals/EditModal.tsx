@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 
-const EditModal = ({ isOpen, closeModal, user }: ModalProps) => {
+const EditModal = ({ closeModal }: ModalProps) => {
   const { currentUser } = useCurrentUser();
   const router = useRouter();
 
@@ -51,7 +51,7 @@ const EditModal = ({ isOpen, closeModal, user }: ModalProps) => {
               photoURL: downloadURL,
             });
 
-            updateDoc(doc(db, "users", user.uid), {
+            updateDoc(doc(db, "users", currentUser.uid), {
               photoURL: downloadURL,
             });
           });
@@ -61,9 +61,9 @@ const EditModal = ({ isOpen, closeModal, user }: ModalProps) => {
       await updateProfile(currentUser, {
         displayName: name,
       });
-      const response = await getDoc(doc(db, "users", user.uid));
+      const response = await getDoc(doc(db, "users", currentUser.uid));
       if (response.exists()) {
-        await updateDoc(doc(db, "users", user.uid), {
+        await updateDoc(doc(db, "users", currentUser.uid), {
           displayName: name,
           username: username,
           bio: bio,
@@ -82,11 +82,11 @@ const EditModal = ({ isOpen, closeModal, user }: ModalProps) => {
   };
 
   useEffect(() => {
-    setName(user?.displayName as string);
-    setUsername(user?.username as string);
-    setProfileImage(user?.photoURL as string);
-    setBio(user?.bio as string);
-    setWebsite(user?.website as string);
+    setName(currentUser?.displayName as string);
+    setUsername(currentUser?.username as string);
+    setProfileImage(currentUser?.photoURL as string);
+    setBio(currentUser?.bio as string);
+    setWebsite(currentUser?.website as string);
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, []);
 
@@ -185,7 +185,6 @@ const EditModal = ({ isOpen, closeModal, user }: ModalProps) => {
         <button
           className="border-2 border-gray-2 w-40 hover:border-primary py-2 rounded-md"
           onClick={handleEditProfile}
-          // disabled={!caption}
         >
           Edit
         </button>

@@ -1,10 +1,9 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { NotificationsItemProps } from "@/types";
-import { db } from "@/utils/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { getRelativeTime } from "@/utils/index";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaComment } from "react-icons/fa";
@@ -18,46 +17,8 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
   }, [notification.username]);
 
   const goToPost = useCallback(async () => {
-    if (currentUser) {
-      const currentUsernameRef = doc(db, "users", currentUser?.uid);
-      const currentUsernameSnapshot = await getDoc(currentUsernameRef);
-
-      router.push(
-        `/${currentUsernameSnapshot.data()?.username}/videos/${
-          notification.postId
-        }`
-      );
-    }
+    router.push(`/${currentUser.username}/videos/${notification.postId}`);
   }, [currentUser, notification.postId]);
-
-  const getRelativeTime = () => {
-    const date = new Date();
-    const timestamp = date.getTime();
-    const seconds = Math.floor(timestamp / 1000);
-    const difference = seconds - notification.timestamp?.seconds;
-    let output = "";
-
-    if (difference < 60) {
-      // Less than a minute has passed:
-      output = `${difference} seconds ago`;
-    } else if (difference < 3600) {
-      // Less than an hour has passed:
-      output = `${Math.floor(difference / 60)} minutes ago`;
-    } else if (difference < 86400) {
-      // Less than a day has passed:
-      output = `${Math.floor(difference / 3600)} hours ago`;
-    } else if (difference < 2620800) {
-      // Less than a month has passed:
-      output = `${Math.floor(difference / 86400)} days ago`;
-    } else if (difference < 31449600) {
-      // Less than a year has passed:
-      output = `${Math.floor(difference / 2620800)} months ago`;
-    } else {
-      // More than a year has passed:
-      output = `${Math.floor(difference / 31449600)} years ago`;
-    }
-    return output;
-  };
 
   if (notification.type === "follow") {
     return (
@@ -148,7 +109,9 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
               {notification.displayName}
             </span>
             commented on your post
-            <span className="text-xs text-gray-2">• {getRelativeTime()}</span>
+            <span className="text-xs text-gray-2">
+              • {getRelativeTime(notification.timestamp)}
+            </span>
           </div>
           <div className="mt-2 text-gray-2">
             <p className="text-sm">{notification.postData?.caption}</p>

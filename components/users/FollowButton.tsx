@@ -1,20 +1,17 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { useCurrentUsername } from "@/hooks/useCurrentUsername";
 import { FollowButtonProps } from "@/types";
+import { sendNotification } from "@/utils/index";
 import { db } from "@/utils/firebase";
 import {
   collection,
   deleteDoc,
   doc,
-  getDoc,
   query,
-  serverTimestamp,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { v4 as uuid } from "uuid";
 
 const FollowButton = ({
   user,
@@ -22,16 +19,6 @@ const FollowButton = ({
   setIsFollowing,
 }: FollowButtonProps) => {
   const { currentUser } = useCurrentUser();
-  const [currentUsername, setCurrentUsername] = useState("");
-
-  const getCurrentUsername = async () => {
-    if (currentUser) {
-      const userRef = doc(db, "users", currentUser.uid);
-      await getDoc(userRef).then((doc) => {
-        setCurrentUsername(doc.data()?.username);
-      });
-    }
-  };
 
   const q = query(collection(db, `users/${currentUser?.uid}/following`));
   const [following] = useCollectionData(q);
@@ -71,11 +58,11 @@ const FollowButton = ({
         await setDoc(doc(followedUserRef, "followers", currentUser.uid), {
           displayName: currentUser.displayName,
           photoURL: currentUser.photoURL,
-          username: currentUsername,
+          username: currentUser.username,
           uid: currentUser.uid,
         });
 
-        handleFollowNotification();
+        sendNotification(currentUser, user.uid, "follow");
 
         await updateDoc(followedUserRef, { hasNotification: true });
         console.log("followed user");
@@ -84,36 +71,7 @@ const FollowButton = ({
     }
   };
 
-  const handleFollowNotification = async () => {
-    const recipientUserRef = doc(db, "users", user.uid);
-
-    if (currentUser) {
-      const notificationId = uuid();
-      const notificationRef = doc(
-        recipientUserRef,
-        "notifications",
-        notificationId
-      );
-      const notificationSnapshot = await getDoc(notificationRef);
-      if (notificationSnapshot.data()?.notificationId === notificationId) {
-        await updateDoc(notificationRef, { isRead: true });
-        console.log("Followed user before, they won't get a notification");
-      } else {
-        await setDoc(doc(recipientUserRef, "notifications", notificationId), {
-          displayName: currentUser.displayName,
-          username: currentUsername,
-          photoURL: currentUser.photoURL,
-          type: "follow",
-          isRead: false,
-          timestamp: serverTimestamp(),
-        });
-        console.log("notification sent");
-      }
-    }
-  };
-
   useEffect(() => {
-    getCurrentUsername();
     handleFollowingCheck();
   }, [user.uid]);
   return (

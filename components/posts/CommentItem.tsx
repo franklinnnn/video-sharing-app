@@ -53,7 +53,7 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
                 commentId={comment.commentId}
               />
             </div>
-            <div>Reply</div>
+            {/* <div>Reply</div> */}
           </div>
           {currentUser && currentUser.uid === comment.userInfo.userId && (
             <AiFillDelete

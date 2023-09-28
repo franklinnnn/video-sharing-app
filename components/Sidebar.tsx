@@ -16,6 +16,8 @@ const Sidebar = () => {
   const { currentUser } = useCurrentUser();
   const [openLogin, setOpenLogin] = useState(false);
 
+  console.log(currentUser);
+
   const sidebarItems = [
     {
       label: "Home",

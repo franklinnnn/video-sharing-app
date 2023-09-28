@@ -16,18 +16,8 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 
 const FollowersItem = ({ user }: FollowersItemProps) => {
   const [isFollowing, setIsFollowing] = useState(false);
-  const [currentUsername, setCurrentUsername] = useState("");
 
   const { currentUser } = useCurrentUser();
-
-  const getCurrentUsername = async () => {
-    if (currentUser) {
-      const userRef = doc(db, "users", currentUser.uid);
-      await getDoc(userRef).then((doc) => {
-        setCurrentUsername(doc.data()?.username);
-      });
-    }
-  };
 
   const q = query(collection(db, `users/${currentUser?.uid}/following`));
   const [following] = useCollectionData(q);
@@ -67,7 +57,7 @@ const FollowersItem = ({ user }: FollowersItemProps) => {
         await setDoc(doc(followedUserRef, "followers", currentUser.uid), {
           displayName: currentUser.displayName,
           photoURL: currentUser.photoURL,
-          username: currentUsername,
+          username: currentUser.username,
           uid: currentUser.uid,
         });
         console.log("followed user");
@@ -77,7 +67,6 @@ const FollowersItem = ({ user }: FollowersItemProps) => {
   };
 
   useEffect(() => {
-    getCurrentUsername();
     handleFollowingCheck();
   }, [user]);
 

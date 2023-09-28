@@ -6,7 +6,6 @@ import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import LoginModal from "./Modals/LoginModal";
 import { useAuth } from "@/hooks/useAuth";
-import useCurrentUser from "@/hooks/useCurrentUser";
 
 const NavbarUser = () => {
   const { user, loading, error } = useAuth();

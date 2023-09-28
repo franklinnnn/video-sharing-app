@@ -18,11 +18,11 @@ const SidebarItem = ({
   const router = useRouter();
 
   const handleClick = useCallback(() => {
-    if (!currentUser) {
+    if (currentUser.uid) {
+      router.push(href);
+    } else {
       openModal();
       console.log("open login modal");
-    } else if (href) {
-      router.push(href);
     }
   }, [router, href, currentUser, openModal]);
 

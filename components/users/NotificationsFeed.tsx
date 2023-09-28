@@ -23,7 +23,7 @@ const NotificationsFeed = () => {
   const [notifications] = useCollectionData(notificationsQuery);
 
   const readNotifications = async () => {
-    if (currentUser) {
+    if (currentUser.uid) {
       const userRef = doc(db, "users", currentUser.uid);
       const userSnapshot = await getDoc(userRef);
       if (userSnapshot.data()) {

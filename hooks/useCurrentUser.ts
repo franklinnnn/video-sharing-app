@@ -23,7 +23,7 @@ const useCurrentUser = () => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [user]);
 
   return { currentUser, loading, error };
 };

@@ -17,37 +17,16 @@ const LikeCommentButton = ({ postId, commentId }: LikeCommentButtonProps) => {
   const handleLikeComment = async () => {
     const commentRef = doc(db, "posts", postId, "comments", commentId);
 
-    if (currentUser) {
+    if (currentUser.uid) {
       if (likedComment) {
-        await deleteDoc(
-          doc(
-            db,
-            "posts",
-            postId,
-            "comments",
-            commentId,
-            "likes",
-            currentUser.uid
-          )
-        );
+        await deleteDoc(doc(commentRef, "likes", currentUser.uid));
         console.log("unliked comment");
         setLikedComment((current) => !current);
       } else {
-        await setDoc(
-          doc(
-            db,
-            "posts",
-            postId,
-            "comments",
-            commentId,
-            "likes",
-            currentUser.uid
-          ),
-          {
-            displayName: currentUser.displayName,
-            uid: currentUser.uid,
-          }
-        );
+        await setDoc(doc(commentRef, "likes", currentUser.uid), {
+          displayName: currentUser.displayName,
+          uid: currentUser.uid,
+        });
 
         console.log("liked comment");
         setLikedComment((current) => !current);
