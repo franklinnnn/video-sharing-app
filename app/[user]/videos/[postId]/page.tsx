@@ -9,6 +9,7 @@ import Video from "@/components/posts/Video";
 import { getRelativeTime } from "@/utils/index";
 import { usePost } from "@/hooks/usePost";
 import { useUser } from "@/hooks/useUser";
+import { ToastContainer } from "react-toastify";
 
 const PostView = () => {
   const params = useParams();

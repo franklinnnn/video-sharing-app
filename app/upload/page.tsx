@@ -15,26 +15,17 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import { useRouter } from "next/navigation";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 const Upload = () => {
+  const { currentUser } = useCurrentUser();
   const [loading, setLoading] = useState(false);
   const [caption, setCaption] = useState("");
-  const [openConfirm, setOpenConfirm] = useState(false);
-  const [fetchedUser, setFetchedUser] = useState({} as any);
+  const [openConfirmCancel, setOpenConfirmCancel] = useState(false);
   const [files, setFiles] = useState<any[]>([]);
 
-  const { currentUser } = useCurrentUser();
-
-  const getUser = async (userId: string) => {
-    const userRef = doc(db, "users", userId);
-    const userSnap = await getDoc(userRef);
-
-    if (userSnap.exists()) {
-      setFetchedUser(userSnap.data());
-    } else {
-      console.log("no document");
-    }
-  };
+  const router = useRouter();
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -55,14 +46,13 @@ const Upload = () => {
 
   useEffect(() => {
     handleFiles();
-    getUser(currentUser?.uid as string);
   }, []);
 
-  const handleCancel = async () => {
+  const handleCancelUpload = async () => {
     setFiles([]);
     setLoading(false);
     setCaption("");
-    setOpenConfirm(false);
+    setOpenConfirmCancel(false);
   };
 
   const handleUpload = async () => {
@@ -72,10 +62,10 @@ const Upload = () => {
         caption: caption,
         timestamp: serverTimestamp(),
         userInfo: {
-          userId: fetchedUser.uid,
-          displayName: fetchedUser.displayName,
-          username: fetchedUser.username,
-          photoURL: fetchedUser.photoURL,
+          userId: currentUser.uid,
+          displayName: currentUser.displayName,
+          username: currentUser.username,
+          photoURL: currentUser.photoURL,
         },
       });
 
@@ -98,6 +88,14 @@ const Upload = () => {
       setFiles([]);
       setCaption("");
       setLoading(false);
+    }
+  };
+
+  const handleCancel = () => {
+    if (caption) {
+      setOpenConfirmCancel(true);
+    } else {
+      router.back();
     }
   };
 
@@ -130,7 +128,7 @@ const Upload = () => {
                   <p>MP4 or WebM</p>
                   <p>Less than 500MB</p>
                 </div>
-                <button className="bg-primary text-white w-40 p-2 rounded-md">
+                <button className="bg-primary hover:bg-primary/75 text-white w-40 py-2 rounded-md">
                   Select file
                 </button>
               </div>
@@ -152,7 +150,7 @@ const Upload = () => {
               ))}
             </div>
             <div {...getRootProps({ className: "dropzone" })}>
-              <button className="bg-primary text-white w-40 p-2 rounded-md">
+              <button className="bg-primary hover:bg-primary/75 text-white w-40 py-2 rounded-md">
                 Change file
               </button>
             </div>
@@ -171,13 +169,13 @@ const Upload = () => {
 
       <div className="flex justify-center items-center gap-4 w-full my-4">
         <button
-          className="border-2 w-40 border-gray-2 hover:border-gray-1 py-2 rounded-md"
-          onClick={() => setOpenConfirm(true)}
+          className="bg-primary hover:bg-primary/75 text-white w-40 py-2 rounded-md"
+          onClick={handleCancel}
         >
           Cancel
         </button>
         <button
-          className="border-2 w-40 border-gray-2 hover:border-gray-1 py-2 rounded-md"
+          className="bg-primary hover:bg-primary/75 text-white w-40 py-2 rounded-md"
           onClick={handleUpload}
           disabled={!caption}
         >
@@ -186,26 +184,31 @@ const Upload = () => {
       </div>
 
       <Dialog
-        open={openConfirm}
-        onClose={handleCancel}
+        open={openConfirmCancel}
+        onClose={() => setOpenConfirmCancel(false)}
         className="relative z-20"
       >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
 
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel>
-            <div className="flex flex-col items-center justify-center gap-4 bg-zinc-800 rounded-md p-4 w-full md:w-[24rem]">
-              <p className="text-2xl font-semibold">Discard upload?</p>
+            <div className="relative flex flex-col justify-center items-center gap-4 w-72 md:w-96 h-72 bg-white px-6 py-12 rounded-m">
+              <AiFillCloseCircle
+                size={30}
+                className="absolute right-2 top-2 hover:cursor-pointer text-gray-2 hover:text-gray-2/75 transition"
+                onClick={() => setOpenConfirmCancel(false)}
+              />
+              <p className="text-xl font-semibold">Discard upload?</p>
               <div className="flex gap-4">
                 <button
-                  onClick={() => setOpenConfirm(false)}
-                  className="px-4 p-2 bg-zinc-900 rounded-md"
+                  onClick={() => setOpenConfirmCancel(false)}
+                  className="bg-primary hover:bg-primary/75 text-white w-24 py-2 rounded-md"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={handleCancel}
-                  className="px-4 p-2 bg-zinc-900 rounded-md"
+                  onClick={handleCancelUpload}
+                  className="bg-red-500/90 hover:bg-red-500 text-white w-24 py-2 rounded-md"
                 >
                   Discard
                 </button>

@@ -3,15 +3,11 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { CommentInputProps } from "@/types";
 import { sendNotification } from "@/utils/index";
 import { db } from "@/utils/firebase";
-import {
-  doc,
-  getDoc,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { useState } from "react";
 import { v4 as uuid } from "uuid";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CommentInput = ({ postId, postUserId }: CommentInputProps) => {
   const [comment, setComment] = useState("");
@@ -42,22 +38,26 @@ const CommentInput = ({ postId, postUserId }: CommentInputProps) => {
       console.log(error);
     }
     setComment("");
-    alert(`comment: "${comment}" posted successfully`);
+    toast.success("Comment posted 👍");
   };
 
   return (
-    <div className="fixed bottom-0 right-0 flex gap-2 justify-around items-center w-[40%] p-4 bg-gray-1 z-10">
+    <div className="fixed bottom-0 right-0 flex gap-2 justify-around items-center w-[40%] p-4 border-t-2 border-gray-1 z-10">
       <input
         type="text"
-        placeholder="Add comment..."
+        placeholder="Add a comment..."
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        className="text-lg w-full bg-white outline-none px-2 py-1 rounded-md"
+        className="text-lg w-full bg-white outline-none px-2 py-1 border-b-2 focus:border-primary transition"
       />
       <button
         onClick={handlePostComment}
         disabled={!comment}
-        className="border-2 border-primary rounded-md px-2 py-1 hover:bg-primary hover:text-white transition"
+        className={`border-2 rounded-md px-2 py-1 ${
+          !comment
+            ? "bg-gray-2 border-gray-2"
+            : "bg-primary border-primary hover:bg-primary/75"
+        } text-white transition`}
       >
         Post
       </button>

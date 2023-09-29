@@ -7,6 +7,8 @@ import { AiFillDelete } from "react-icons/ai";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { getRelativeTime } from "@/utils/index";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CommentItem = ({ postId, comment }: CommentItemProps) => {
   const { currentUser } = useCurrentUser();
@@ -19,7 +21,7 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
   const handleDeleteComment = async () => {
     const commentRef = doc(db, "posts", postId, "comments", comment.commentId);
     await deleteDoc(commentRef);
-    alert("comment deleted");
+    toast.success("Comment deleted ❌");
   };
 
   return (

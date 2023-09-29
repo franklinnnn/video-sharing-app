@@ -12,6 +12,7 @@ import {
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import NotificationsItem from "./NotificationsItem";
 import { useEffect } from "react";
+import { useNotifications } from "@/hooks/useNotifications";
 
 const NotificationsFeed = () => {
   const { currentUser } = useCurrentUser();
@@ -21,6 +22,10 @@ const NotificationsFeed = () => {
     orderBy("timestamp", "desc")
   );
   const [notifications] = useCollectionData(notificationsQuery);
+
+  const { data } = useNotifications(currentUser.uid as string);
+
+  console.log(data);
 
   const readNotifications = async () => {
     if (currentUser.uid) {

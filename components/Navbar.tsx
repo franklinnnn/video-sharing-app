@@ -1,6 +1,7 @@
 import Search from "./Search";
 import NavbarLogo from "./NavbarLogo";
 import NavbarUser from "./NavbarUser";
+import { ToastContainer, Slide } from "react-toastify";
 
 const Navbar = () => {
   return (
@@ -8,6 +9,19 @@ const Navbar = () => {
       <NavbarLogo />
       <Search />
       <NavbarUser />
+
+      <ToastContainer
+        position="top-center"
+        autoClose={2500}
+        hideProgressBar={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Slide}
+        theme="light"
+      />
     </div>
   );
 };

@@ -72,9 +72,14 @@ const UserBio = ({
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-md">{user.bio}</p>
-        <Link href="" className="text-sm font-semibold hover:underline">
+        <a
+          href={user.website}
+          className="text-sm font-semibold hover:underline"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           {user.website}
-        </Link>
+        </a>
       </div>
 
       <Dialog
