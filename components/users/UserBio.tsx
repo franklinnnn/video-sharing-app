@@ -39,10 +39,10 @@ const UserBio = ({
           <h1 className="text-4xl font-semibold font-display">
             {user.displayName}
           </h1>
-          <p className="text-zinc-500 text-lg -mt-4">@{user?.username}</p>
+          <p className="text-primary/80 text-lg -mt-4">@{user?.username}</p>
           {currentUser?.uid === user.uid ? (
             <button
-              className="py-1 px-6 object-fit border-2 font-semibold border-primary rounded-md hover:bg-gray-1 transition"
+              className="py-1 px-6 object-fit border-2 font-semibold border-primary rounded-md hover:bg-primary/20 transition"
               onClick={() => setOpenEditModal(true)}
             >
               Edit
@@ -56,7 +56,7 @@ const UserBio = ({
           )}
         </div>
       </div>
-      <div className="flex flex-row gap-6 my-2 text-sm md:text-base text-zinc-500">
+      <div className="flex flex-row gap-6 my-2 text-sm md:text-base">
         <div
           onClick={() => setActiveTab("Followers")}
           className="hover:underline hover:cursor-pointer"
@@ -87,7 +87,7 @@ const UserBio = ({
         onClose={() => setOpenEditModal(false)}
         className="relative z-20"
       >
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <div className="fixed inset-0 bg-primary/20" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel>
             <EditModal

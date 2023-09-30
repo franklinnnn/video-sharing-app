@@ -65,10 +65,10 @@ const LoginModal = ({ isOpen, closeModal, href }: ModalProps) => {
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel>
-            <div className="relative flex flex-col justify-center items-center gap-6 bg-white w-72 md:w-96 h-72 rounded-md">
+            <div className="relative flex flex-col justify-center items-center gap-6 bg-main-light w-72 md:w-96 h-72 rounded-md">
               <AiFillCloseCircle
                 size={30}
-                className="absolute right-2 top-2 hover:cursor-pointer text-gray-2 hover:text-gray-2/75 transition"
+                className="absolute right-2 top-2 hover:cursor-pointer text-primary/30 hover:text-primary/40 transition"
                 onClick={closeModal}
               />
               <div className="flex justify-center">
@@ -79,7 +79,7 @@ const LoginModal = ({ isOpen, closeModal, href }: ModalProps) => {
               </div>
               <button
                 onClick={onSubmit}
-                className="flex justify-center items-center gap-2 bg-primary text-white font-semibold hover:bg-primary/75 p-4 rounded-md z-10"
+                className="flex justify-center items-center gap-2 bg-primary text-main-light font-semibold hover:bg-primary/80 p-4 rounded-md z-10"
               >
                 <FcGoogle />
                 Sign in with Google

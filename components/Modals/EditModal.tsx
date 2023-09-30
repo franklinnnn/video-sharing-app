@@ -103,14 +103,14 @@ const EditModal = ({ closeModal }: ModalProps) => {
   }, [currentUser]);
 
   return (
-    <div className="w-screen md:w-[50rem] bg-white px-4 py-2 rounded-md">
+    <div className="w-screen md:w-[50rem] bg-main-light px-4 py-2 rounded-md">
       <div className="relative flex flex-col gap-4">
         <AiFillCloseCircle
           size={30}
-          className="absolute right-2 top-2 hover:cursor-pointer text-gray-2 hover:text-gray-2/75 transition"
+          className="absolute right-2 top-2 hover:cursor-pointer text-primary/30 hover:text-primary/40 transition"
           onClick={closeModal}
         />
-        <h1 className="text-2xl font-semibold py-4 border-b border-gray-2">
+        <h1 className="text-2xl font-semibold py-4 border-b-2 border-primary/20">
           Edit profile
         </h1>
         <div className="flex items-center justify-center py-6 ">
@@ -121,7 +121,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
             <div className="absolute top-0 left-0 bottom-0 right-0 m-auto w-full h-full flex items-center justify-center p-6 rounded-full">
               <MdOutlineAddAPhoto
                 size={60}
-                className="bg-gray-2/50 hover:bg-gray-1/50 p-4 rounded-full cursor-pointer transition"
+                className="text-primary bg-main-light/40 hover:bg-main-light/50 p-4 rounded-full cursor-pointer transition"
               />
             </div>
             {files.length < 1 ? (
@@ -151,7 +151,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
             )}
           </div>
         </div>
-        <div className="p-4 border-2 border-gray-2 rounded-md focus-within:border-primary transition">
+        <div className="p-4 border-2 border-primary/20 rounded-md focus-within:border-primary transition">
           <input
             type="text"
             placeholder={displayName}
@@ -160,7 +160,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
             className="text-xl w-full bg-inherit outline-none"
           />
         </div>
-        <div className="flex flex-row items-center p-4 border-2 border-gray-2 rounded-md focus-within:border-primary transition">
+        <div className="flex flex-row items-center p-4 border-2 border-primary/20 rounded-md focus-within:border-primary transition">
           <span className="text-xl text-zinc-600">@</span>
           <input
             type="text"
@@ -170,7 +170,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
             className="text-xl w-full bg-inherit outline-none"
           />
         </div>
-        <div className="p-4 border-2 border-gray-2 rounded-md focus-within:border-primary transition">
+        <div className="p-4 border-2 border-primary/20 rounded-md focus-within:border-primary transition">
           <textarea
             name=""
             id=""
@@ -182,7 +182,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
             className="text-xl w-full bg-inherit outline-none resize-none"
           ></textarea>
         </div>
-        <div className="p-4 border-2 border-gray-2 rounded-md focus-within:border-primary transition">
+        <div className="p-4 border-2 border-primary/20 rounded-md focus-within:border-primary transition">
           <input
             type="url"
             placeholder={website ? website : ""}
@@ -192,15 +192,15 @@ const EditModal = ({ closeModal }: ModalProps) => {
           />
         </div>
       </div>
-      <div className="flex justify-center items-center gap-4 w-full my-6 pt-6 border-t-2 border-gray-2">
+      <div className="flex justify-center items-center gap-4 w-full my-6 pt-6 border-t-2 border-primary/20 text-main-light font-semibold">
         <button
-          className="bg-primary hover:bg-primary/75 text-white w-40 py-2 rounded-md"
+          className="bg-primary hover:bg-primary/80 w-40 py-2 rounded-md"
           onClick={closeModal}
         >
           Cancel
         </button>
         <button
-          className="bg-primary hover:bg-primary/75 text-white w-40 py-2 rounded-md"
+          className="bg-primary hover:bg-primary/80 w-40 py-2 rounded-md"
           onClick={handleEditProfile}
         >
           Edit

@@ -42,22 +42,20 @@ const CommentInput = ({ postId, postUserId }: CommentInputProps) => {
   };
 
   return (
-    <div className="fixed bottom-0 right-0 flex gap-2 justify-around items-center w-[40%] p-4 border-t-2 border-gray-1 z-10">
+    <div className="fixed bottom-0 right-0 flex gap-2 justify-around items-center w-[40%] p-4 border-t-2 border-primary/20 z-10">
       <input
         type="text"
         placeholder="Add a comment..."
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        className="text-lg w-full bg-white outline-none px-2 py-1 border-b-2 focus:border-primary transition"
+        className="text-lg w-full bg-main-light outline-none px-2 py-1 border-b-2 border-primary/20 focus:border-primary transition"
       />
       <button
         onClick={handlePostComment}
         disabled={!comment}
-        className={`border-2 rounded-md px-2 py-1 ${
-          !comment
-            ? "bg-gray-2 border-gray-2"
-            : "bg-primary border-primary hover:bg-primary/75"
-        } text-white transition`}
+        className={`rounded-md px-3 py-2 ${
+          !comment ? "bg-primary/30 " : "bg-primary hover:bg-primary/80"
+        } text-main-light font-semibold transition`}
       >
         Post
       </button>

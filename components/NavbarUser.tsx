@@ -36,7 +36,7 @@ const NavbarUser = () => {
       <div className="flex justify-end gap-2 w-full">
         <button
           onClick={handleUpload}
-          className="flex justify-center items-center gap-2 border-2 border-primary text-primary-dark py-2 rounded-lg h-12 w-12 md:w-36 px-2 font-semibold hover:bg-primary hover:text-white transition"
+          className="flex justify-center items-center gap-2 border-2 border-primary text-main-dark py-2 rounded-lg h-12 w-12 md:w-36 px-2 font-semibold hover:bg-primary hover:text-main-light transition"
         >
           <AiOutlinePlus size={20} />{" "}
           <span className="hidden md:block">Upload</span>
@@ -46,17 +46,17 @@ const NavbarUser = () => {
           <div className="flex items-center justify-center gap-4 h-12 w-12">
             <Image
               src={user?.photoURL as string}
-              width={50}
-              height={50}
+              width={52}
+              height={52}
               alt={user?.displayName as string}
-              className="object-fit rounded-full hover:cursor-pointer"
+              className="object-fit rounded-full hover:cursor-pointer border-[3px] border-primary"
               onClick={handleLogout}
             />
           </div>
         ) : (
           <button
             onClick={() => setOpenLogin(true)}
-            className="bg-primary text-white py-2 rounded-lg w-36 px-2"
+            className="bg-primary text-main-light py-2 rounded-lg w-36 px-2"
           >
             Login
           </button>

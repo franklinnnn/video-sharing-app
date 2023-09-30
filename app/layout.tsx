@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-white text-zinc-800">
+      <body className="bg-main-light text-main-dark">
         <AuthProvider>
           <div className="container grid grid-cols-4 justify-center mt-16 mx-auto max-w-3xl">
             <div className="col-span-1 flex justify-center">

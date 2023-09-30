@@ -43,14 +43,16 @@ const NotificationsFeed = () => {
   });
 
   return (
-    <div>
+    <section>
       {notifications?.map((notification) => (
-        <NotificationsItem
-          key={notification.notificationId}
-          notification={notification}
-        />
+        <div key={notification.notificationId}>
+          <NotificationsItem
+            key={notification.notificationId}
+            notification={notification}
+          />
+        </div>
       ))}
-    </div>
+    </section>
   );
 };
 export default NotificationsFeed;

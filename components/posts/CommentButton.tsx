@@ -14,7 +14,7 @@ const CommentButton = ({ postId, onClick }: CommentButtonProps) => {
         onClick={onClick}
         className={`group flex gap-2 items-center justify-center transition`}
       >
-        <div className="flex items-center justify-center w-8 h-8 rounded-full p-1 bg-gray-1 group-hover:bg-gray-2">
+        <div className="flex items-center justify-center w-8 h-8 rounded-full p-1 bg-primary/10 group-hover:bg-primary/20">
           <FaComment />
         </div>
         <span>{comments?.length}</span>

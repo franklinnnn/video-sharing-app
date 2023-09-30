@@ -77,16 +77,16 @@ const FollowButton = ({
   return (
     <button
       onClick={handleFollow}
-      className={`py-1 px-6 object-fit border-2  rounded-md  transition 
+      className={`py-1 px-6 object-fit border-2 rounded-md transition 
         ${
           isFollowing
-            ? "bg-primary border-primary text-white font-semibold hover:bg-transparent hover:border-red-500 hover:text-red-500"
-            : "border-zinc-200 hover:bg-zinc-700/60"
+            ? "bg-primary border-primary text-main-light font-semibold hover:bg-transparent hover:border-red-500 hover:text-red-500"
+            : "border-primary/20 hover:bg-primary/10"
         }
         ${currentUser?.uid === user.uid ? "hidden" : "block"}
       `}
     >
-      {isFollowing ? "Unfollow" : "Follow"}
+      {isFollowing ? "Following" : "Follow"}
     </button>
   );
 };

@@ -41,7 +41,7 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
           >
             {comment.userInfo.displayName}
           </span>{" "}
-          <span className="text-xs text-zinc-500">
+          <span className="text-xs text-main-dark/60">
             {getRelativeTime(comment.timestamp?.seconds)}
           </span>
         </div>
@@ -60,7 +60,7 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
           {currentUser && currentUser.uid === comment.userInfo.userId && (
             <AiFillDelete
               size={12}
-              className="text-zinc-700 hover:text-red-500 hover:cursor-pointer"
+              className="text-main-dark hover:text-red-500 hover:cursor-pointer"
               onClick={handleDeleteComment}
             />
           )}

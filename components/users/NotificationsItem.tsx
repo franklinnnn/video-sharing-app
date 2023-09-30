@@ -25,7 +25,7 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
       <div
         key={notification.notificationId}
         onClick={goToUser}
-        className="flex gap-6 items-start py-4 border-b-2 border-gray-1 hover:cursor-pointer"
+        className="flex gap-6 items-start py-4 border-b-2 border-primary/20 hover:cursor-pointer"
       >
         <div className="flex justify-center w-8 text-primary">
           <BsFillPersonFill size={30} />
@@ -54,7 +54,7 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
       <div
         key={notification.notificationId}
         onClick={goToPost}
-        className="flex gap-6 items-start py-2 border-b-2 border-gray-1 hover:cursor-pointer"
+        className="flex gap-6 items-start py-2 border-b-2 border-primary/20 hover:cursor-pointer"
       >
         <div className="flex justify-center w-8 text-red-500">
           <AiFillHeart size={27} />
@@ -88,7 +88,7 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
       <div
         key={notification.notificationId}
         onClick={goToPost}
-        className="flex gap-6 items-start py-2 border-b-2 border-gray-1 hover:cursor-pointer"
+        className="flex gap-6 items-start py-2 border-b-2 border-primary/20 hover:cursor-pointer"
       >
         <div className="flex justify-center w-8 text-primary-light">
           <FaComment size={23} />

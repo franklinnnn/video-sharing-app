@@ -22,13 +22,13 @@ const LikesItem = ({ item }: LikesItemProps) => {
     <div
       key={item.postId}
       onClick={goToPost}
-      className="my-4 pb-6 border-b-2 border-gray-2 sm:border-transparent hover:cursor-pointer"
+      className="my-4 pb-6 border-b-2 border-primary/20 sm:border-transparent hover:cursor-pointer"
     >
       <video
         muted
         onMouseOver={handleOnMouseOver}
         onMouseOut={handleOnMouseOut}
-        className="rounded-md w-full aspect-[9/16] bg-black/20 focus:outline-none object-cover"
+        className="rounded-md w-full aspect-[9/16] bg-main-dark focus:outline-none object-cover"
       >
         <source src={item.video} type="video/mp4" />
       </video>

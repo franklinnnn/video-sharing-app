@@ -32,7 +32,7 @@ const PostView = () => {
       <div className="relative flex flex-row items-center justify-center h-full w-full">
         <div
           onClick={() => router.back()}
-          className="absolute top-20 left-0 bg-gray-1/50 rounded-full m-2 p-2 z-10 hover:bg-gray-2/50 hover:cursor-pointer transition"
+          className="absolute top-20 left-0 bg-main-light/40 hover:bg-main-light/50 rounded-full m-2 p-2 z-10 hover:cursor-pointer transition"
         >
           <MdClose size={24} />
         </div>
@@ -47,7 +47,7 @@ const PostView = () => {
           {loadingPost ? (
             <div>loading...</div>
           ) : (
-            <div className="flex flex-col py-2 px-4 m-2 border-b-2 border-b-gray-1">
+            <div className="flex flex-col py-2 px-4 m-2 border-b-2 border-b-primary/20">
               <div className="flex justify-between mb-4">
                 <div className="flex gap-2 items-center">
                   <div className="min-w-20 rounded-full overflow-hidden">

@@ -22,7 +22,7 @@ const Video = ({ video, isBigVideo }: VideoProps) => {
 
   return (
     <div
-      className={`w-full bg-black ${
+      className={`w-full bg-main-dark ${
         isBigVideo ? "rounded-none" : "rounded-md"
       }`}
     >
@@ -41,7 +41,7 @@ const Video = ({ video, isBigVideo }: VideoProps) => {
           <div className="flex items-center justify-between w-full">
             <button
               onClick={togglePlay}
-              className="bg-none border-none outline-none cursor-pointer px-1 text-white"
+              className="bg-none border-none outline-none cursor-pointer px-1 text-main-light"
             >
               {!playerState.isPlaying ? (
                 <BsFillPlayFill size={30} />
