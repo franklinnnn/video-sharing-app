@@ -72,6 +72,7 @@ export const sendNotification = async (
         caption: postCaption,
       },
       timestamp: serverTimestamp(),
+      notificationId: notificationId,
     });
     if (comment) {
       await updateDoc(notificationRef, { comment: comment });
@@ -80,10 +81,11 @@ export const sendNotification = async (
     await setDoc(notificationRef, {
       displayName: currentUser.displayName,
       username: currentUser.username,
-      photoUrl: currentUser.photoURL,
+      photoURL: currentUser.photoURL,
       type: notificationType,
       isRead: false,
       timestamp: serverTimestamp(),
+      notificationId: notificationId,
     });
   }
   await updateDoc(recipientUserRef, { hasNotification: true });

@@ -23,7 +23,6 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
   if (notification.type === "follow") {
     return (
       <div
-        key={notification.notificationId}
         onClick={goToUser}
         className="flex gap-6 items-start py-4 border-b-2 border-primary/20 hover:cursor-pointer"
       >
@@ -52,7 +51,6 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
   if (notification.type === "like") {
     return (
       <div
-        key={notification.notificationId}
         onClick={goToPost}
         className="flex gap-6 items-start py-2 border-b-2 border-primary/20 hover:cursor-pointer"
       >
@@ -86,7 +84,6 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
   if (notification.type === "comment") {
     return (
       <div
-        key={notification.notificationId}
         onClick={goToPost}
         className="flex gap-6 items-start py-2 border-b-2 border-primary/20 hover:cursor-pointer"
       >

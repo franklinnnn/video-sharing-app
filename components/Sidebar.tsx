@@ -16,8 +16,6 @@ const Sidebar = () => {
   const { currentUser } = useCurrentUser();
   const [openLogin, setOpenLogin] = useState(false);
 
-  console.log(currentUser);
-
   const sidebarItems = [
     {
       label: "Home",
@@ -51,7 +49,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="fixed flex flex-col gap-2 pt-12 z-1">
+    <aside className="fixed flex flex-col gap-2 pt-12 z-1">
       {sidebarItems.map((item) => (
         <SidebarItem
           key={item.label}
@@ -65,24 +63,12 @@ const Sidebar = () => {
         />
       ))}
 
-      <Dialog
-        open={openLogin}
-        onClose={() => setOpenLogin(false)}
-        className="relative z-20"
-      >
-        <div className="fixed inset-0 bg-main-dark" aria-hidden="true" />
-
-        <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel>
-            <LoginModal
-              isOpen={openLogin}
-              closeModal={() => setOpenLogin(false)}
-              href={"/users"}
-            />
-          </Dialog.Panel>
-        </div>
-      </Dialog>
-    </div>
+      <LoginModal
+        isOpen={openLogin}
+        closeModal={() => setOpenLogin(false)}
+        href={"/users"}
+      />
+    </aside>
   );
 };
 

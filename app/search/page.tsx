@@ -9,9 +9,9 @@ const Search = () => {
 
   const { currentUser } = useCurrentUser();
 
-  console.log(currentUser);
+  // console.log(currentUser);
 
-  return <div>{JSON.stringify(currentUser)}</div>;
+  return <section>{JSON.stringify(currentUser)}</section>;
 };
 
 export default Search;

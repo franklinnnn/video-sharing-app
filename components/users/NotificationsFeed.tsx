@@ -23,9 +23,7 @@ const NotificationsFeed = () => {
   );
   const [notifications] = useCollectionData(notificationsQuery);
 
-  const { data } = useNotifications(currentUser.uid as string);
-
-  console.log(data);
+  console.log(notifications);
 
   const readNotifications = async () => {
     if (currentUser.uid) {
@@ -45,12 +43,12 @@ const NotificationsFeed = () => {
   return (
     <section>
       {notifications?.map((notification) => (
-        <div key={notification.notificationId}>
+        <>
           <NotificationsItem
             key={notification.notificationId}
             notification={notification}
           />
-        </div>
+        </>
       ))}
     </section>
   );

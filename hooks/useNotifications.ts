@@ -3,7 +3,7 @@ import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export const useNotifications = (currentUserId: string) => {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState([] as any);
 
   const getNotifications = async () => {
     const notificationsCollection = collection(
@@ -15,15 +15,12 @@ export const useNotifications = (currentUserId: string) => {
       orderBy("timestamp", "desc")
     );
     const notificationsSnapshot = await getDocs(notificationsQuery);
-    const notificationsList = notificationsSnapshot.docs.map((item) => {
-      return {
-        ...item,
-        item,
-      };
+    notificationsSnapshot.docs.map((item) => {
+      console.log(data);
+      setData(item.data());
     });
-    setData(notificationsList);
 
-    console.log(notificationsList);
+    console.log(data);
 
     useEffect(() => {
       try {

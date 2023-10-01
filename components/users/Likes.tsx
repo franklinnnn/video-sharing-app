@@ -12,9 +12,6 @@ const Likes = ({ userId }: LikesProps) => {
   );
   const [likes] = useCollectionData(likesQuery);
 
-  const { likes: testLikes } = useLikes(userId);
-  console.log(testLikes);
-
   return (
     <>
       {likes && (

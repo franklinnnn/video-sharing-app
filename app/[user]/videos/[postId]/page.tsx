@@ -28,7 +28,7 @@ const PostView = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen">
+    <section className="fixed top-0 left-0 w-screen h-screen">
       <div className="relative flex flex-row items-center justify-center h-full w-full">
         <div
           onClick={() => router.back()}
@@ -86,7 +86,7 @@ const PostView = () => {
           <CommentFeed post={post} />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

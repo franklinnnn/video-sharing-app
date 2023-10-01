@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { auth } from "@/utils/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Menu } from "@headlessui/react";
@@ -12,10 +10,10 @@ import LikePostButton from "../posts/LikePostButton";
 import CommentButton from "../posts/CommentButton";
 import DeletePostModal from "../Modals/DeletePostModal";
 import Video from "./Video";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const PostItem = ({ post }: PostItemProps) => {
-  // const currentUser = useCurrentUser();
-  const [currentUser] = useAuthState(auth);
+  const { currentUser } = useCurrentUser();
   const router = useRouter();
   const [openDeletePostModal, setOpenDeletePostModal] = useState(false);
   const goToPost = useCallback(() => {

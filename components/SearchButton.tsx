@@ -95,31 +95,31 @@ const SearchButton = ({ input }: SearchButtonProps) => {
       );
 
       const postsSnapshot = await getDocs(postsQuery);
-      postsSnapshot.forEach((post) => {
-        // console.log(post.id, "=>", post.data());
-        setPostResults(post.data());
+      postsSnapshot.docs.map((doc) => {
+        console.log(doc.data());
+        setPostResults(doc.data());
       });
       const usersUsernameSnapshot = await getDocs(usersUsernameQuery);
-      usersUsernameSnapshot.forEach((user) => {
-        // console.log(user.id, "=>", user.data());
-        setUsernameResults(user.data());
+      usersUsernameSnapshot.docs.map((doc) => {
+        setUsernameResults(doc.data());
       });
       const usersDisplayNameSnapshot = await getDocs(usersDisplayNameQuery);
-      usersDisplayNameSnapshot.forEach((user) => {
-        // console.log(user.id, "=>", user.data());
-        setDisplayNameResults(user.data());
+      usersDisplayNameSnapshot.docs.map((doc) => {
+        setDisplayNameResults(doc.data());
       });
 
-      console.log(postResults);
-      console.log(usernameResults);
-      console.log(displayNameResults);
-      // console.log("posts", postResults, "users", userResults);
+      console.log("posts", postResults);
+      console.log("usernames", usernameResults);
+      console.log("display names", displayNameResults);
+
+      const users = usernameResults.concat(displayNameResults);
+
+      console.log("users", users);
 
       router.push(`/search?q=${input}`);
     } catch (error) {
       console.log(error);
     }
-    console.log("did it work?");
   };
   return (
     <button
