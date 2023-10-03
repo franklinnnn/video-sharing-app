@@ -59,7 +59,7 @@ const PostItem = ({ post }: PostItemProps) => {
           </Menu.Button>
           <div className="absolute top-10 right-1 z-10">
             <Menu.Items>
-              <div className="flex flex-col justify-center bg-main-light rounded-md border-2 border-primary">
+              <div className="flex flex-col justify-center bg-main-light rounded-md border-2 border-primary/10">
                 <Menu.Item>
                   <button className="flex gap-2 items-center py-2 px-4 hover:bg-primary/10">
                     <BsFillShareFill /> Share

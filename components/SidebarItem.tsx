@@ -34,9 +34,9 @@ const SidebarItem = ({
       }`}
     >
       {activePage === activeSegment ? (
-        <ActiveIcon size={32} className="text-primary" />
+        <ActiveIcon size={32} className="text-primary dark:text-accent" />
       ) : (
-        <Icon size={32} className="text-primary" />
+        <Icon size={32} className="text-primary dark:text-accent" />
       )}
       {alert ? (
         <BsDot size={60} className="text-red-500 absolute -top-4 left-1" />
