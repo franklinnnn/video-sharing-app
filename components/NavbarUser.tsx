@@ -77,7 +77,7 @@ const NavbarUser = () => {
       <div className="flex justify-end gap-2 w-full">
         <button
           onClick={goToUpload}
-          className="flex justify-center items-center gap-2 border-2 border-primary text-main-dark py-2 rounded-lg h-12 w-12 md:w-36 px-2 font-semibold dark:text-main-light hover:bg-primary hover:text-main-light transition"
+          className="flex justify-center items-center gap-2 border-2 border-primary text-main-dark py-2 rounded-lg h-12 w-12 md:w-36 px-2 font-semibold dark:text-main-light dark:border-zinc-800 dark:bg-zinc-900 hover:dark:bg-zinc-800/40 hover:bg-primary hover:text-main-light transition"
         >
           <AiOutlinePlus size={20} />{" "}
           <span className="hidden md:block">Upload</span>
@@ -93,7 +93,7 @@ const NavbarUser = () => {
                     width={52}
                     height={52}
                     alt={user?.displayName as string}
-                    className="object-fit rounded-full hover:cursor-pointer border-[3px] border-primary"
+                    className="object-fit rounded-full hover:cursor-pointer border-[3px] border-primary dark:border-main-light"
                     onClick={() => setOpenUserMenu(true)}
                   />
                 </div>
@@ -116,8 +116,6 @@ const NavbarUser = () => {
                         onClick={() => ""}
                         className="flex justify-start items-center gap-4 w-full py-2 px-4 hover:bg-primary/10 hover:dark:bg-main-light/10"
                       >
-                        <BiMoon size={22} />
-                        {/* <span>Dark Mode</span> */}
                         <ThemeButton />
                       </button>
                     </Menu.Item>

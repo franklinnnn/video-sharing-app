@@ -81,11 +81,11 @@ const LikePostButton = ({ postId, userId }: LikePostButtonProps) => {
     <>
       <button
         onClick={handleLikePost}
-        className={`group flex items-center justify-center gap-2 hover:text-red-500 transition ${
-          likedPost ? "text-red-500" : "text-main-dark"
+        className={`group flex items-center justify-center gap-2 hover:text-red-500 hover:dark:text-red-500 transition ${
+          likedPost ? "text-red-500" : "text-main-dark dark:text-main-light"
         }`}
       >
-        <div className="flex items-center justify-center w-8 h-8 rounded-full p-1 bg-primary/10 group-hover:bg-primary/20">
+        <div className="flex items-center justify-center w-8 h-8 rounded-full p-1 bg-primary/10 group-hover:bg-primary/20 dark:bg-zinc-700/80 hover:dark:bg-zinc-700">
           <AiFillHeart size={20} />
         </div>
         <span>{likes?.length}</span>

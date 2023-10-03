@@ -29,13 +29,16 @@ const DeletePostModal = ({ isOpen, closeModal, postId }: ModalProps) => {
   return (
     <>
       <Dialog open={isOpen} onClose={closeModal} className="relative z-20">
-        <div className="fixed inset-0 bg-primary/20" aria-hidden="true" />
+        <div
+          className="fixed inset-0 bg-primary/20 dark:bg-main-light/10"
+          aria-hidden="true"
+        />
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel>
-            <div className="relative flex flex-col justify-center items-center gap-4 w-72 md:w-96 h-72 bg-main-light px-6 py-12 rounded-md">
+            <div className="relative flex flex-col justify-center items-center gap-4 w-72 md:w-96 h-72 bg-main-light dark:bg-main-dark px-6 py-12 rounded-md">
               <AiFillCloseCircle
                 size={30}
-                className="absolute right-2 top-2 hover:cursor-pointer text-primary/30 hover:text-primary/40 transition"
+                className="absolute right-2 top-2 hover:cursor-pointer text-primary/30 hover:text-primary/40 dark:text-main-light/30 hover:dark:text-main-light/40 transition"
                 onClick={closeModal}
               />
               <h2 className="text-xl">Delete your post?</h2>

@@ -39,10 +39,12 @@ const UserBio = ({
           <h1 className="text-4xl font-semibold font-display">
             {user.displayName}
           </h1>
-          <p className="text-primary/80 text-lg -mt-4">@{user?.username}</p>
+          <p className="text-primary/80 dark:text-zinc-400 text-lg -mt-4">
+            @{user?.username}
+          </p>
           {currentUser?.uid === user.uid ? (
             <button
-              className="py-1 px-6 object-fit border-2 font-semibold border-primary rounded-md hover:bg-primary/20 transition"
+              className="py-1 px-6 object-fit border-2 font-semibold border-primary rounded-md hover:bg-primary/20 dark:border-zinc-200 hover:dark:bg-zinc-800 transition"
               onClick={() => setOpenEditModal(true)}
             >
               Edit
@@ -87,7 +89,10 @@ const UserBio = ({
         onClose={() => setOpenEditModal(false)}
         className="relative z-20"
       >
-        <div className="fixed inset-0 bg-primary/20" aria-hidden="true" />
+        <div
+          className="fixed inset-0 bg-primary/20 dark:bg-main-light/10"
+          aria-hidden="true"
+        />
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel>
             <EditModal

@@ -103,14 +103,14 @@ const EditModal = ({ closeModal }: ModalProps) => {
   }, [currentUser]);
 
   return (
-    <div className="w-screen md:w-[50rem] bg-main-light px-4 py-2 rounded-md">
+    <div className="w-screen md:w-[50rem] bg-main-light dark:bg-main-dark px-4 py-2 rounded-md">
       <div className="relative flex flex-col gap-4">
         <AiFillCloseCircle
           size={30}
-          className="absolute right-2 top-2 hover:cursor-pointer text-primary/30 hover:text-primary/40 transition"
+          className="absolute right-2 top-2 hover:cursor-pointer text-primary/30 hover:text-primary/40 dark:text-main-light/30 hover:dark:text-main-light/40 transition"
           onClick={closeModal}
         />
-        <h1 className="text-2xl font-semibold py-4 border-b-2 border-primary/20">
+        <h1 className="text-2xl font-semibold py-4 border-b-2 border-primary/20 dark:border-main-light/20">
           Edit profile
         </h1>
         <div className="flex items-center justify-center py-6 ">
@@ -121,7 +121,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
             <div className="absolute top-0 left-0 bottom-0 right-0 m-auto w-full h-full flex items-center justify-center p-6 rounded-full">
               <MdOutlineAddAPhoto
                 size={60}
-                className="text-primary bg-main-light/40 hover:bg-main-light/50 p-4 rounded-full cursor-pointer transition"
+                className="text-primary bg-main-light/40 hover:bg-main-light/50 p-4 rounded-full cursor-pointer focus-within:dark:border-main-light transition"
               />
             </div>
             {files.length < 1 ? (
@@ -151,7 +151,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
             )}
           </div>
         </div>
-        <div className="p-4 border-2 border-primary/20 rounded-md focus-within:border-primary transition">
+        <div className="p-4 border-2 border-primary/20 dark:border-main-light/20 rounded-md focus-within:border-primary focus-within:dark:border-main-light transition">
           <input
             type="text"
             placeholder={displayName}
@@ -160,7 +160,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
             className="text-xl w-full bg-inherit outline-none"
           />
         </div>
-        <div className="flex flex-row items-center p-4 border-2 border-primary/20 rounded-md focus-within:border-primary transition">
+        <div className="flex flex-row items-center p-4 border-2 border-primary/20 dark:border-main-light/20 rounded-md focus-within:border-primary focus-within:dark:border-main-light focus-within:dark:border-main-light transition">
           <span className="text-xl text-zinc-600">@</span>
           <input
             type="text"
@@ -170,7 +170,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
             className="text-xl w-full bg-inherit outline-none"
           />
         </div>
-        <div className="p-4 border-2 border-primary/20 rounded-md focus-within:border-primary transition">
+        <div className="p-4 border-2 border-primary/20 dark:border-main-light/20 rounded-md focus-within:border-primary focus-within:dark:border-main-light transition">
           <textarea
             name=""
             id=""
@@ -182,7 +182,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
             className="text-xl w-full bg-inherit outline-none resize-none"
           ></textarea>
         </div>
-        <div className="p-4 border-2 border-primary/20 rounded-md focus-within:border-primary transition">
+        <div className="p-4 border-2 border-primary/20 dark:border-main-light/20 rounded-md focus-within:border-primary focus-within:dark:border-main-light transition">
           <input
             type="url"
             placeholder={website ? website : ""}

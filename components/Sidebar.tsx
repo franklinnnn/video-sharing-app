@@ -49,7 +49,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="fixed flex flex-col gap-2 pt-12 z-1">
+    <aside className="fixed flex flex-col gap-2 pt-12">
       {sidebarItems.map((item) => (
         <SidebarItem
           key={item.label}

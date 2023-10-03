@@ -64,17 +64,19 @@ const UserProfile = () => {
 
       <div className="flex flex-row items-center my-4">
         <button
-          className={`px-1 sm:px-6 text-sm sm:text-base border-b-2 hover:bg-primary/10 rounded-t-md transition ${
-            activeTab === "Videos" ? "border-b-primary" : "border-transparent"
+          className={`px-1 sm:px-6 text-sm sm:text-base border-b-2 hover:bg-primary/10 hover:dark:bg-zinc-800 rounded-t-md transition ${
+            activeTab === "Videos"
+              ? "border-b-primary dark:border-b-zinc-200"
+              : "border-transparent"
           }`}
           onClick={() => setActiveTab("Videos")}
         >
           Videos
         </button>
         <button
-          className={`px-1 sm:px-6 border-b-2 hover:bg-primary/10 rounded-t-md transition ${
+          className={`px-1 sm:px-6 border-b-2 hover:bg-primary/10 hover:dark:bg-zinc-800 rounded-t-md transition ${
             activeTab === "Followers"
-              ? "border-b-primary"
+              ? "border-b-primary dark:border-b-zinc-200"
               : "border-transparent"
           }`}
           onClick={() => setActiveTab("Followers")}
@@ -82,8 +84,10 @@ const UserProfile = () => {
           Followers
         </button>
         <button
-          className={`px-1 sm:px-6 text-sm sm:text-base border-b-2 hover:bg-primary/10 rounded-t-md transition ${
-            activeTab === "Likes" ? "border-b-primary" : "border-transparent"
+          className={`px-1 sm:px-6 text-sm sm:text-base border-b-2 hover:bg-primary/10 hover:dark:bg-zinc-800 rounded-t-md transition ${
+            activeTab === "Likes"
+              ? "border-b-primary dark:border-b-zinc-200"
+              : "border-transparent"
           }`}
           onClick={() => setActiveTab("Likes")}
         >

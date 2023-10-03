@@ -1,19 +1,30 @@
 "use client";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 const NavbarLogo = () => {
+  const { theme, setTheme } = useTheme();
+
   const router = useRouter();
   return (
     <div
       onClick={() => router.push("/")}
-      className="col-span-2 flex gap-1 justify-center items-center hover:cursor-pointer w-full"
+      className="col-span-2 flex justify-center items-end hover:cursor-pointer w-full"
     >
-      <Image src="/icon.png" width={40} height={40} alt="Logo" />
-      <span className="font-display font-extrabold italic text-3xl text-primary md:block hidden">
+      {theme === "light" ? (
+        <div>
+          <Image src="/icon-light.png" width={38} height={38} alt="Logo" />
+        </div>
+      ) : (
+        <div>
+          <Image src="/icon-dark.png" width={38} height={38} alt="Logo" />
+        </div>
+      )}
+      <h1 className="font-display font-extrabold italic text-3xl text-main-dark dark:text-main-light md:block hidden">
         Vidiot
-      </span>
+      </h1>
     </div>
   );
 };

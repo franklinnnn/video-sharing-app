@@ -54,7 +54,7 @@ const LikeCommentButton = ({ postId, commentId }: LikeCommentButtonProps) => {
       <button
         onClick={handleLikeComment}
         className={`flex gap-2 items-center justify-center hover:text-red-500 transition ${
-          likedComment ? "text-red-500" : "text-main-dark"
+          likedComment ? "text-red-500" : "text-zinc-500"
         }`}
       >
         {likedComment ? (

@@ -21,7 +21,7 @@ const PostItem = ({ post }: PostItemProps) => {
   }, [router, post.postId, post.userInfo.username]);
 
   return (
-    <div className="relative w-fit pb-6 my-2 border-b-2 border-primary/20">
+    <div className="relative w-fit pb-6 my-2 border-b-2 border-primary/20 dark:border-zinc-800">
       <div className="absolute top-2 left-2 flex justify-start gap-2 z-10 text-xs sm:text-base">
         <div className="w-12 h-12">
           <Image
@@ -59,16 +59,16 @@ const PostItem = ({ post }: PostItemProps) => {
           </Menu.Button>
           <div className="absolute top-10 right-1 z-10">
             <Menu.Items>
-              <div className="flex flex-col justify-center bg-main-light rounded-md border-2 border-primary/10">
+              <div className="flex flex-col justify-center bg-main-light rounded-md border-2 border-primary/10 dark:bg-main-dark dark:border-zinc-800 ">
                 <Menu.Item>
-                  <button className="flex gap-2 items-center py-2 px-4 hover:bg-primary/10">
+                  <button className="flex gap-2 items-center py-2 px-4 hover:bg-primary/10 hover:dark:bg-main-light/10">
                     <BsFillShareFill /> Share
                   </button>
                 </Menu.Item>
                 {currentUser?.uid === post.userInfo.userId ? (
                   <Menu.Item>
                     <button
-                      className="flex gap-2 items-center py-2 px-4 hover:bg-primary/10"
+                      className="flex gap-2 items-center py-2 px-4 hover:bg-primary/10 hover:dark:bg-main-light/10"
                       onClick={() => setOpenDeletePostModal(true)}
                     >
                       <AiFillDelete />

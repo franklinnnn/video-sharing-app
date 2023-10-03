@@ -5,7 +5,7 @@ import { ToastContainer, Slide } from "react-toastify";
 
 const Navbar = () => {
   return (
-    <nav className="fixed top-0 w-full grid grid-cols-6 items-center justify-center h-20 gap-2 md:gap-6 px-2 md:px-8 border-b-2 border-primary/20 py-2 z-20">
+    <nav className="fixed top-0 w-full grid grid-cols-6 items-center justify-center h-20 gap-2 md:gap-6 px-2 md:px-8 border-b-2 bg-main-light border-primary/20 dark:bg-main-dark dark:border-zinc-800 py-2 z-20">
       <NavbarLogo />
       <Search />
       <NavbarUser />
