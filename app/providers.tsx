@@ -4,11 +4,7 @@ import { ThemeProvider } from "next-themes";
 
 type ProviderProps = { children: ReactNode };
 const Providers = ({ children }: ProviderProps) => {
-  return (
-    <div>
-      <ThemeProvider attribute="class">{children}</ThemeProvider>
-    </div>
-  );
+  return <ThemeProvider attribute="class">{children}</ThemeProvider>;
 };
 
 export default Providers;

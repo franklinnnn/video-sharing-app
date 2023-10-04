@@ -2,22 +2,25 @@
 import LikePostButton from "@/components/posts/LikePostButton";
 import CommentFeed from "@/components/posts/CommentFeed";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { MdClose } from "react-icons/md";
 import CommentButton from "@/components/posts/CommentButton";
 import Video from "@/components/posts/Video";
-import { getRelativeTime } from "@/utils/index";
+import { getRelativeTime, handleCopyUrl } from "@/utils/index";
 import { usePost } from "@/hooks/usePost";
 import { useUser } from "@/hooks/useUser";
-import { ToastContainer } from "react-toastify";
+import { useEffect, useState } from "react";
+import Loader from "@/components/Loader";
 
 const PostView = () => {
   const params = useParams();
   const postId = params.postId;
   const username = params.user;
+  const pathname = usePathname();
 
-  const { data: post, loading: loadingPost } = usePost(postId as string);
-  const { data: user, loading: loadingUser } = useUser(username as string);
+  const { data: post } = usePost(postId as string);
+  const { data: user } = useUser(username as string);
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
   const goToPage = () => {
@@ -26,6 +29,10 @@ const PostView = () => {
   const renderVideo = (video: string) => {
     return <Video video={video} isBigVideo />;
   };
+
+  useEffect(() => {
+    post && user ? setLoading(false) : setLoading(true);
+  }, []);
 
   return (
     <section className="fixed top-0 left-0 w-screen h-screen">
@@ -43,10 +50,12 @@ const PostView = () => {
         </div>
 
         {/* USER AND COMMENTS SECTION */}
-        <div className="relative top-20 h-full w-[40%] min-w-72 ">
-          {loadingPost ? (
-            <div>loading...</div>
-          ) : (
+        {loading ? (
+          <div className="relative flex justify-center pt-20 top-20 h-full w-[40%] min-w-72">
+            <Loader />
+          </div>
+        ) : (
+          <div className="relative top-20 h-full w-[40%] min-w-72">
             <div className="flex flex-col py-2 px-4 m-2 border-b-2 border-b-primary/20">
               <div className="flex justify-between mb-4">
                 <div className="flex gap-2 items-center">
@@ -81,10 +90,24 @@ const PostView = () => {
                 <LikePostButton postId={post.postId} userId={user.uid} />
                 <CommentButton postId={post.postId} onClick={() => {}} />
               </div>
+              <div className="w-full">
+                <p>Share</p>
+                <div className="flex justify-evenly bg-primary/10 dark:bg-zinc-200/10 rounded-md mr-2 mt-2">
+                  <p className="p-2 text-zinc-500 w-full truncate">
+                    localhost:3000{pathname}
+                  </p>
+                  <button
+                    onClick={() => handleCopyUrl(pathname)}
+                    className="px-4 rounded-r-md font-semibold hover:bg-primary/20 hover:dark:bg-zinc-200/20"
+                  >
+                    Copy
+                  </button>
+                </div>
+              </div>
             </div>
-          )}
-          <CommentFeed post={post} />
-        </div>
+            <CommentFeed post={post} />
+          </div>
+        )}
       </div>
     </section>
   );

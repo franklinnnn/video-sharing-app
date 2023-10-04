@@ -125,7 +125,7 @@ const SearchButton = ({ input }: SearchButtonProps) => {
     <button
       disabled={!input}
       onClick={handleSearch}
-      className="flex justify-center items-center h-full px-4 text-primary/20 dark:text-zinc-800 transition peer-focus:text-primary peer-focus:dark:text-zinc-200 dark:bg-zinc-900"
+      className="flex justify-center items-center h-full px-4 text-primary/20 dark:text-zinc-800 transition peer-focus:text-primary peer-focus:dark:text-zinc-200 dark:bg-zinc-900 rounded-r-md"
     >
       <BsSearch size={20} />
     </button>

@@ -24,9 +24,9 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
     return (
       <div
         onClick={goToUser}
-        className="flex gap-6 items-start py-4 border-b-2 border-primary/20 hover:cursor-pointer"
+        className="flex gap-6 items-start py-4 border-b-2 border-primary/20 dark:border-zinc-200/20 hover:cursor-pointer"
       >
-        <div className="flex justify-center w-8 text-primary">
+        <div className="flex justify-center w-8 text-primary dark:text-zinc-200">
           <BsFillPersonFill size={30} />
         </div>
         <div className="flex gap-2 items-center">
@@ -52,7 +52,7 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
     return (
       <div
         onClick={goToPost}
-        className="flex gap-6 items-start py-2 border-b-2 border-primary/20 hover:cursor-pointer"
+        className="flex gap-6 items-start py-2 border-b-2 border-primary/20 dark:border-zinc-200/20 hover:cursor-pointer"
       >
         <div className="flex justify-center w-8 text-red-500">
           <AiFillHeart size={27} />
@@ -85,9 +85,9 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
     return (
       <div
         onClick={goToPost}
-        className="flex gap-6 items-start py-2 border-b-2 border-primary/20 hover:cursor-pointer"
+        className="flex gap-6 items-start py-2 border-b-2 border-primary/20 dark:border-zinc-200/20 hover:cursor-pointer"
       >
-        <div className="flex justify-center w-8 text-primary-light">
+        <div className="flex justify-center w-8 text-primary dark:text-zinc-200">
           <FaComment size={23} />
         </div>
         <div className="flex flex-col">
@@ -112,7 +112,7 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
           </div>
           <div className="mt-2 text-gray-2">
             <p className="text-sm">{notification.postData?.caption}</p>
-            <p className="font-semibold text-primary-dark ml-4 mt-2 text-lg">
+            <p className="font-semibold text-main-dark dark:text-main-light ml-4 mt-2 text-lg">
               {notification.comment}
             </p>
           </div>

@@ -39,7 +39,7 @@ const UserBio = ({
           <h1 className="text-4xl font-semibold font-display">
             {user.displayName}
           </h1>
-          <p className="text-primary/80 dark:text-zinc-400 text-lg -mt-4">
+          <p className="text-primary/80 dark:text-zinc-500 text-lg -mt-4">
             @{user?.username}
           </p>
           {currentUser?.uid === user.uid ? (

@@ -42,49 +42,19 @@ const NavbarUser = () => {
     alert("signed out");
   };
 
-  // var timeout:number;
-  // const timeoutDuration = 200;
-
-  // const toggleMenu = (open: any) => {
-  //   setOpenUserMenu((openUserMenu) => !openUserMenu);
-  //   menuRef?.current?.click();
-  // };
-  // const onHover = (open: any, action: any) => {
-  //   if(!open && !openUserMenu && action === "onMouseEnter") || (open && openUserMenu && action === "onMouseLeave") {
-  //     clearTimeout(timeout);
-  //     timeout = setTimeout(() => toggleMenu(open), timeoutDuration);
-  //   }
-  // }
-  // const handleClick = (open:any) => {
-  //   setOpenUserMenu(!open);
-  //   clearTimeout(timeout);
-  // }
-  // const handleClickOutside = (event:any) => {
-  //   if (menuRef.current && !menuRef.current.contains(event.target)) {
-  //     event.stopPropagation()
-  //   }
-  // }
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside)
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside)
-  //   }
-  // })
-
   return (
-    <div className="col-span-2 justify-end items-end w-full">
-      <div className="flex justify-end gap-2 w-full">
+    <div className="col-span-1 justify-center items-center w-full">
+      <div className="flex justify-end items-center gap-2 w-full">
         <button
           onClick={goToUpload}
-          className="flex justify-center items-center gap-2 border-2 border-primary text-main-dark py-2 rounded-lg h-12 w-12 md:w-36 px-2 font-semibold dark:text-main-light dark:border-zinc-800 dark:bg-zinc-900 hover:dark:bg-zinc-800/40 hover:bg-primary hover:text-main-light transition"
+          className="flex justify-center items-center gap-2 border-2 border-primary text-main-dark py-2 rounded-lg h-12 w-12 md:w-36 px-2 font-semibold dark:text-main-light dark:border-zinc-200/20 dark:bg-zinc-200/10 hover:dark:bg-zinc-200/20 hover:bg-primary hover:text-main-light hover:dark:border-zinc-200 transition"
         >
           <AiOutlinePlus size={20} />{" "}
           <span className="hidden md:block">Upload</span>
         </button>
 
         {user ? (
-          <div className="text-main-dark dark:bg-main-dark dark:text-main-light">
+          <div className="flex justify-center text-main-dark dark:bg-main-dark dark:text-main-light">
             <Menu>
               <Menu.Button>
                 <div className="flex items-center justify-center gap-4 h-12 w-12">
@@ -97,9 +67,8 @@ const NavbarUser = () => {
                     onClick={() => setOpenUserMenu(true)}
                   />
                 </div>
-                {/* <BsThreeDotsVertical /> */}
               </Menu.Button>
-              <div className="absolute top-16 right-10 w-44 z-10">
+              <div className="absolute top-16 right-[8%] mt-2 w-44 z-10">
                 <Menu.Items>
                   <div className="flex flex-col bg-main-light dark:bg-main-dark rounded-md border-2 border-primary/10 dark:border-main-light/20">
                     <Menu.Item>
@@ -136,7 +105,7 @@ const NavbarUser = () => {
         ) : (
           <button
             onClick={() => setOpenLogin(true)}
-            className="bg-primary text-main-light py-2 rounded-lg w-36 px-2"
+            className="flex justify-center items-center gap-2 border-2 border-primary text-main-dark py-2 rounded-lg h-12 w-12 md:w-20 px-2 font-semibold dark:text-main-light dark:border-zinc-200 hover:bg-primary hover:text-main-light hover:dark:border-primary transition"
           >
             Login
           </button>

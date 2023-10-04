@@ -100,7 +100,7 @@ const Upload = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-1 lg:gap-4 p-6 bg-gray-1/50">
+    <div className="flex flex-col justify-center items-center gap-1 lg:gap-4 p-6 bg-primary/10 dark:bg-zinc-200/10">
       <h1 className="text-2xl font-semibold w-full text-left">Upload video</h1>
 
       <section className="w-full my-2">
@@ -117,7 +117,7 @@ const Upload = () => {
                 <h1>Uploading...</h1>
               </div>
             ) : (
-              <div className="flex flex-col justify-center items-center gap-6 p-6 h-72 min-h-72 bg-white rounded-md border-2 border-dashed border-gray-2">
+              <div className="flex flex-col justify-center items-center gap-6 p-6 h-72 min-h-72 bg-main-light dark:bg-main-dark rounded-md border-2 border-dashed border-primary/20 dark:border-zinc-200/20">
                 <input {...getInputProps()} />
                 <div className="flex flex-col justify-center items-center">
                   <BsCloudUploadFill size={50} />
@@ -128,7 +128,7 @@ const Upload = () => {
                   <p>MP4 or WebM</p>
                   <p>Less than 500MB</p>
                 </div>
-                <button className="bg-primary hover:bg-primary/75 text-white w-40 py-2 rounded-md">
+                <button className="bg-primary hover:bg-primary/75 text-main-light w-40 py-2 rounded-md font-semibold">
                   Select file
                 </button>
               </div>
@@ -150,7 +150,7 @@ const Upload = () => {
               ))}
             </div>
             <div {...getRootProps({ className: "dropzone" })}>
-              <button className="bg-primary hover:bg-primary/75 text-white w-40 py-2 rounded-md">
+              <button className="bg-primary hover:bg-primary/75 text-main-light w-40 py-2 rounded-md font-semibold">
                 Change file
               </button>
             </div>
@@ -163,21 +163,21 @@ const Upload = () => {
         placeholder="Write a caption..."
         value={caption}
         required
-        className="w-full fontsize-lg bg-white border-2 border-gray-2 p-2 focus:border-primary focus:outline-none rounded-md"
+        className="w-full fontsize-lg bg-main-light dark:bg-main-dark border-2 border-primary/20 p-2 focus:border-primary focus:dark:border-zinc-200 focus:outline-none rounded-md"
         onChange={(e) => setCaption(e.target.value)}
       />
 
       <div className="flex justify-center items-center gap-4 w-full my-4">
         <button
-          className="bg-primary hover:bg-primary/75 text-white w-40 py-2 rounded-md"
+          className="bg-primary hover:bg-primary/75 w-40 py-2 rounded-md text-main-light font-semibold"
           onClick={handleCancel}
         >
           Cancel
         </button>
         <button
-          className="bg-primary hover:bg-primary/75 text-white w-40 py-2 rounded-md"
+          className="bg-primary hover:bg-primary/75 w-40 py-2 rounded-md text-main-light font-semibold"
           onClick={handleUpload}
-          disabled={!caption}
+          disabled={!caption && files.length < 1}
         >
           Post
         </button>

@@ -6,6 +6,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import { toast } from "react-toastify";
 import { v4 as uuid } from "uuid";
 
 export const getRelativeTime = (timestamp: number) => {
@@ -90,4 +91,10 @@ export const sendNotification = async (
   }
   await updateDoc(recipientUserRef, { hasNotification: true });
   console.log("notification sent");
+};
+
+export const handleCopyUrl = (pathname: string) => {
+  const url = `localhost:3000${pathname}`;
+  navigator.clipboard.writeText(url);
+  toast.success("Copied URL ✔️");
 };

@@ -1,5 +1,4 @@
 "use client";
-import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import { HiUser, HiOutlineUser } from "react-icons/hi";
 import SidebarItem from "./SidebarItem";

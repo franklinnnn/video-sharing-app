@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const NavbarLogo = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
 
   const router = useRouter();
   return (
     <div
       onClick={() => router.push("/")}
-      className="col-span-2 flex justify-center items-end hover:cursor-pointer w-full"
+      className="col-span-1 flex justify-center items-end hover:cursor-pointer w-full "
     >
       {theme === "light" ? (
         <div>

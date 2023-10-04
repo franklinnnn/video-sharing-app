@@ -11,6 +11,7 @@ import CommentButton from "../posts/CommentButton";
 import DeletePostModal from "../Modals/DeletePostModal";
 import Video from "./Video";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import { handleCopyUrl } from "@/utils/index";
 
 const PostItem = ({ post }: PostItemProps) => {
   const { currentUser } = useCurrentUser();
@@ -61,7 +62,14 @@ const PostItem = ({ post }: PostItemProps) => {
             <Menu.Items>
               <div className="flex flex-col justify-center bg-main-light rounded-md border-2 border-primary/10 dark:bg-main-dark dark:border-zinc-800 ">
                 <Menu.Item>
-                  <button className="flex gap-2 items-center py-2 px-4 hover:bg-primary/10 hover:dark:bg-main-light/10">
+                  <button
+                    onClick={() =>
+                      handleCopyUrl(
+                        `/${post.userInfo.username}/videos/${post.postId}`
+                      )
+                    }
+                    className="flex gap-2 items-center py-2 px-4 hover:bg-primary/10 hover:dark:bg-main-light/10"
+                  >
                     <BsFillShareFill /> Share
                   </button>
                 </Menu.Item>
