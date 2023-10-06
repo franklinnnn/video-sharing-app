@@ -12,11 +12,10 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useUser } from "@/hooks/useUser";
 import { useFollowingCheck } from "@/hooks/useFollowingCheck";
 
-const UserProfile = () => {
+const UserPage = () => {
   const params = useParams();
   const username = params.user;
   const { currentUser } = useCurrentUser();
-  // const [fetchedUser, setFetchedUser] = useState({} as any);
   const [activeTab, setActiveTab] = useState("Videos");
   const [isFollowing, setIsFollowing] = useState(false);
 
@@ -103,4 +102,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default UserPage;

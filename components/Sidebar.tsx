@@ -48,25 +48,26 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="fixed flex flex-col gap-2 pt-12">
-      {sidebarItems.map((item) => (
-        <SidebarItem
-          key={item.label}
-          label={item.label}
-          icon={item.icon}
-          activeIcon={item.activeIcon}
-          href={item.href}
-          activeSegment={item.activeSegment}
-          alert={item.alert}
-          openModal={() => setOpenLogin(true)}
+    <aside className="col-span-1 flex justify-center">
+      <div className="fixed flex flex-col gap-2 pt-12">
+        {sidebarItems.map((item) => (
+          <SidebarItem
+            key={item.label}
+            label={item.label}
+            icon={item.icon}
+            activeIcon={item.activeIcon}
+            href={item.href}
+            activeSegment={item.activeSegment}
+            alert={item.alert}
+            openModal={() => setOpenLogin(true)}
+          />
+        ))}
+        <LoginModal
+          isOpen={openLogin}
+          closeModal={() => setOpenLogin(false)}
+          href={"/users"}
         />
-      ))}
-
-      <LoginModal
-        isOpen={openLogin}
-        closeModal={() => setOpenLogin(false)}
-        href={"/users"}
-      />
+      </div>
     </aside>
   );
 };

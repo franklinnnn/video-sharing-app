@@ -21,9 +21,10 @@ const NotificationsFeed = () => {
     collection(db, `users/${currentUser?.uid}/notifications`),
     orderBy("timestamp", "desc")
   );
-  const [notifications] = useCollectionData(notificationsQuery);
+  // const [notifications] = useCollectionData(notificationsQuery);
 
-  console.log(notifications);
+  const { data: notifications } = useNotifications(currentUser.uid, 500);
+  console.log("notif", notifications);
 
   const readNotifications = async () => {
     if (currentUser.uid) {
@@ -42,7 +43,7 @@ const NotificationsFeed = () => {
 
   return (
     <section>
-      {notifications?.map((notification) => (
+      {notifications?.map((notification: Record<string, any>) => (
         <>
           <NotificationsItem
             key={notification.notificationId}
