@@ -22,10 +22,11 @@ export default function RootLayout({
         <ThemeProviders>
           <body className="bg-main-light text-main-dark dark:bg-main-dark dark:text-main-light ">
             <Navbar />
-            <main className="container grid grid-cols-4 justify-center mt-16 mx-auto max-w-3xl">
+            {/* <main className="container grid grid-cols-4 justify-center mt-16 mx-auto max-w-3xl">
               <Sidebar />
               <div className="col-span-3 w-full px-2 py-6">{children}</div>
-            </main>
+            </main> */}
+            {children}
           </body>
         </ThemeProviders>
       </AuthProvider>

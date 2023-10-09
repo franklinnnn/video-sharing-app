@@ -2,7 +2,7 @@ import React from "react";
 
 const NotifictionsLoading = () => {
   return (
-    <div className="animate-pulse">
+    <div className="max-w-2xl mx-auto mt-24 animate-pulse">
       {Array.from({ length: 5 }, (item, i) => (
         <div key={i} className="flex gap-6 items-start py-4 w-[560px] h-[90px]">
           <div className="flex gap-2 items-center w-full ml-12 pl-2">

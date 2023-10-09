@@ -53,7 +53,7 @@ const UserPage = () => {
   }, [fetchedUser]);
 
   return (
-    <section className="h-full w-full p-2">
+    <section className="h-full max-w-2xl mx-auto mt-20 p-2">
       <UserBio
         user={fetchedUser}
         setActiveTab={setActiveTab}

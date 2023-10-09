@@ -100,7 +100,7 @@ const Upload = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-1 lg:gap-4 p-6 bg-primary/10 dark:bg-zinc-200/10">
+    <div className="max-w-3xl mt-24 mx-2 md:mx-auto flex flex-col justify-center items-center gap-1 lg:gap-4 p-6 bg-primary/10 dark:bg-zinc-200/10 rounded-md">
       <h1 className="text-2xl font-semibold w-full text-left">Upload video</h1>
 
       <section className="w-full my-2">

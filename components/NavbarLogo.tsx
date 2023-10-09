@@ -11,7 +11,7 @@ const NavbarLogo = () => {
   return (
     <div
       onClick={() => router.push("/")}
-      className="col-span-1 flex justify-center items-end hover:cursor-pointer w-full "
+      className="col-span-1 flex justify-start items-end hover:cursor-pointer w-full"
     >
       {theme === "light" ? (
         <div>
