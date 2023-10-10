@@ -64,7 +64,7 @@ const NavbarMenu = () => {
   ];
 
   return (
-    <section className="fixed bottom-0 left-0 md:relative bg-main-light flex justify-evenly col-span-2 w-full h-12">
+    <section className="fixed bottom-0 left-0 md:relative bg-main-light dark:bg-main-dark flex justify-evenly col-span-2 w-full h-12">
       {navbarItems.map((item) => (
         <NavbarMenuItem
           key={item.label}

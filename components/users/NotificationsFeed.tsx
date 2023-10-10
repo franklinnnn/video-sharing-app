@@ -16,15 +16,7 @@ import { useNotifications } from "@/hooks/useNotifications";
 
 const NotificationsFeed = () => {
   const { currentUser } = useCurrentUser();
-
-  const notificationsQuery = query(
-    collection(db, `users/${currentUser?.uid}/notifications`),
-    orderBy("timestamp", "desc")
-  );
-  // const [notifications] = useCollectionData(notificationsQuery);
-
   const { data: notifications } = useNotifications(currentUser.uid, 500);
-  console.log("notif", notifications);
 
   const readNotifications = async () => {
     if (currentUser.uid) {

@@ -1,17 +1,31 @@
 "use client";
-import useCurrentUser from "@/hooks/useCurrentUser";
-import { useParams, useSearchParams } from "next/navigation";
-import React from "react";
+import SearchForm from "@/components/SearchForm";
+import SearchResults from "@/components/SearchResults";
+import PostItem from "@/components/posts/PostItem";
+import FollowersItem from "@/components/users/FollowersItem";
+import { useState } from "react";
 
-const Search = () => {
-  const searchParams = useSearchParams();
-  const params = useParams();
+const SearchPage = () => {
+  const [posts, setPosts] = useState([] as any);
+  const [users, setUsers] = useState([] as any);
 
-  const { currentUser } = useCurrentUser();
+  return (
+    <section className="max-w-3xl mx-auto mt-24">
+      <SearchForm setPosts={setPosts} setUsers={setUsers} />
+      {/* <div>
+        {posts.map((post: Record<string, any>) => (
+          <PostItem post={post} key={post.postId} />
+        ))}
+      </div>
+      <div>
+        {users.map((user: any) => (
+          <FollowersItem user={user} key={user.uid} />
+        ))}
+      </div> */}
 
-  // console.log(currentUser);
-
-  return <section>{JSON.stringify(currentUser)}</section>;
+      <SearchResults users={users} posts={posts} />
+    </section>
+  );
 };
 
-export default Search;
+export default SearchPage;
