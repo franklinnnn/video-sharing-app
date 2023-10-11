@@ -58,7 +58,7 @@ const PostItem = ({ post }: PostItemProps) => {
           <Menu.Button>
             <BsThreeDotsVertical />
           </Menu.Button>
-          <div className="absolute top-10 right-1 z-10">
+          <div className="absolute top-10 right-1 z-20">
             <Menu.Items>
               <div className="flex flex-col justify-center bg-main-light rounded-md border-2 border-primary/10 dark:bg-main-dark dark:border-zinc-800 ">
                 <Menu.Item>

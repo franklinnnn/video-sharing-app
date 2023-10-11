@@ -1,8 +1,6 @@
-import Search from "./Search";
 import NavbarLogo from "./NavbarLogo";
 import NavbarUser from "./NavbarUser";
 import { ToastContainer, Slide } from "react-toastify";
-import Sidebar from "./Sidebar";
 import NavbarMenu from "./NavbarMenu";
 
 const Navbar = () => {

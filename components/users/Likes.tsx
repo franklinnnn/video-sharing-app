@@ -3,7 +3,6 @@ import { collection, orderBy, query } from "firebase/firestore";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import LikesItem from "./LikesItem";
 import { LikesProps } from "@/types";
-import { useLikes } from "@/hooks/useLikes";
 
 const Likes = ({ userId }: LikesProps) => {
   const likesQuery = query(

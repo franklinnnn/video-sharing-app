@@ -81,7 +81,7 @@ const FollowButton = ({
         ${
           isFollowing
             ? "bg-primary border-primary text-main-light font-semibold hover:bg-transparent hover:border-red-500 hover:text-red-500"
-            : "border-primary/20 hover:bg-primary/10"
+            : "border-primary/20 hover:bg-primary/10 dark:border-zinc-200/20 hover:dark:bg-zinc-200/10"
         }
         ${currentUser?.uid === user.uid ? "hidden" : "block"}
       `}

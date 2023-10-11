@@ -58,7 +58,7 @@ const NavbarUser = () => {
               <div className="flex flex-col bg-main-light dark:bg-main-dark rounded-md border-2 border-primary/10 dark:border-main-light/20">
                 <Menu.Item>
                   <button
-                    onClick={() => router.push(`${currentUser.username}`)}
+                    onClick={() => router.push("/about")}
                     className="flex justify-start items-center gap-4 w-full py-2 px-4 hover:bg-primary/10 hover:dark:bg-main-light/10"
                   >
                     <AiOutlineInfoCircle size={22} />

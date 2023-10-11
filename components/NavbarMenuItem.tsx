@@ -42,7 +42,6 @@ const NavbarMenuItem = ({
       {alert ? (
         <BsDot size={60} className="text-red-500 absolute -top-4 left-1" />
       ) : null}
-      {/* <span className="hidden md:block">{label}</span> */}
     </button>
   );
 };

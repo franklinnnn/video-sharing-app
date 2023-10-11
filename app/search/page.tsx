@@ -1,29 +1,35 @@
 "use client";
+import Loader from "@/components/Loader";
 import SearchForm from "@/components/SearchForm";
 import SearchResults from "@/components/SearchResults";
-import PostItem from "@/components/posts/PostItem";
-import FollowersItem from "@/components/users/FollowersItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const SearchPage = () => {
   const [posts, setPosts] = useState([] as any);
   const [users, setUsers] = useState([] as any);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setPosts([] as any);
+    setUsers([] as any);
+  }, []);
 
   return (
-    <section className="max-w-3xl mx-auto mt-24">
-      <SearchForm setPosts={setPosts} setUsers={setUsers} />
-      {/* <div>
-        {posts.map((post: Record<string, any>) => (
-          <PostItem post={post} key={post.postId} />
-        ))}
-      </div>
-      <div>
-        {users.map((user: any) => (
-          <FollowersItem user={user} key={user.uid} />
-        ))}
-      </div> */}
-
-      <SearchResults users={users} posts={posts} />
+    <section className="max-w-2xl mx-auto mt-24">
+      <SearchForm
+        setPosts={setPosts}
+        setUsers={setUsers}
+        setLoading={setLoading}
+      />
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {posts.length < 1 && users.length < 1 ? null : (
+            <SearchResults users={users} posts={posts} loading={loading} />
+          )}
+        </>
+      )}
     </section>
   );
 };

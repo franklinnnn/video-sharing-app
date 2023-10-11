@@ -63,7 +63,7 @@ const UserPage = () => {
 
       <div className="flex flex-row items-center my-4">
         <button
-          className={`px-1 sm:px-6 text-sm sm:text-base border-b-2 hover:bg-primary/10 hover:dark:bg-zinc-800 rounded-t-md transition ${
+          className={`w-24 sm:w-32 text-sm sm:text-base border-b-2 hover:bg-primary/10 hover:dark:bg-zinc-800 rounded-t-md transition ${
             activeTab === "Videos"
               ? "border-b-primary dark:border-b-zinc-200"
               : "border-transparent"
@@ -73,7 +73,7 @@ const UserPage = () => {
           Videos
         </button>
         <button
-          className={`px-1 sm:px-6 border-b-2 hover:bg-primary/10 hover:dark:bg-zinc-800 rounded-t-md transition ${
+          className={`w-24 sm:w-32 border-b-2 hover:bg-primary/10 hover:dark:bg-zinc-800 rounded-t-md transition ${
             activeTab === "Followers"
               ? "border-b-primary dark:border-b-zinc-200"
               : "border-transparent"
@@ -83,7 +83,7 @@ const UserPage = () => {
           Followers
         </button>
         <button
-          className={`px-1 sm:px-6 text-sm sm:text-base border-b-2 hover:bg-primary/10 hover:dark:bg-zinc-800 rounded-t-md transition ${
+          className={`w-24 sm:w-32 text-sm sm:text-base border-b-2 hover:bg-primary/10 hover:dark:bg-zinc-800 rounded-t-md transition ${
             activeTab === "Likes"
               ? "border-b-primary dark:border-b-zinc-200"
               : "border-transparent"

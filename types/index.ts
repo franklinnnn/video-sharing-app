@@ -111,6 +111,14 @@ export type ModalProps = {
   closeModal: () => void;
 };
 
-export type SearchButtonProps = {
-  input: string;
+export type SearchFormProps = {
+  setPosts: (value: any[]) => void;
+  setUsers: (value: any[]) => void;
+  setLoading: (value: boolean) => void;
+};
+
+export type SearchResultsProps = {
+  posts: any[];
+  users: any[];
+  loading: boolean;
 };

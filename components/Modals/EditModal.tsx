@@ -12,6 +12,7 @@ import { useDropzone } from "react-dropzone";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { MdOutlineAddAPhoto } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const EditModal = ({ closeModal }: ModalProps) => {
   const { currentUser } = useCurrentUser();
@@ -82,12 +83,12 @@ const EditModal = ({ closeModal }: ModalProps) => {
       //     website: website,
       //   });
       // }
+      setLoading(false);
+      toast.success("Profile edited");
     } catch (error) {
       console.log(error);
       alert(error);
     } finally {
-      setLoading(false);
-      alert("profile update");
       closeModal();
       location.reload();
     }
@@ -103,8 +104,8 @@ const EditModal = ({ closeModal }: ModalProps) => {
   }, [currentUser]);
 
   return (
-    <div className="w-screen md:w-[50rem] bg-main-light dark:bg-main-dark px-4 py-2 rounded-md">
-      <div className="relative flex flex-col gap-4">
+    <div className="w-screen max-sm:h-screen md:w-[50rem] bg-main-light dark:bg-main-dark px-4 py-2 rounded-md max-sm:overflow-auto">
+      <div className="relative flex flex-col gap-4 overflow-y-auto">
         <AiFillCloseCircle
           size={30}
           className="absolute right-2 top-2 hover:cursor-pointer text-primary/30 hover:text-primary/40 dark:text-zinc-200/30 hover:dark:text-zinc-200/40 transition"
@@ -176,7 +177,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
             id=""
             cols={30}
             rows={5}
-            maxLength={80}
+            maxLength={240}
             value={bio || ""}
             onChange={(e) => setBio(e.target.value)}
             className="text-xl w-full bg-inherit outline-none resize-none"
@@ -203,7 +204,7 @@ const EditModal = ({ closeModal }: ModalProps) => {
           className="bg-primary hover:bg-primary/80 w-40 py-2 rounded-md"
           onClick={handleEditProfile}
         >
-          Edit
+          {loading ? "Saving..." : "Edit"}
         </button>
       </div>
     </div>

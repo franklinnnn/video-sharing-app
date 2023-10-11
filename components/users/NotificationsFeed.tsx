@@ -1,15 +1,7 @@
 "use client";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { db } from "@/utils/firebase";
-import {
-  collection,
-  doc,
-  getDoc,
-  orderBy,
-  query,
-  updateDoc,
-} from "firebase/firestore";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import NotificationsItem from "./NotificationsItem";
 import { useEffect } from "react";
 import { useNotifications } from "@/hooks/useNotifications";

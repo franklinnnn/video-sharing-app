@@ -2,7 +2,6 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { UserBioProps } from "@/types";
 import { Dialog } from "@headlessui/react";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import EditModal from "../Modals/EditModal";
 import { collection, query } from "firebase/firestore";

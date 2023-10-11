@@ -3,20 +3,23 @@ import { getSearchPosts, getSearchUsers } from "@/utils/getSearchResults";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
+import { SearchFormProps } from "@/types";
+import { BsSearch } from "react-icons/bs";
 
-type SearchFormProps = {
-  setPosts: (value: any[]) => void;
-  setUsers: (value: any[]) => void;
-};
-
-const SearchForm = ({ setPosts, setUsers }: SearchFormProps) => {
+const SearchForm = ({ setPosts, setUsers, setLoading }: SearchFormProps) => {
   const router = useRouter();
   const [input, setInput] = useState("");
   const [query] = useDebounce(input, 500);
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    getSearchPosts(input).then(setPosts);
-    getSearchUsers(input).then(setUsers);
+    setLoading(true);
+    setPosts([] as any);
+    setUsers([] as any);
+    setTimeout(() => {
+      getSearchPosts(input).then(setPosts);
+      getSearchUsers(input).then(setUsers);
+      setLoading(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -38,11 +41,13 @@ const SearchForm = ({ setPosts, setUsers }: SearchFormProps) => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      <input
+
+      <button
         type="submit"
         className="flex justify-center items-center h-full px-4 text-primary/20 dark:text-zinc-800 transition peer-focus:text-primary peer-focus:dark:text-zinc-200 dark:bg-zinc-900 rounded-r-md"
-      />
-      {/* <BsSearch size={20} /> */}
+      >
+        <BsSearch size={20} />
+      </button>
     </form>
   );
 };

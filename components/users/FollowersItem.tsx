@@ -3,14 +3,7 @@ import { FollowersItemProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  query,
-  setDoc,
-} from "firebase/firestore";
+import { collection, deleteDoc, doc, query, setDoc } from "firebase/firestore";
 import { db } from "@/utils/firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
@@ -90,26 +83,6 @@ const FollowersItem = ({ user }: FollowersItemProps) => {
           <p className="text-md text-zinc-600">@{user.username}</p>
         </div>
       </div>
-      {/* <FollowButton
-        user={user}
-        isFollowing={isFollowing}
-        setIsFollowing={setIsFollowing}
-      /> */}
-
-      {/* 
-      <button
-        onClick={handleFollow}
-        className={`py-1 px-6 object-fit border-2  rounded-md  transition 
-        ${
-          isFollowing
-            ? "bg-fuchsia-500 border-fuchsia-500 hover:bg-transparent hover:border-red-500"
-            : "border-zinc-200 hover:bg-zinc-700/60"
-        }
-        ${currentUser?.uid === user.uid ? "hidden" : "block"}
-      `}
-      >
-        {isFollowing ? "Follow" : "Unfollow"}
-      </button> */}
     </Link>
   );
 };
