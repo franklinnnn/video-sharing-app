@@ -10,7 +10,7 @@ type LoginButtonProps = {
 const LoginButton = ({ openModal, handleLogout }: LoginButtonProps) => {
   const { user, loading, error } = useAuth();
 
-  if (user) {
+  if (!user) {
     return (
       <button
         onClick={openModal}

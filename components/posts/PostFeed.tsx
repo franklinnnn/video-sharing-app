@@ -5,9 +5,8 @@ import { PostFeedProps } from "@/types";
 
 const PostFeed = ({ userId }: PostFeedProps) => {
   const posts = usePosts(userId);
-
   return (
-    <div className="h-full w-full flex flex-col items-center ">
+    <section className="h-full w-full flex flex-col items-center ">
       {posts && posts?.length === 0 ? (
         <div>User has no posts</div>
       ) : (
@@ -19,7 +18,7 @@ const PostFeed = ({ userId }: PostFeedProps) => {
             ))}
         </>
       )}
-    </div>
+    </section>
   );
 };
 

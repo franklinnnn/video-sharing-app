@@ -23,11 +23,23 @@ const Upload = () => {
   const [caption, setCaption] = useState("");
   const [openConfirmCancel, setOpenConfirmCancel] = useState(false);
   const [files, setFiles] = useState<any[]>([]);
+  const [error, setError] = useState("");
 
   const router = useRouter();
 
+  const fileValidator = (file: any) => {
+    if (file.size / (1024 * 1024) > 120) {
+      return {
+        code: "file-too-large",
+        message: "File is too large, max 120MB",
+      };
+    }
+    return null;
+  };
+
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop: (acceptedFiles) => {
+    onDrop: (acceptedFiles, rejectedFiles) => {
+      console.log(rejectedFiles);
       setFiles(
         acceptedFiles.map((file) =>
           Object.assign(file, {
@@ -35,15 +47,20 @@ const Upload = () => {
           })
         )
       );
+      setError(rejectedFiles[0].errors[0].message);
     },
+    validator: fileValidator,
     maxFiles: 1,
   });
 
   const handleFiles = () => {
-    files.forEach((file) => URL.revokeObjectURL(file.preview));
+    files.forEach((file) => {
+      URL.revokeObjectURL(file.preview);
+    });
   };
 
   useEffect(() => {
+    setError("");
     handleFiles();
   }, []);
 
@@ -51,6 +68,7 @@ const Upload = () => {
     setFiles([]);
     setLoading(false);
     setCaption("");
+    setError("");
     setOpenConfirmCancel(false);
   };
 
@@ -123,10 +141,15 @@ const Upload = () => {
                   <h1 className="text-xl">Select video to upload</h1>
                   <h2>Or drag and drop a file</h2>
                 </div>
-                <div className="flex flex-col justify-center items-center text-xs">
-                  <p>MP4 or WebM</p>
-                  <p>Less than 500MB</p>
-                </div>
+
+                {error ? (
+                  <p className="font-semibold text-red-500">{error}</p>
+                ) : (
+                  <div className="flex flex-col justify-center items-center text-xs">
+                    <p>MP4 or WebM</p>
+                    <p>Less than 120MB</p>
+                  </div>
+                )}
                 <button className="bg-primary hover:bg-primary/75 text-main-light w-40 py-2 rounded-md font-semibold">
                   Select file
                 </button>
@@ -187,14 +210,16 @@ const Upload = () => {
         onClose={() => setOpenConfirmCancel(false)}
         className="relative z-20"
       >
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-
+        <div
+          className="fixed inset-0 bg-primary/20 dark:bg-zinc-200/20"
+          aria-hidden="true"
+        />
         <div className="fixed inset-0 flex items-center justify-center p-4">
           <Dialog.Panel>
-            <div className="relative flex flex-col justify-center items-center gap-4 w-72 md:w-96 h-72 bg-white px-6 py-12 rounded-m">
+            <div className="relative flex flex-col justify-center items-center gap-4 w-72 md:w-96 h-72 bg-main-light dark:bg-main-dark px-6 py-12 rounded-md">
               <AiFillCloseCircle
                 size={30}
-                className="absolute right-2 top-2 hover:cursor-pointer text-gray-2 hover:text-gray-2/75 transition"
+                className="absolute right-2 top-2 hover:cursor-pointer text-primary/30 hover:text-primary/40 dark:text-zinc-200/30 hover:dark:text-zinc-200/40 transition"
                 onClick={() => setOpenConfirmCancel(false)}
               />
               <p className="text-xl font-semibold">Discard upload?</p>
@@ -216,35 +241,6 @@ const Upload = () => {
           </Dialog.Panel>
         </div>
       </Dialog>
-
-      {/* <section className="w-full">
-        <div {...getRootProps({ className: "dropzone" })}>
-          {files.length < 1 ? (
-            <div className="flex flex-col justify-center items-center gap-6 p-6 h-72 min-h-72 bg-zinc-800 rounded-md border-2 border-dashed border-zinc-700">
-              <input {...getInputProps()} />
-              <div className="flex flex-col justify-center items-center">
-                <BsCloudUploadFill size={50} />
-                <h1 className="text-xl">Select video to upload</h1>
-                <h2>Or drag and drop a file</h2>
-              </div>
-              <div className="flex flex-col justify-center items-center text-xs">
-                <p>MP4 or WebM</p>
-                <p>Less than 500MB</p>
-              </div>
-              <button className="bg-fuchsia-500 w-40 p-2 rounded-md">
-                Select file
-              </button>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center gap-4 w-full h-72">
-              <div>{thumbs}</div>
-              <button className="bg-fuchsia-500 w-40 p-2 rounded-md">
-                Change file
-              </button>
-            </div>
-          )}
-        </div>
-      </section> */}
     </div>
   );
 };

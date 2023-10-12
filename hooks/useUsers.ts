@@ -1,12 +1,12 @@
-import { UserProps } from "@/types";
-import axios from "axios";
+import { db } from "@/utils/firebase";
+import { collection, query } from "firebase/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
-type GetUsersResponse = { usersData: UserProps };
-const useUsers = async () => {
-  const res = await axios.get<GetUsersResponse>("/api/users");
+const useUsers = () => {
+  const usersQuery = query(collection(db, "posts"));
+  const [users] = useCollectionData(usersQuery);
 
-  console.log(res.data.usersData);
-  return res.data.usersData;
+  return users;
 };
 
 export default useUsers;

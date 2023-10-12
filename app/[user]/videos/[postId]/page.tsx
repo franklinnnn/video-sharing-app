@@ -31,7 +31,7 @@ const PostView = () => {
   };
 
   useEffect(() => {
-    post && user ? setLoading(false) : setLoading(true);
+    post || user ? setLoading(false) : setLoading(true);
   }, []);
 
   return (
@@ -50,18 +50,18 @@ const PostView = () => {
         </div>
 
         {/* USER AND COMMENTS SECTION */}
-        {loading ? (
-          <div className="relative flex justify-center pt-20 top-20 h-full w-[40%] min-w-72">
-            <Loader />
-          </div>
-        ) : (
-          <div className="relative top-20 h-full w-[40%] min-w-72">
-            <div className="flex flex-col py-2 px-4 m-2 border-b-2 border-b-primary/20">
+        <div className="relative top-20 h-full w-[40%] min-w-72">
+          {Object.keys(user).length === 0 ? (
+            <div className="w-full h-64 flex items-center justify-center border-b-2 border-b-primary/20 dark:border-b-zinc-200/20">
+              <Loader />
+            </div>
+          ) : (
+            <div className="flex flex-col py-2 px-4 m-2 border-b-2 border-b-primary/20 dark:border-b-zinc-200/20">
               <div className="flex justify-between mb-4">
                 <div className="flex gap-2 items-center">
                   <div className="min-w-20 rounded-full overflow-hidden">
                     <Image
-                      src={post.userInfo?.photoURL}
+                      src={post.userInfo?.photoURL || "/images/placeholder.png"}
                       alt="User profile photo"
                       width={60}
                       height={60}
@@ -105,9 +105,9 @@ const PostView = () => {
                 </div>
               </div>
             </div>
-            <CommentFeed post={post} />
-          </div>
-        )}
+          )}
+          <CommentFeed post={post} />
+        </div>
       </div>
     </section>
   );

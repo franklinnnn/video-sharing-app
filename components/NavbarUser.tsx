@@ -66,7 +66,9 @@ const NavbarUser = () => {
                   </button>
                 </Menu.Item>
                 <Menu.Item>
-                  <ThemeButton />
+                  <div>
+                    <ThemeButton />
+                  </div>
                 </Menu.Item>
                 <Menu.Item>
                   {/* {user ? (
@@ -86,10 +88,12 @@ const NavbarUser = () => {
                   <span>Logout</span>
                 </button>
               )} */}
-                  <LoginButton
-                    openModal={() => setOpenLogin(true)}
-                    handleLogout={handleLogout}
-                  />
+                  <div>
+                    <LoginButton
+                      openModal={() => setOpenLogin(true)}
+                      handleLogout={handleLogout}
+                    />
+                  </div>
                 </Menu.Item>
               </div>
             </Menu.Items>

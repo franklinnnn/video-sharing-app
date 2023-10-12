@@ -12,6 +12,7 @@ import {
 import { HiUser, HiOutlineUser } from "react-icons/hi";
 import NavbarMenuItem from "./NavbarMenuItem";
 import { PiMagnifyingGlass, PiMagnifyingGlassFill } from "react-icons/pi";
+import LoginModal from "./Modals/LoginModal";
 
 const NavbarMenu = () => {
   const { currentUser } = useCurrentUser();
@@ -77,6 +78,12 @@ const NavbarMenu = () => {
           openModal={() => setOpenLogin(true)}
         />
       ))}
+
+      <LoginModal
+        isOpen={openLogin}
+        closeModal={() => setOpenLogin(false)}
+        href="/"
+      />
     </section>
   );
 };

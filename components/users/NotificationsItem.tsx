@@ -107,7 +107,7 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
             </span>
             commented on your post
             <span className="text-xs text-gray-2">
-              • {getRelativeTime(notification.timestamp)}
+              • {getRelativeTime(notification.timestamp.seconds)}
             </span>
           </div>
           <div className="mt-2 text-gray-2">

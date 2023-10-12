@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
+import { toast } from "react-toastify";
 
 const LoginModal = ({ isOpen, closeModal, href }: ModalProps) => {
   const provider = new GoogleAuthProvider();
@@ -35,7 +36,7 @@ const LoginModal = ({ isOpen, closeModal, href }: ModalProps) => {
               .toLowerCase(),
           });
         }
-        alert("signed in successfully");
+        toast.success("Signed in successfully");
         router.push(`/${href}`);
         closeModal();
       } else {

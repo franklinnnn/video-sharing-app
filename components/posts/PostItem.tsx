@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { Suspense, useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Menu } from "@headlessui/react";
 import { PostItemProps } from "@/types";
@@ -12,6 +12,7 @@ import DeletePostModal from "../Modals/DeletePostModal";
 import Video from "./Video";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { handleCopyUrl } from "@/utils/index";
+import Loader from "../Loader";
 
 const PostItem = ({ post }: PostItemProps) => {
   const { currentUser } = useCurrentUser();
@@ -46,7 +47,9 @@ const PostItem = ({ post }: PostItemProps) => {
         </div>
       </div>
 
-      <Video video={post.video} />
+      <Suspense fallback={<Loader />}>
+        <Video video={post.video} />
+      </Suspense>
 
       <div className="relative flex justify-between items-center py-2">
         <div className="flex flex-row gap-4">

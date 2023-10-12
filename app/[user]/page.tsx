@@ -5,12 +5,11 @@ import Likes from "@/components/users/Likes";
 import UserBio from "@/components/users/UserBio";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { db } from "@/utils/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, query } from "firebase/firestore";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useUser } from "@/hooks/useUser";
-import { useFollowingCheck } from "@/hooks/useFollowingCheck";
 
 const UserPage = () => {
   const params = useParams();
@@ -20,18 +19,6 @@ const UserPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);
 
   const { data: fetchedUser } = useUser(username as string);
-  // console.log(testUser);
-
-  // const getUser = async () => {
-  //   const q = query(collection(db, "users"), where("username", "==", username));
-  //   const usersSnapshot = await getDocs(q);
-  //   usersSnapshot.forEach((doc) => {
-  //     setFetchedUser(doc.data());
-  //   });
-  // };
-
-  // const { isFollowing } = useFollowingCheck(fetchedUser.uid);
-  // console.log(isFollowing);
 
   const followingQuery = query(
     collection(db, `users/${currentUser?.uid}/following`)

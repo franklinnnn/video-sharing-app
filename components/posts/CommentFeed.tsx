@@ -5,6 +5,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import CommentItem from "./CommentItem";
 import CommentInput from "./CommentInput";
 import { CommentFeedProps } from "@/types";
+import Loader from "../Loader";
 
 const CommentFeed = ({ post }: CommentFeedProps) => {
   const [comments] = useCollectionData(
@@ -13,26 +14,36 @@ const CommentFeed = ({ post }: CommentFeedProps) => {
       orderBy("timestamp", "desc")
     )
   );
+
   return (
     <section className="flex flex-col justify-between w-full h-full">
-      <div className="relative p-4 h-full overflow-auto [&::-webkit-scrollbar]:hidden">
-        <div className="flex gap-2">
-          <h1>Comments</h1>
-          <span>
-            {comments && comments?.length < 1 ? "(0)" : `(${comments?.length})`}
-          </span>
+      {!comments ? (
+        <Loader />
+      ) : (
+        <div className="relative p-4 h-full overflow-auto [&::-webkit-scrollbar]:hidden">
+          <div className="flex gap-2">
+            <h1>Comments</h1>
+            <span>
+              {comments && comments?.length < 1
+                ? "(0)"
+                : `(${comments?.length})`}
+            </span>
+          </div>
+          <div>
+            {comments?.map((comment) => (
+              <CommentItem
+                comment={comment}
+                key={comment.timestamp}
+                postId={post.postId}
+              />
+            ))}
+          </div>
+          <CommentInput
+            postId={post.postId}
+            postUserId={post.userInfo?.userId}
+          />
         </div>
-        <div>
-          {comments?.map((comment) => (
-            <CommentItem
-              comment={comment}
-              key={comment.timestamp}
-              postId={post.postId}
-            />
-          ))}
-        </div>
-        <CommentInput postId={post.postId} postUserId={post.userInfo?.userId} />
-      </div>
+      )}
     </section>
   );
 };

@@ -28,7 +28,7 @@ const NavbarMenuItem = ({
   return (
     <button
       onClick={handleClick}
-      className={`relative flex flex-row justify-start items-center gap-4 text-xl mx-1 px-2 md:mx-2 md:px-4 py-2 hover:bg-primary/10 hover:dark:bg-main-light/10 rounded-full md:rounded-md md:object-fit hover:cursor-pointer ${
+      className={`relative flex flex-row justify-start items-center gap-4 text-xl mx-1 px-2 md:mx-2 md:px-4 py-2 hover:bg-primary/10 hover:dark:bg-main-light/10 rounded-full md:rounded-md md:object-fit hover:cursor-pointer group ${
         activePage === activeSegment
           ? "font-semibold dark:text-main-light"
           : "font-normal dark:text-zinc-200/70"
@@ -42,6 +42,9 @@ const NavbarMenuItem = ({
       {alert ? (
         <BsDot size={60} className="text-red-500 absolute -top-4 left-1" />
       ) : null}
+      {/* <span className="absolute left-12 top-3 justify-center items-center bg-primary text-main-light text-base rounded-md px-2 hidden group-hover:block z-10">
+        {label}
+      </span> */}
     </button>
   );
 };

@@ -44,6 +44,7 @@ export type FollowButtonProps = {
   user: UserProps;
   isFollowing: boolean;
   setIsFollowing: (value: boolean) => void;
+  openModal: () => void;
 };
 export type FollowersProps = {
   userId: string;

@@ -1,5 +1,6 @@
 "use client";
 
+import { delay } from "@/utils/index";
 import { db } from "@/utils/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ export const useUser = (username?: string, userId?: string) => {
     const userCollection = collection(db, "users");
     const userQuery = query(userCollection, where("username", "==", username));
     const userSnapshot = await getDocs(userQuery);
+    await delay(1500);
     userSnapshot.forEach((doc) => {
       // console.log(doc.data());
       setData(doc.data());
@@ -22,6 +24,7 @@ export const useUser = (username?: string, userId?: string) => {
     const userCollection = collection(db, "users");
     const userQuery = query(userCollection, where("uid", "==", userId));
     const userSnapshot = await getDocs(userQuery);
+    await delay(1500);
     userSnapshot.forEach((doc) => {
       // console.log(doc.data());
       setData(doc.data());

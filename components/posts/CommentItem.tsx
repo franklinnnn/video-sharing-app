@@ -24,6 +24,8 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
     toast.success("Comment deleted ❌");
   };
 
+  console.log(comment);
+
   return (
     <div className="flex items-start gap-2 my-6">
       <Image

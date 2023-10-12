@@ -28,12 +28,10 @@ const NotificationsFeed = () => {
   return (
     <section>
       {notifications?.map((notification: Record<string, any>) => (
-        <>
-          <NotificationsItem
-            key={notification.notificationId}
-            notification={notification}
-          />
-        </>
+        <NotificationsItem
+          key={notification.notificationId}
+          notification={notification}
+        />
       ))}
     </section>
   );
