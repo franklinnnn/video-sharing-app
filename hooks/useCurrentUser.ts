@@ -4,10 +4,6 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const useCurrentUser = () => {
-  try {
-  } catch (error) {
-    console.log(error);
-  }
   const [user, loading, error] = useAuthState(auth);
   const [currentUser, setCurrentUser] = useState<any>({});
 
@@ -15,14 +11,16 @@ const useCurrentUser = () => {
     if (user) {
       const userRef = doc(db, "users", user?.uid);
       const userSnapshot = await getDoc(userRef);
-      if (userSnapshot.exists()) {
-        setCurrentUser(userSnapshot.data());
-      }
+      setCurrentUser(userSnapshot.data());
     }
   };
 
   useEffect(() => {
-    getUser();
+    try {
+      getUser();
+    } catch (error) {
+      console.log(error);
+    }
   }, [user]);
 
   return { currentUser, loading, error };

@@ -19,8 +19,9 @@ const NavbarSettings = () => {
   const handleLogout = () => {
     auth.signOut();
     router.push("/");
-    location.reload();
-    toast.success("You have been logged out");
+    toast.success("You have been logged out", {
+      onClose: () => location.reload(),
+    });
   };
   return (
     <div className="col-span-1 flex justify-end items-center w-full">

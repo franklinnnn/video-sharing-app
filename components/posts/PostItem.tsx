@@ -41,7 +41,10 @@ const PostItem = ({ post }: PostItemProps) => {
           >
             {post.userInfo.displayName}
           </Link>
-          <span onClick={goToPost} className="hover:cursor-pointer">
+          <span
+            onClick={goToPost}
+            className="font-semibold hover:cursor-pointer"
+          >
             {post.caption}
           </span>
         </div>

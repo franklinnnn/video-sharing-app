@@ -36,8 +36,8 @@ const LoginModal = ({ isOpen, closeModal, href }: ModalProps) => {
               .toLowerCase(),
           });
         }
+        router.push(href === "/undefined" ? userSnap.data().username : href);
         toast.success("Signed in successfully");
-        router.push(`/${href}`);
         closeModal();
       } else {
         await setDoc(userRef, {

@@ -1,6 +1,6 @@
 "use client";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   AiFillBell,
   AiFillHome,
@@ -12,11 +12,9 @@ import {
 import { HiUser, HiOutlineUser } from "react-icons/hi";
 import NavbarMenuItem from "./NavbarMenuItem";
 import { PiMagnifyingGlass, PiMagnifyingGlassFill } from "react-icons/pi";
-import LoginModal from "./Modals/LoginModal";
 
 const NavbarMenu = () => {
   const { currentUser } = useCurrentUser();
-  const [openLogin, setOpenLogin] = useState(false);
 
   const navbarItems = [
     {
@@ -75,15 +73,14 @@ const NavbarMenu = () => {
           href={item.href}
           activeSegment={item.activeSegment}
           alert={item.alert}
-          openModal={() => setOpenLogin(true)}
         />
       ))}
 
-      <LoginModal
+      {/* <LoginModal
         isOpen={openLogin}
         closeModal={() => setOpenLogin(false)}
         href="/"
-      />
+      /> */}
     </section>
   );
 };

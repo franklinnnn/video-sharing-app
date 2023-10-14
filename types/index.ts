@@ -101,7 +101,6 @@ export type SidebarItemProps = {
   href: string;
   activeSegment: string | null;
   alert: boolean;
-  openModal: () => void;
 };
 
 export type ModalProps = {

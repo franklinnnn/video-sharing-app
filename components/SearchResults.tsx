@@ -7,7 +7,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 const SearchResults = ({ posts, users, loading }: SearchResultsProps) => {
-  console.log(posts, users);
   const [activeTab, setActiveTab] = useState("posts");
   return (
     <div className="w-full flex flex-col items-center justify-center">

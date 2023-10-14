@@ -3,7 +3,7 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { ModalProps } from "@/types";
 import { auth, db, storage } from "@/utils/firebase";
 import { Dialog } from "@headlessui/react";
-import { updateProfile } from "firebase/auth";
+import { getAuth, updateProfile } from "firebase/auth";
 import {
   FieldPath,
   collection,
@@ -25,8 +25,8 @@ import { toast } from "react-toastify";
 import DeleteAccountModal from "./DeleteAccountModal";
 
 const EditModal = ({ isOpen, closeModal }: ModalProps) => {
+  const auth = getAuth();
   const { currentUser } = useCurrentUser();
-  const [user] = useAuthState(auth);
   const router = useRouter();
 
   const [displayName, setDisplayName] = useState("");
@@ -64,11 +64,8 @@ const EditModal = ({ isOpen, closeModal }: ModalProps) => {
           );
           uploadBytesResumable(storageRef, file).then(async () => {
             const downloadURL = await getDownloadURL(storageRef);
-            updateProfile(currentUser, {
-              photoURL: downloadURL,
-            });
 
-            updateDoc(doc(db, "users", currentUser.uid), {
+            await updateDoc(doc(db, "users", currentUser.uid), {
               photoURL: downloadURL,
             });
           });
@@ -103,7 +100,6 @@ const EditModal = ({ isOpen, closeModal }: ModalProps) => {
       alert(error);
     } finally {
       closeModal();
-      location.reload();
     }
   };
 
