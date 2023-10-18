@@ -74,7 +74,7 @@ const FollowButton = ({
 
   useEffect(() => {
     handleFollowingCheck();
-  }, [user.uid]);
+  }, [user.uid, following]);
   return (
     <button
       onClick={currentUser?.uid ? handleFollow : openModal}

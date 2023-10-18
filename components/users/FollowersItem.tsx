@@ -61,7 +61,7 @@ const FollowersItem = ({ user }: FollowersItemProps) => {
 
   useEffect(() => {
     handleFollowingCheck();
-  }, [user]);
+  }, [user, following]);
 
   return (
     <Link

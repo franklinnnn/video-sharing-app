@@ -32,7 +32,7 @@ const PostView = () => {
 
   useEffect(() => {
     post || user ? setLoading(false) : setLoading(true);
-  }, []);
+  }, [post, user]);
 
   return (
     <section className="fixed top-0 left-0 w-screen h-screen">

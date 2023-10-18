@@ -14,11 +14,11 @@ const NotificationsItem = ({ notification }: NotificationsItemProps) => {
 
   const goToUser = useCallback(() => {
     router.push(`/${notification.username}`);
-  }, [notification.username]);
+  }, [notification.username, router]);
 
   const goToPost = useCallback(async () => {
     router.push(`/${currentUser.username}/videos/${notification.postId}`);
-  }, [currentUser, notification.postId]);
+  }, [currentUser, notification.postId, router]);
 
   if (notification.type === "follow") {
     return (

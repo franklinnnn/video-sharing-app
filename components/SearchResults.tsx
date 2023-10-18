@@ -58,6 +58,7 @@ const SearchResults = ({ posts, users, loading }: SearchResultsProps) => {
               {users.map((user: any) => (
                 <Link
                   href={user.username}
+                  key={user.userId}
                   className="flex flex-row gap-4 items-center justify-between p-2 my-2 hover:cursor-pointer w-full max-w-2xl"
                 >
                   <div className="flex gap-4 items-start justify-start">

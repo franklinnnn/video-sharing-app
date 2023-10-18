@@ -170,7 +170,7 @@ const EditModal = ({ isOpen, closeModal }: ModalProps) => {
     setBio(currentUser?.bio as string);
     setWebsite(currentUser?.website as string);
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
-  }, [currentUser]);
+  }, [currentUser, files]);
 
   return (
     <>

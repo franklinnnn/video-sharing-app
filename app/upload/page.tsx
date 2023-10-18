@@ -63,7 +63,7 @@ const Upload = () => {
   useEffect(() => {
     setError("");
     handleFiles();
-  }, []);
+  }, [files]);
 
   const handleCancelUpload = async () => {
     setFiles([]);
