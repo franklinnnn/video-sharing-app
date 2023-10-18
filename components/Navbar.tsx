@@ -1,8 +1,7 @@
 import NavbarLogo from "./NavbarLogo";
-import NavbarUser from "./NavbarUser";
-import { ToastContainer, Slide } from "react-toastify";
 import NavbarMenu from "./NavbarMenu";
 import NavbarSettings from "./NavbarSettings";
+import { ToastContainer, Slide } from "react-toastify";
 
 const Navbar = () => {
   return (
@@ -10,7 +9,6 @@ const Navbar = () => {
       <NavbarLogo />
       <NavbarMenu />
       <NavbarSettings />
-      {/* <NavbarUser /> */}
 
       <ToastContainer
         position="top-center"

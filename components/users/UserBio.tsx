@@ -20,6 +20,7 @@ const UserBio = ({
   const [openLoginModal, setOpenLoginModal] = useState(false);
 
   const { currentUser } = useCurrentUser();
+
   const followersQuery = query(collection(db, `users/${user.uid}/followers`));
   const [followers] = useCollectionData(followersQuery);
   const likesQuery = query(collection(db, `users/${user.uid}/likedPosts`));
@@ -34,14 +35,16 @@ const UserBio = ({
       ) : (
         <div className="p-4 rounded-md">
           <div className="flex flex-col sm:flex-row gap-4 mb-4">
-            <Image
-              src={user.photoURL || "/images/placeholder.png"}
-              alt="User profile photo"
-              width={112}
-              height={112}
-              className="object-fit w-28 h-28 rounded-full"
-            />
-            <div className="flex flex-col items-start justify-evenly w-full gap-2">
+            <div className="w-28 h-28">
+              <Image
+                src={user.photoURL || "/images/placeholder.png"}
+                alt="User profile photo"
+                width={112}
+                height={112}
+                className="object-cover w-28 h-28 rounded-full"
+              />
+            </div>
+            <div className="flex flex-col items-start justify-evenly gap-2">
               <h1 className="text-4xl font-semibold font-display">
                 {user.displayName ? (
                   user.displayName

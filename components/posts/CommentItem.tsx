@@ -24,8 +24,6 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
     toast.success("Comment deleted ❌");
   };
 
-  console.log(comment);
-
   return (
     <div className="flex items-start gap-2 my-6">
       <Image
@@ -59,7 +57,7 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
             </div>
             {/* <div>Reply</div> */}
           </div>
-          {currentUser && currentUser.uid === comment.userInfo.userId && (
+          {currentUser && currentUser?.uid === comment.userInfo.userId && (
             <AiFillDelete
               size={12}
               className="text-zinc-500 hover:text-red-500  hover:cursor-pointer"

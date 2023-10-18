@@ -9,6 +9,7 @@ import {
   BsFillVolumeUpFill,
   BsVolumeMuteFill,
 } from "react-icons/bs";
+import Loader from "../Loader";
 
 const Video = ({ video, isBigVideo }: VideoProps) => {
   const videoRef = useRef(null);
@@ -27,16 +28,26 @@ const Video = ({ video, isBigVideo }: VideoProps) => {
       }`}
     >
       <div className="relative flex justify-center w-full overflow-hidden rounded-md group">
-        <video
-          ref={videoRef}
-          onClick={togglePlay}
-          onTimeUpdate={handleOnTimeUpdate}
-          className={`${
-            isBigVideo ? "h-screen" : "h-[60vh]"
-          } aspect-[9/16] object-cover sm:object-contain`}
-        >
-          <source src={video} type="video/mp4" />
-        </video>
+        {video !== undefined ? (
+          <video
+            ref={videoRef}
+            onClick={togglePlay}
+            onTimeUpdate={handleOnTimeUpdate}
+            className={`${
+              isBigVideo ? "h-screen" : "h-[60vh]"
+            } aspect-[9/16] object-cover sm:object-contain`}
+          >
+            <source src={video} type="video/mp4" />
+          </video>
+        ) : (
+          <div
+            className={`${
+              isBigVideo ? "h-screen" : "h-[60vh]"
+            } aspect-[9/16] object-cover sm:object-contain`}
+          >
+            <Loader />
+          </div>
+        )}
         <div className="absolute -bottom-2 w-full opacity-0 group-hover:opacity-80 transition duration-200">
           <div className="flex items-center justify-between w-full">
             <button

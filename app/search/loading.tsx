@@ -3,7 +3,7 @@
 import Loader from "@/components/Loader";
 import React from "react";
 
-const HomeLoading = () => {
+const SearchLoading = () => {
   return (
     <div className="max-w-2xl mx-auto mt-24">
       <Loader />
@@ -11,4 +11,4 @@ const HomeLoading = () => {
   );
 };
 
-export default HomeLoading;
+export default SearchLoading;

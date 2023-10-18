@@ -57,8 +57,8 @@ const NavbarMenu = () => {
       label: "Profile",
       icon: HiOutlineUser,
       activeIcon: HiUser,
-      href: `/${currentUser.username}`,
-      activeSegment: `${currentUser.username}`,
+      href: `/${currentUser?.username}`,
+      activeSegment: `${currentUser?.username}`,
     },
   ];
 

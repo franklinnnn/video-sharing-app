@@ -16,6 +16,7 @@ import {
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { useRouter } from "next/navigation";
 import { AiFillCloseCircle } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 const Upload = () => {
   const { currentUser } = useCurrentUser();
@@ -98,7 +99,12 @@ const Upload = () => {
           });
         })
       );
-      alert("Your video will be available once it has finished uploading");
+      toast.success(
+        "Your video is will be available once it has finished uploading",
+        {
+          onClose: () => router.push("/"),
+        }
+      );
     } catch (error) {
       console.log(error);
     } finally {

@@ -25,39 +25,39 @@ const FollowersItem = ({ user }: FollowersItemProps) => {
     });
   };
 
-  const handleFollow = async () => {
-    const followedUserRef = doc(db, "users", user.uid);
-    if (currentUser) {
-      const userRef = doc(db, "users", currentUser.uid);
+  // const handleFollow = async () => {
+  //   const followedUserRef = doc(db, "users", user.uid);
+  //   if (currentUser) {
+  //     const userRef = doc(db, "users", currentUser.uid);
 
-      if (isFollowing) {
-        await deleteDoc(
-          doc(db, "users", currentUser.uid, "following", user.uid)
-        );
-        await deleteDoc(
-          doc(db, "users", user.uid, "followers", currentUser.uid)
-        );
+  //     if (isFollowing) {
+  //       await deleteDoc(
+  //         doc(db, "users", currentUser.uid, "following", user.uid)
+  //       );
+  //       await deleteDoc(
+  //         doc(db, "users", user.uid, "followers", currentUser.uid)
+  //       );
 
-        console.log("unfollowed user");
-        setIsFollowing(false);
-      } else {
-        await setDoc(doc(userRef, "following", user.uid), {
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          username: user.username,
-          uid: user.uid,
-        });
-        await setDoc(doc(followedUserRef, "followers", currentUser.uid), {
-          displayName: currentUser.displayName,
-          photoURL: currentUser.photoURL,
-          username: currentUser.username,
-          uid: currentUser.uid,
-        });
-        console.log("followed user");
-        setIsFollowing(true);
-      }
-    }
-  };
+  //       console.log("unfollowed user");
+  //       setIsFollowing(false);
+  //     } else {
+  //       await setDoc(doc(userRef, "following", user.uid), {
+  //         displayName: user.displayName,
+  //         photoURL: user.photoURL,
+  //         username: user.username,
+  //         uid: user.uid,
+  //       });
+  //       await setDoc(doc(followedUserRef, "followers", currentUser.uid), {
+  //         displayName: currentUser.displayName,
+  //         photoURL: currentUser.photoURL,
+  //         username: currentUser.username,
+  //         uid: currentUser.uid,
+  //       });
+  //       console.log("followed user");
+  //       setIsFollowing(true);
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     handleFollowingCheck();

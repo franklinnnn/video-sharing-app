@@ -50,8 +50,9 @@ const LoginModal = ({ isOpen, closeModal, href }: ModalProps) => {
           providerId: providerData[0].providerId,
           uid: uid,
           bio: "",
-          website: "",
+          website: null,
         });
+        toast.success("Signed in successfully");
       }
     } catch (error) {
       console.log(error);

@@ -4,6 +4,7 @@ import { useRouter, useSelectedLayoutSegment } from "next/navigation";
 import React, { useCallback, useState } from "react";
 import { BsDot } from "react-icons/bs";
 import LoginModal from "./Modals/LoginModal";
+import Image from "next/image";
 
 const NavbarMenuItem = ({
   label,
@@ -38,9 +39,39 @@ const NavbarMenuItem = ({
         }`}
       >
         {activePage === activeSegment ? (
-          <ActiveIcon size={32} className="text-primary dark:text-main-light" />
+          <>
+            {label === "Profile" && currentUser?.photoURL ? (
+              <Image
+                src={currentUser?.photoURL}
+                width={34}
+                height={34}
+                alt="User profile photo"
+                className="border-2 border-primary dark:border-zinc-200 rounded-full"
+              />
+            ) : (
+              <ActiveIcon
+                size={32}
+                className="text-primary dark:text-main-light"
+              />
+            )}
+          </>
         ) : (
-          <Icon size={32} className="text-primary/50 dark:text-main-light/50" />
+          <>
+            {label === "Profile" && currentUser?.photoURL ? (
+              <Image
+                src={currentUser?.photoURL}
+                width={34}
+                height={34}
+                alt="User profile photo"
+                className="border-2 border-primary/20 dark:border-zinc-200/20 rounded-full"
+              />
+            ) : (
+              <Icon
+                size={32}
+                className="text-primary/50 dark:text-main-light/50"
+              />
+            )}
+          </>
         )}
         {alert ? (
           <BsDot size={60} className="text-red-500 absolute -top-4 left-1" />

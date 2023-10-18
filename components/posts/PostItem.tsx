@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense, useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Menu } from "@headlessui/react";
+import { Menu, Transition } from "@headlessui/react";
 import { PostItemProps } from "@/types";
 import { BsThreeDotsVertical, BsFillShareFill } from "react-icons/bs";
 import { AiFillDelete } from "react-icons/ai";
@@ -18,6 +18,7 @@ const PostItem = ({ post }: PostItemProps) => {
   const { currentUser } = useCurrentUser();
   const router = useRouter();
   const [openDeletePostModal, setOpenDeletePostModal] = useState(false);
+  const [openPostMenu, setOpenPostMenu] = useState(false);
   const goToPost = useCallback(() => {
     router.push(`/${post.userInfo.username}/videos/${post.postId}`);
   }, [router, post.postId, post.userInfo.username]);

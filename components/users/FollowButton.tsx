@@ -77,7 +77,7 @@ const FollowButton = ({
   }, [user.uid]);
   return (
     <button
-      onClick={currentUser.uid ? handleFollow : openModal}
+      onClick={currentUser?.uid ? handleFollow : openModal}
       className={`py-1 px-6 object-fit border-2 rounded-md transition 
         ${
           isFollowing

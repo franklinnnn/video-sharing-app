@@ -23,6 +23,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { toast } from "react-toastify";
 import DeleteAccountModal from "./DeleteAccountModal";
+import usePosts from "@/hooks/usePosts";
 
 const EditModal = ({ isOpen, closeModal }: ModalProps) => {
   const auth = getAuth();
@@ -37,6 +38,8 @@ const EditModal = ({ isOpen, closeModal }: ModalProps) => {
   const [files, setFiles] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [openDeleteAccount, setOpenDeleteAccount] = useState(false);
+
+  const posts = usePosts();
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -68,6 +71,7 @@ const EditModal = ({ isOpen, closeModal }: ModalProps) => {
             await updateDoc(doc(db, "users", currentUser.uid), {
               photoURL: downloadURL,
             });
+            setPhotoURL(downloadURL);
           });
         });
       }
@@ -83,21 +87,15 @@ const EditModal = ({ isOpen, closeModal }: ModalProps) => {
       });
 
       handleUpdatePosts();
+      handleUpdateComments();
 
-      // const response = await getDoc(doc(db, "users", currentUser.uid));
-      // if (response.exists()) {
-      //   await updateDoc(doc(db, "users", currentUser.uid), {
-      //     displayName: displayName,
-      //     username: username,
-      //     bio: bio,
-      //     website: website,
-      //   });
-      // }
       setLoading(false);
-      toast.success("Profile edited");
+      toast.success("Profile edited", {
+        onClose: () => location.reload(),
+      });
+      router.push(`/${username}`);
     } catch (error) {
       console.log(error);
-      alert(error);
     } finally {
       closeModal();
     }
@@ -119,13 +117,46 @@ const EditModal = ({ isOpen, closeModal }: ModalProps) => {
         const postRef = post.data();
         postsToUpdate.push(postRef);
       });
-      postsToUpdate.map((post) => {
+      postsToUpdate?.map((post) => {
         const postRef = doc(db, "posts", post.postId);
         updateDoc(postRef, {
           "userInfo.username": username,
           "userInfo.displayName": displayName,
+          "userInfo.photoURL": photoURL,
         });
         console.log("posts updated");
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUpdateComments = () => {
+    try {
+      // const postsCollection = collection(db, `posts`);
+      // const postsQuery = query(postsCollection);
+      // const postsSnapshot = await getDocs(postsQuery);
+
+      // const postsList: any[] = [];
+
+      // postsSnapshot.forEach((post) => {
+      //   const postRef = post.data();
+      //   postsList.push(postRef);
+      // });
+      posts?.map(async (post) => {
+        const commentRef = collection(db, `/posts/${post.postId}/comments/`);
+        const commentQuery = query(
+          commentRef,
+          where("userInfo.userId", "==", currentUser.uid)
+        );
+        const commentSnapshot = await getDocs(commentQuery);
+        commentSnapshot.forEach((doc) => {
+          updateDoc(doc.ref, {
+            "userInfo.username": username,
+            "userInfo.displayName": displayName,
+            "userInfo.photoURL": photoURL,
+          });
+        });
       });
     } catch (error) {
       console.log(error);

@@ -46,7 +46,7 @@ const NavbarSettings = () => {
                 </div>
               </Menu.Item>
               <Menu.Item>
-                {currentUser.uid ? (
+                {currentUser?.uid ? (
                   <button
                     onClick={handleLogout}
                     className="flex justify-start items-center gap-4 w-full py-2 px-4 hover:bg-primary/10 hover:dark:bg-main-light/10 border-t border-primary/20 dark:border-main-light/20"
