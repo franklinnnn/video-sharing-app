@@ -39,11 +39,11 @@ const SearchResults = ({ posts, users, loading }: SearchResultsProps) => {
               No results found 🤷‍♂️
             </span>
           ) : (
-            <div>
+            <>
               {posts.map((post: Record<string, any>) => (
                 <PostItem post={post} key={post.postId} />
               ))}
-            </div>
+            </>
           )}
         </>
       )}
