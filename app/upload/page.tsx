@@ -29,10 +29,10 @@ const Upload = () => {
   const router = useRouter();
 
   const fileValidator = (file: any) => {
-    if (file.size / (1024 * 1024) > 120) {
+    if (file.size / (1024 * 1024) > 100) {
       return {
         code: "file-too-large",
-        message: "File is too large, max 120MB",
+        message: "File is too large, max 100MB",
       };
     }
     return null;
