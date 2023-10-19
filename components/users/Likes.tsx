@@ -17,7 +17,7 @@ const Likes = ({ userId }: LikesProps) => {
         <div>
           {likes.length < 1 ? (
             <div className="flex justify-center text-lg font-semibold pt-4">
-              User hasn't liked a post yet 👎
+              User hasn't liked a post yet
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">

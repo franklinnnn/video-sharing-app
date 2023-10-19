@@ -40,7 +40,7 @@ const UserPage = () => {
 
   useEffect(() => {
     handleFollowingCheck();
-  }, [fetchedUser.uid, following]);
+  }, [fetchedUser.uid, following, isFollowing]);
 
   return (
     <section className="h-full max-w-2xl mx-auto mt-20 p-2">
