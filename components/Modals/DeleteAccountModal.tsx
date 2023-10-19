@@ -58,7 +58,7 @@ const DeleteAccountModal = ({ isOpen, closeModal }: ModalProps) => {
           })
           .catch((error) => {
             console.log(error);
-            reauthWithGoogle();
+            // reauthWithGoogle();
           });
       }
     } catch (error) {
@@ -66,11 +66,11 @@ const DeleteAccountModal = ({ isOpen, closeModal }: ModalProps) => {
     }
   };
 
-  const reauthWithGoogle = () => {
-    if (auth) {
-      return reauthenticateWithPopup(auth, googleProvider);
-    }
-  };
+  // const reauthWithGoogle = () => {
+  //   if (auth) {
+  //     return reauthenticateWithPopup(auth, googleProvider);
+  //   }
+  // };
 
   const handleDeleteUserPosts = async (uid: string) => {
     const postsCollection = collection(db, `posts`);
