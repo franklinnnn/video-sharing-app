@@ -6,7 +6,6 @@ import { Dialog } from "@headlessui/react";
 import {
   GoogleAuthProvider,
   deleteUser,
-  getAuth,
   reauthenticateWithPopup,
 } from "firebase/auth";
 import {

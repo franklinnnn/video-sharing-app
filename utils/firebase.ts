@@ -1,13 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {
-  GoogleAuthProvider,
-  NextOrObserver,
-  User,
-  getAuth,
-  onAuthStateChanged,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
