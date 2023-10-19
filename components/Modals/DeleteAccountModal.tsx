@@ -1,7 +1,7 @@
 import usePosts from "@/hooks/usePosts";
 import useUsers from "@/hooks/useUsers";
 import { ModalProps } from "@/types";
-import { db, storage } from "@/utils/firebase";
+import { auth, db, storage } from "@/utils/firebase";
 import { Dialog } from "@headlessui/react";
 import {
   GoogleAuthProvider,
@@ -28,9 +28,8 @@ import Loader from "../Loader";
 const DeleteAccountModal = ({ isOpen, closeModal }: ModalProps) => {
   // const [user] = useAuthState(auth);
 
-  const auth = getAuth();
   const user = auth.currentUser;
-  const googleProvider = new GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const usersList = useUsers();
@@ -66,10 +65,8 @@ const DeleteAccountModal = ({ isOpen, closeModal }: ModalProps) => {
     }
   };
 
-  // const reauthWithGoogle = () => {
-  //   if (auth) {
-  //     return reauthenticateWithPopup(auth, googleProvider);
-  //   }
+  // const reauthWithGoogle = async () => {
+  //   return await reauthenticateWithPopup(auth, provider);
   // };
 
   const handleDeleteUserPosts = async (uid: string) => {
