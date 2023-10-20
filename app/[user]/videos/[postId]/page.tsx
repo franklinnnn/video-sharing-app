@@ -34,6 +34,8 @@ const PostView = () => {
     post || user ? setLoading(false) : setLoading(true);
   }, [post, user]);
 
+  const shareUrl = `${window.location.origin}${pathname}`;
+
   return (
     <section className="fixed top-0 left-0 w-screen h-screen">
       <div className="relative flex flex-row items-center justify-center h-full w-full">
@@ -94,7 +96,7 @@ const PostView = () => {
                 <p>Share</p>
                 <div className="flex justify-evenly bg-primary/10 dark:bg-zinc-200/10 rounded-md mr-2 mt-2">
                   <p className="p-2 text-zinc-500 w-full truncate">
-                    localhost:3000{pathname}
+                    {shareUrl}
                   </p>
                   <button
                     onClick={() => handleCopyUrl(pathname)}

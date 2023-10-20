@@ -94,7 +94,8 @@ export const sendNotification = async (
 };
 
 export const handleCopyUrl = (pathname: string) => {
-  const url = `localhost:3000${pathname}`;
+  const url = `${window.location.origin}${pathname}`;
+  console.log(url);
   navigator.clipboard.writeText(url);
   toast.success("Copied URL ✔️");
 };
