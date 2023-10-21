@@ -48,7 +48,9 @@ const Upload = () => {
           })
         )
       );
-      setError(rejectedFiles[0].errors[0].message);
+      if (rejectedFiles) {
+        setError(rejectedFiles[0]?.errors[0].message);
+      }
     },
     validator: fileValidator,
     maxFiles: 1,
@@ -63,7 +65,7 @@ const Upload = () => {
   useEffect(() => {
     setError("");
     handleFiles();
-  }, [files]);
+  }, []);
 
   const handleCancelUpload = async () => {
     setFiles([]);
@@ -153,7 +155,7 @@ const Upload = () => {
                 ) : (
                   <div className="flex flex-col justify-center items-center text-xs">
                     <p>MP4 or WebM</p>
-                    <p>Less than 120MB</p>
+                    <p>Less than 100MB</p>
                   </div>
                 )}
                 <button className="bg-primary hover:bg-primary/75 text-main-light w-40 py-2 rounded-md font-semibold">
